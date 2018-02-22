@@ -14,8 +14,8 @@
 		if ($count==1) {//valid login
 			$user=mysql_fetch_object($res);
 			$_SESSION['logged']=true;
-			$_SESSION['user_id']=$user->id;
-			$_SESSION['user_type']=$user->type;
+			$_SESSION['user_id']=$user->userId;
+			$_SESSION['user_type']=$user->position;
 			header("location: dash.php");
 			exit();
 		}else{
