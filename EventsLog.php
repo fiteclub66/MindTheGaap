@@ -1,6 +1,6 @@
 <html lang="en">
 	<head>
-		<title>Chart of Accounts</title>
+		<title>Events Log</title>
 	  	<meta charset="utf-8">
 	  	<meta name="viewport" content="width=device-width, initial-scale=1">
 	  	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"> -->
@@ -17,11 +17,14 @@
 	  	<!-- DataTables CSS -->
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
 		 
 		<!-- DataTables javascript-->
 		<!-- <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 
 
 	  	<!-- Bootstrap CSS -->
@@ -34,6 +37,10 @@
 	  	<!-- ajax javascript-->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+		<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+		<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+
 
 		<!-- Bootstrap Javascript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -88,82 +95,84 @@
 		<div class="container">
 			<div class="row" style="margin-top: 40px">
 				<div class="row col-xs-2 col-sm-2 col-md-2 col-lg-1"></div>
-				<div class="row col-xs-10 col-sm-10 col-md-7 col-lg-7">
-					<h1 style="color: #DD9787; border-bottom: 3px solid #A6C48A;">CHART OF ACCOUNTS</h1>
+				<div class="row col-xs-10 col-sm-10 col-md-7 col-lg-10">
+					<h1 style="color: #DD9787; border-bottom: 3px solid #A6C48A;">LOGS</h1>
 				</div>
-				<div class="row col-xs-12 col-sm-12 col-md-3 col-lg-4">
-					<button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">ADD ACCOUNT</button>
+				<div id="buttons" class="row col-xs-12 col-sm-12 col-md-2 col-lg-1 float-right">
+					<!-- <button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">EXPORT LOG</button> -->
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<table id="example" name="example" class="display table-striped" cellspacing="10" width="90%" style="margin-left: auto; margin-right: auto; color: #DD9787">
 			        <thead>
 			            <tr>
-			                <th>NAME</th>
-			                <th>NUM</th>
-			                <th>BALANCE</th>
-			                <th>STATUS</th>
-			                <th style="color:white;">&nbsp;</th>
+			                <th>EVENT</th>
+			                <th>CHANGE</th>
+			                <th>OLD</th>
+			                <th>NEW</th>
+			                <th>AUTHOR</th>
+			                <th>DATE</th>
 			            </tr>
 			        </thead>
 			        <!-- uncomment if search bar per column is wanted -->
-			        <!-- <tfoot>
+			        <tfoot>
 			            <tr>
-			                <th>Name</th>
-			                <th>Num</th>
-			                <th>Balance</th>
-			                <th>Status</th>
-			                <th style="color: white">&nbsp;</th>
+			                <th>Event</th>
+			                <th>Change</th>
+			                <th>Old</th>
+			                <th>New</th>
+			                <th>Author</th>
+			                <th>Date</th>
 			            </tr>
-			        </tfoot> -->
+			        </tfoot>
 					<tbody style="margin-bottom: 10px;">
 			            <tr>
-			                <td>CASH</td>
-			                <td>105</td>
-			                <td>$1000.00</td>
-			                <td>Active</td>
-			                <td><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button>
-			                </td>
-			            </tr>
-			            <tr>
-			                <td>ACCOUNTS PAYABLE</td>
+			                <td>1</td>
+			                <td>Account Number</td>
+			                <td>104</td>
 			                <td>106</td>
-			                <td>$1000.00</td>
-			                <td>Active</td>
-			                <td><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button>
-			                </td>
+			                <td>Jim User</td>
+			                <td>00-00-00</td>
 			            </tr>
 			            <tr>
-			                <td>OWNERS EQUITY</td>
-			                <td>204</td>
-			                <td>$1000.00</td>
-			                <td>Active</td>
-			                <td><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button>
-			                </td>
+			                <td>2</td>
+			                <td>Account Name</td>
+			                <td>Cash</td>
+			                <td>Petty Cash</td>
+			                <td>Jim User</td>
+			                <td>00-00-00</td>
 			            </tr>
 			            <tr>
-			                <td>EQUIPMENT</td>
-			                <td>405</td>
-			                <td>$1000.00</td>
-			                <td>Active</td>
-			                <td><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button>
-			                </td>
+			                <td>3</td>
+			                <td>User First Name</td>
+			                <td>Jonh</td>
+			                <td>John</td>
+			                <td>Jim User</td>
+			                <td>00-00-00</td>
 			            </tr>
 			            <tr>
-			                <td>CORPORATE PAYOFFS</td>
-			                <td>222</td>
-			                <td>$1000.00</td>
-			                <td>Active</td>
-			                <td><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button>
-			                </td>
+			                <td>4</td>
+			                <td>Last Name User</td>
+			                <td>Smarth</td>
+			                <td>Smith</td>
+			                <td>Jim User</td>
+			                <td>00-00-00</td>
+			            </tr>
+			            <tr>
+			                <td>5</td>
+			                <td>Account Category</td>
+			                <td>Assets</td>
+			                <td>Equity</td>
+			                <td>Jim User</td>
+			                <td>00-00-00</td>
 			            </tr>
 			             <tr>
-			                <td>PONZI</td>
-			                <td>786</td>
-			                <td>$1000.00</td>
-			                <td>Active</td>
-			                <td><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button>
-			                </td>
+			                <td>6</td>
+			                <td>Account Number</td>
+			                <td>304</td>
+			                <td>340</td>
+			                <td>Jim User</td>
+			                <td>00-00-00</td>
 			            </tr>
 			        </tbody>
 			    </table>
@@ -172,9 +181,9 @@
 
 		<script type="text/javascript">
 			//SINGLE SEARCH BAR FOR WHOLE DATATABLE
-			$(document).ready(function() {
-			    $('#example').DataTable();
-			} );
+			// $(document).ready(function() {
+			//     $('#example').DataTable();
+			// } );
 
 
 			//DATATABLE THAT ALLOWS FOR SEARCHING INDIVIDUAL COLUMNS 
@@ -186,7 +195,26 @@
 			//     } );
 			 
 			//     // DataTable
-			//     var table = $('#example').DataTable();
+			//     var table = $('#example').DataTable( {
+
+			//         dom: 'Bfrtip Br',
+			//         buttons: [
+			//             'copyHtml5',
+			//             'excelHtml5',
+			//             'csvHtml5',
+			//             'pdfHtml5'
+			//         ]
+			//     }, {
+			//     	"columns": [
+			//     	{ "width": "19%"},
+			//     	{ "width": "25%"},
+			//     	null,
+			//     	null,
+			//     	null,
+			//     	null
+			//     	]
+			//     }
+			//     );
 			 
 			//     // Apply the search
 			//     table.columns().every( function () {
@@ -201,6 +229,73 @@
 			//         } );
 			//     } );
 			// } );
+
+
+
+
+			$(document).ready(function() {
+			    // Setup - add a text input to each footer cell
+			    $('#example tfoot th').each( function () {
+			        var title = $(this).text();
+			        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+			    } );
+			 
+			    // DataTable
+			    var table = $('#example').DataTable( {
+			    	"columns": [
+			    	{ "width": "19%"},
+			    	{ "width": "25%"},
+			    	null,
+			    	null,
+			    	null,
+			    	null
+			    	]
+			    }
+			    );
+
+			    var buttons = new $.fn.dataTable.Buttons(table, {
+				     buttons: [
+				    	{
+					        extend: 'collection',
+			                text: 'Export Log',
+			                buttons: [
+			                    'copy',
+			                    'excel',
+			                    'csv',
+			                    'pdf'
+			                ]
+			            }
+				    ]
+				}).container().appendTo($('#buttons'));
+			 
+			    // Apply the search
+			    table.columns().every( function () {
+			        var that = this;
+			 
+			        $( 'input', this.footer() ).on( 'keyup change', function () {
+			            if ( that.search() !== this.value ) {
+			                that
+			                    .search( this.value )
+			                    .draw();
+			            }
+			        } );
+			    } );
+			} );
+
+			// document.getElementById("copyHtml5").style.color= "blue";
+
+//	CODE SPECIFICALLY FOR EXPORTING TABLE
+// 			$(document).ready(function() {
+//     $('#example').DataTable( {
+//         dom: 'Bfrtip',
+//         buttons: [
+//             'copyHtml5',
+//             'excelHtml5',
+//             'csvHtml5',
+//             'pdfHtml5'
+//         ]
+//     } );
+// } );
 		</script>
 	</body>
 </html>

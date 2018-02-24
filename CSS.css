@@ -1,3 +1,38 @@
+/*@import url('https://fonts.googleapis.com/css?family=Open+Sans');*/
+
 .alignButtonCenter {
 	text-align: center;
 }
+
+tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+}
+
+/*use only if search bar in each column*/
+tfoot {
+    display: table-header-group;
+}
+
+/*Doesn't work*/
+table.dataTable tr.odd { 
+	background-color: #E2E4FF; 
+}
+
+.float-right {float: right;}
+
+/*.editAccountLeftColumn {
+	padding-top: 10px;
+	text-align: right; 
+	font-size: 28; 
+	color: #DD9787; 
+	padding-bottom: 10px;
+}
+
+.editAccountRightColumn {
+	padding-top: 10px;
+	font-size: 28; 
+	color: #DD9787; 
+	padding-left: 50px
+}*/
