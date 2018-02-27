@@ -1,3 +1,5 @@
+<?php include ($_SERVER['DOCUMENT_ROOT']."database_Connection_File.php"); ?> 
+
 <html lang="en">
 	<head>
 		<title>User List</title>
@@ -55,7 +57,7 @@
 
 	<body style="background-color:#FFFFFF">
 
-			<nav class="navbar navbar-toggleable-md navbar-light navbar-inverse" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px">
+		<nav class="navbar navbar-toggleable-md navbar-light navbar-inverse" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px">
   				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     				<span class="navbar-toggler-icon"></span>
  				</button>
@@ -113,11 +115,11 @@
 						</tr>
 						<tr>
 							<td style="text-align: right; font-size: 32; color: #DD9787"><b>First Name</b></td>
-							<td style="font-size: 28; color: #DD9787; padding-left: 50px">James</td>
+							<td style="font-size: 28; color: #DD9787; padding-left: 50px"><?php echo $row["firstName"] ?></td>
 						</tr>
 						<tr>
 							<td style="text-align: right; font-size: 32; color: #DD9787"><b>Last Name</b></td>
-							<td style="font-size: 28; color: #DD9787; padding-left: 50px">Bond</td>
+							<td style="font-size: 28; color: #DD9787; padding-left: 50px"><?php echo $row["firstName"] ?></td>
 						</tr>
 						<tr>
 							<td style="text-align: right; font-size: 32; color: #DD9787"><b>Position</b></td>
