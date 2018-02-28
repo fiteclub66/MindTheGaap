@@ -1,3 +1,5 @@
+<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_EventsLog.php") ?>
+
 <html lang="en">
 	<head>
 		<title>Events Log</title>
@@ -103,13 +105,13 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<table id="example" name="example" class="display table-striped" cellspacing="10" width="90%" style="margin-left: auto; margin-right: auto; color: #DD9787">
+				<table id="example" name="example" class="display table-striped" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto; color: #DD9787">
 			        <thead>
 			            <tr>
 			                <th>EVENT</th>
 			                <th>CHANGE</th>
-			                <th>OLD</th>
-			                <th>NEW</th>
+			                <th>OLD VALUE</th>
+			                <th>NEW VALUE</th>
 			                <th>AUTHOR</th>
 			                <th>DATE</th>
 			            </tr>
@@ -126,54 +128,16 @@
 			            </tr>
 			        </tfoot>
 					<tbody style="margin-bottom: 10px;">
-			            <tr>
-			                <td>1</td>
-			                <td>Account Number</td>
-			                <td>104</td>
-			                <td>106</td>
-			                <td>Jim User</td>
-			                <td>00-00-00</td>
-			            </tr>
-			            <tr>
-			                <td>2</td>
-			                <td>Account Name</td>
-			                <td>Cash</td>
-			                <td>Petty Cash</td>
-			                <td>Jim User</td>
-			                <td>00-00-00</td>
-			            </tr>
-			            <tr>
-			                <td>3</td>
-			                <td>User First Name</td>
-			                <td>Jonh</td>
-			                <td>John</td>
-			                <td>Jim User</td>
-			                <td>00-00-00</td>
-			            </tr>
-			            <tr>
-			                <td>4</td>
-			                <td>Last Name User</td>
-			                <td>Smarth</td>
-			                <td>Smith</td>
-			                <td>Jim User</td>
-			                <td>00-00-00</td>
-			            </tr>
-			            <tr>
-			                <td>5</td>
-			                <td>Account Category</td>
-			                <td>Assets</td>
-			                <td>Equity</td>
-			                <td>Jim User</td>
-			                <td>00-00-00</td>
-			            </tr>
-			             <tr>
-			                <td>6</td>
-			                <td>Account Number</td>
-			                <td>304</td>
-			                <td>340</td>
-			                <td>Jim User</td>
-			                <td>00-00-00</td>
-			            </tr>
+			            <?php while($data = $result->fetch_assoc()) { ?>
+						<tr>
+							<th><?php echo $data["eventId"]; ?></th>
+			                <th><?php echo $data["changeField"]; ?></th>
+			                <th><?php echo $data["beforeValue"]; ?></th>
+			                <th><?php echo $data["afterValue"]; ?></th>
+			                <th><?php echo $data["username"]; ?></th>
+			                <th><?php echo $data["time"]; ?></th>
+						</tr>
+						<?php } ?>
 			        </tbody>
 			    </table>
 			</div>

@@ -1,3 +1,5 @@
+<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_ChartOfAccounts.php") ?>
+
 <html lang="en">
 	<head>
 		<title>Chart of Accounts</title>
@@ -92,7 +94,7 @@
 					<h1 style="color: #DD9787; border-bottom: 3px solid #A6C48A;">CHART OF ACCOUNTS</h1>
 				</div>
 				<div class="row col-xs-12 col-sm-12 col-md-3 col-lg-4">
-					<button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">ADD ACCOUNT</button>
+					<a href="http://www.mindthegaap.info/Add_ChartOfAccounts.php"><button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">ADD ACCOUNT</button></a>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -117,54 +119,16 @@
 			            </tr>
 			        </tfoot> -->
 					<tbody style="margin-bottom: 10px;">
-			            <tr>
-			                <td>CASH</td>
-			                <td>105</td>
-			                <td>$1000.00</td>
-			                <td>Active</td>
-			                <td><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button>
+			 <?php while($data = $result->fetch_assoc()) { ?>
+				    <tr>
+			                <td><?php echo $data["accountName"]; ?></td>
+			                <td><?php echo $data["accountId"]; ?></td>
+			                <td>$<?php echo $data["balance"]; ?></td>
+			                <td><?php echo $data["active"]; ?></td>
+			                <td><a href="http://www.mindthegaap.info/Edit_ChartOfAccounts.php"><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button></a>
 			                </td>
 			            </tr>
-			            <tr>
-			                <td>ACCOUNTS PAYABLE</td>
-			                <td>106</td>
-			                <td>$1000.00</td>
-			                <td>Active</td>
-			                <td><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button>
-			                </td>
-			            </tr>
-			            <tr>
-			                <td>OWNERS EQUITY</td>
-			                <td>204</td>
-			                <td>$1000.00</td>
-			                <td>Active</td>
-			                <td><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button>
-			                </td>
-			            </tr>
-			            <tr>
-			                <td>EQUIPMENT</td>
-			                <td>405</td>
-			                <td>$1000.00</td>
-			                <td>Active</td>
-			                <td><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button>
-			                </td>
-			            </tr>
-			            <tr>
-			                <td>CORPORATE PAYOFFS</td>
-			                <td>222</td>
-			                <td>$1000.00</td>
-			                <td>Active</td>
-			                <td><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button>
-			                </td>
-			            </tr>
-			             <tr>
-			                <td>PONZI</td>
-			                <td>786</td>
-			                <td>$1000.00</td>
-			                <td>Active</td>
-			                <td><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button>
-			                </td>
-			            </tr>
+				<?php } ?>
 			        </tbody>
 			    </table>
 			</div>
@@ -173,7 +137,9 @@
 		<script type="text/javascript">
 			//SINGLE SEARCH BAR FOR WHOLE DATATABLE
 			$(document).ready(function() {
-			    $('#example').DataTable();
+			    $('#example').DataTable( {
+					"bSort": false
+					});
 			} );
 
 

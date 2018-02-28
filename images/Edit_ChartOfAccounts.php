@@ -1,6 +1,6 @@
 <html lang="en">
 	<head>
-		<title>Password Recovery</title>
+		<title>Edit Chart of Accounts</title>
 	  	<meta charset="utf-8">
 	  	<meta name="viewport" content="width=device-width, initial-scale=1">
 	  	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"> -->
@@ -52,6 +52,7 @@
 			#funky_font {font-family: 'Lato';}
 		</style>
 	</head>
+
 	<body style="background-color:#FFFFFF">
 
 			<nav class="navbar navbar-toggleable-md navbar-light navbar-inverse" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px">
@@ -62,7 +63,7 @@
     				<a class="navbar-brand" href="#"><img src="images/logo_with_text.png" height="30px" width="100px" style="margin-top: -5px"></a>
     			</div>
   				<div class="collapse navbar-collapse" id="navbarNav">
-    				<!-- <ul class="navbar-nav">
+    				<ul class="navbar-nav">
       					<li class="funky_font" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;">
 			    		   | &nbsp;  <a href="http://www.mindthegaap.info/ChartOfAccounts.php" style="color: white">CHARTS OF ACCOUNTS</a>
 				    	</li>
@@ -81,64 +82,76 @@
 				    	<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
 				    		| &nbsp;  <a href="http://www.mindthegaap.info/Users_Admin.php" style="color: white">USERS</a>
 				    	</li>
-    				</ul> -->
+    				</ul>
 
     				
   				</div>
-  				<!-- <div class="float-right" style="margin-top: 8px">
+  				<div class="float-right" style="margin-top: 8px">
 			        	<a href="#" style="color:#ffffff; font-size: 16px"><span class="glyphicon glyphicon-log-out" style="color:#F6E7CB"></span> LOGOUT</a>
-			    </div> -->
+			    </div>
 			</nav>	
+		
+
 		<div class="container">
 			<div class="row" style="margin-top: 40px">
-				<div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
-				<div class="row col-xs-10 col-sm-10 col-md-7 col-lg-9">
-					<h1 style="color: #DD9787; border-bottom: 3px solid #A6C48A;">PASSWORD RECOVERY</h1>
+				<div class="row col-xs-2 col-sm-2 col-md-2 col-lg-1"></div>
+				<div class="row col-xs-10 col-sm-10 col-md-7 col-lg-10">
+					<h1 style="color: #DD9787; border-bottom: 3px solid #A6C48A;">Edit Account</h1>
 				</div>
 				<div id="buttons" class="row col-xs-12 col-sm-12 col-md-2 col-lg-1 float-right">
 					<!-- <button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">EXPORT LOG</button> -->
 				</div>
 			</div>
-			<form id="recoveryForm" action="">
-				<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px">
-					<div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
-					<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
-						<b>What is your username?</b><br>
-						<input type="text" id="username" name="username" size="80">
-						<br><br>
-						<b>Question 1: What is the meaning of life?</b><br>
-						<input type="text" id="answer1" name="answer1" size="80">
-						<br><br>
-						<b>Question 2: What is the average flying speed of a swallow?</b><br>
-						<input type="text" id="answer2" name="answer2" size="80"><br><br>
-						<b>Question 3:  What is is the name of the disease the kids have in school of rock when pretending to be sick?</b><br>
-						<input type="text" id="answer3" name="answer3" size="80">
-						<br><br>
-						<table class="table" cellspacing="5" style="border: none">
-							<tr>
-								<td><button type="button" name="BtnSubmit" class="btn btn-success">Submit</td>
-								<td><button type="reset" name="BtnClear" class="btn btn-primary">Clear All</td>
-								<td><button type="reset" name="cancel" class="btn btn-warning">Cancel</td>
-							</tr>
-						</table>
-					</div>
-					<div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
+
+				<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 50px">
+					<!-- <div class="row col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					</div> -->
+					<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<form id="editCOAForm" name="editCOAForm">
+							<table style="border-spacing: 40px 20px">
+								<col width="300px">
+								<col width="450px">
+								<tr>
+									<td style="text-align: right; font-size: 28; color: #DD9787; padding-bottom: 10px">Account Name</td>
+									<td style="font-size: 28; color: #DD9787; padding-left: 50px">
+										<div class="form-group">
+											<select class="form-control" id="sel1">
+											    <option value="" disabled="true" selected style="color: #D3D3D3">Account Name</option>
+											    <option value="105">105 - Cash</option>
+											    <option value="106">106 - Petty Cash</option>
+											    <option value="201">201 - Accounts Receivable</option>
+											    <option value="208">208 - Accounts Payable</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align: right; font-size: 28; color: #DD9787">Active</td>
+									<td style="font-size: 28; color: #DD9787; padding-left: 50px">
+										<input type="checkbox" name="editCOAActive">
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align: right; font-size: 28; color: #DD9787; padding-top: 17px; vertical-align: text-top;">Comments</td>
+									<td style="font-size: 28; color: #DD9787; padding-left: 50px; padding-top: 20px">
+										<textarea id="editCOAComments" name="comments" class="form-control" rows="4" placeholder="Comments"></textarea>
+									</td>
+								</tr>
+							</table>
+						</form>	
 				</div>
-			</form>
-			
+			</div>
+			<div class="row col-xs-5 col-sm-4 col-md-4 col-lg-3 float-right" style="margin-top: 75px">
+				<a href="www.mindthegaap.info"><button type="submit" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">CANCEL</button></a> &nbsp;
+				<button type="submit" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">UPDATE</button>
+			</div>
 		</div>
-		<div id="AppendDiv" name="AppendDiv"></div>
+
+			</div>
+		</div>
+
 		<script type="text/javascript">
-			$(document).ready(function(){
-				$('#btnClear').click(function(){				
-						$('#recoveryForm').val('');				
-				});
-			});
-			$(document).ready(function(){
-				$("#BtnSubmit").click(function(){
-				        $("#AppendDiv").append("<div>Your password is: </div>");
-			    });
-			});
+			
 		</script>
 	</body>
 </html>

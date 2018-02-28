@@ -1,4 +1,4 @@
-<?php include ($_SERVER['DOCUMENT_ROOT']."database_Connection_File.php"); ?> 
+<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_usersGeneral.php"); ?> 
 
 <html lang="en">
 	<head>
@@ -79,7 +79,7 @@
 				    		| &nbsp;  <a href="http://www.mindthegaap.info/Categories.php" style="color: white">CATEGORIES</a> 
 				    	</li>
 				    	<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
-				    		| &nbsp;  <a href="http://www.mindthegaap.info/NormalSide.php" style="color: white">Normal Side</a> 
+				    		| &nbsp;  <a href="http://www.mindthegaap.info/NormalSide.php" style="color: white">NORMAL SIDES</a> 
 				    	</li>
 				    	<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
 				    		| &nbsp;  <a href="http://www.mindthegaap.info/Users_General.php" style="color: white">USERS</a>
@@ -111,23 +111,23 @@
 					<table style="border-spacing: 40px 20px">
 						<tr>
 							<td style="text-align: right; font-size: 32; color: #DD9787;"><b>User ID</b></td>
-							<td style="font-size: 28; color: #DD9787; padding-left: 50px">007</td>
+							<td style="font-size: 28; color: #DD9787; padding-left: 50px"><?php echo $data["userId"] ?></td>
 						</tr>
 						<tr>
 							<td style="text-align: right; font-size: 32; color: #DD9787"><b>First Name</b></td>
-							<td style="font-size: 28; color: #DD9787; padding-left: 50px"><?php echo $row["firstName"] ?></td>
+							<td style="font-size: 28; color: #DD9787; padding-left: 50px"><?php echo $data["firstName"] ?></td>
 						</tr>
 						<tr>
 							<td style="text-align: right; font-size: 32; color: #DD9787"><b>Last Name</b></td>
-							<td style="font-size: 28; color: #DD9787; padding-left: 50px"><?php echo $row["firstName"] ?></td>
+							<td style="font-size: 28; color: #DD9787; padding-left: 50px"><?php echo $data["lastName"] ?></td>
 						</tr>
 						<tr>
 							<td style="text-align: right; font-size: 32; color: #DD9787"><b>Position</b></td>
-							<td style="font-size: 28; color: #DD9787; padding-left: 50px">Ordinary User</td>
+							<td style="font-size: 28; color: #DD9787; padding-left: 50px"><?php echo $data["position"] ?></td>
 						</tr>
 						<tr>
 							<td style="text-align: right; font-size: 32; color: #DD9787"><b>Status</b></td>
-							<td style="font-size: 28; color: #DD9787; padding-left: 50px">Active</td>
+							<td style="font-size: 28; color: #DD9787; padding-left: 50px"><?php echo $data["active"] ?></td>
 						</tr>
 					</table>	
 				</div>
