@@ -16,7 +16,7 @@
 			$_SESSION['logged']=true;
 			$_SESSION['user_id']=$user->userId;
 			$_SESSION['user_type']=$user->position;
-			header("location: dash.php");
+			header("location: ChartOfAccounts.php");
 			exit();
 		}else{
 			$error="Error! There was an error in login.";

@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 	die ("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT Accounts.accountName, Accounts.accountId FROM Accounts WHERE NOT EXISTS(SELECT * FROM ChartOfAccounts WHERE ChartOfAccounts.accountId=Accounts.accountId)";
+$sql = "SELECT userId, firstName, lastName, username, position, active FROM mindthegaap.Users";
 $result = $conn->query($sql);
 $data;
 if ($result->num_rows > 0) {
@@ -23,7 +23,7 @@ if ($result->num_rows > 0) {
 	//	//echo $row["firstName"] . " " . $row["lastName"];
 	//}
 } else {
-	//echo "0 results";
+	echo "0 results";
 }
 //echo "row: " . $data["firstName"] . " " . $data["lastName"];
 $conn->close();
