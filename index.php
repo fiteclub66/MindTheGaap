@@ -1,47 +1,102 @@
 <?php
 
-	include ($_SERVER['DOCUMENT_ROOT'] . "/includes/header.php");
-
-	//Login Process
-	if (count($_POST)>0) {
-		$username = $_POST['username'];
+	session_start();
+	
+	require_once($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Login.php");
+	//print_r($_SESSION);
+	if (isset($_POST) & !empty($_POST)) {
+		$username = mysqli_real_escape_string($connection, $_POST['username']);
+		//echo "<br/>";
 		$password = $_POST['password'];
-
-		$password=sha1($password);
-		$sql="SELECT * FROM `users` WHERE `username`='$username' AND `password`='$password'";
-		$res=mysql_query($sql);
-		$count= mysql_num_rows($res);
-		if ($count==1) {//valid login
-			$user=mysql_fetch_object($res);
-			$_SESSION['logged']=true;
-			$_SESSION['user_id']=$user->userId;
-			$_SESSION['user_type']=$user->position;
-			header("location: ChartOfAccounts.php");
-			exit();
-		}else{
-			$error="Error! There was an error in login.";
+	
+		$sql = "SELECT * FROM mindthegaap.Users WHERE username = '$username' AND password = '$password'";
+	
+		$result = mysqli_query($connection, $sql);
+		$count = mysqli_num_rows($result);
+		if($count == 1){
+			//echo "create session";
+			$data = mysqli_fetch_assoc($result);
+			$_SESSION['username'] = $data['username'];
+			$_SESSION['firstName'] = $data['firstName'];
+			$_SESSION['userId'] = $data['userId'];
+			$_SESSION['systemId'] = $data['systemId'];
+		} else {
+			$fmsg = "Invalid Username/Password";
 		}
+	}
+	if (isset($_SESSION['username'])) {
+		$smsg = "User already logged in";
+		header('Location: ChartOfAccounts.php');
 	}
 
 ?>
-  <div class="wrapper login">
-	<div class="container">
-		<h1>Welcome</h1>
-		<form class="login-form" method="post">
-			<?php
-				if (!empty($error)) {
-			?>
-			<div class="alert alert-danger" role="alert"><?= $error ?></div>
-			<?php
-				}
-			?>
-			<input type="text" placeholder="Username" name="username" id="username">
-			<input type="password" placeholder="Password" name="password" id="password">
-			<input type="submit" id="login-button" name="submit" value="Login">
-			<a href="#">Forgot Password</a>
-		</form>
-	</div>
-</div>
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-  <script  src="/js/index.js"></script>
+<html lang="en">
+	<head>
+		<title>Login</title>
+	<!-- header is in the header.php file with all the scripts, css, and other files needed for formating -->
+	<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/header.php") ?>
+	<body style="background-color:#FFFFFF">
 
+			<nav class="navbar navbar-toggleable-md navbar-light navbar-inverse" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px">
+  				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    				<span class="navbar-toggler-icon"></span>
+ 				</button>
+  				<div class="navbar-header">
+    				<a class="navbar-brand" href="#"><img src="images/logo_with_text.png" height="30px" width="100px" style="margin-top: -5px"></a>
+    			</div>
+  				<div class="collapse navbar-collapse" id="navbarNav">
+    	
+  				</div>
+			</nav>	
+		<div class="container">
+			<br/>
+				<?php if(isset($fmsg)){ ?><div class="alert alert-danger" role="alert"> <?php echo $fmsg; ?></div>
+				<?php } ?>
+			<div class="row" style="margin-top: 40px">
+				<div class="col-xs-2 col-sm-3 col-md-2 col-lg-5"></div>
+				<div class="row col-xs-10 col-sm-9 col-md-7 col-lg-7" style="margin-left: -4%">
+					<img src="images/mainLogo.png" height="310px" width="220px"> 
+				</div>
+				<div id="buttons" class="row col-xs-12 col-sm-12 col-md-2 col-lg-1 float-right">
+					<!-- <button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">EXPORT LOG</button> -->
+				</div>
+			</div>
+			<form id="loginForm" action="" method="post">
+				<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px">
+					<div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
+					<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">						
+						<input type="text" id="username" name="username" size="60" placeholder="Username">
+					</div>
+					<div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
+				</div>
+				<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px">
+					<div class="col-xs-0 col-sm-1 col-md-2 col-lg-3"></div>
+					<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">	
+						<input type="password" id="password" name="password" size="60" placeholder="Password">
+					</div>	
+				</div>
+				<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px; width: 100%;">
+					<table style="margin: 0 auto;">
+						<tr>
+							<td>
+								<button type="submit" class="btn btn-success btn-large" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">LOGIN</button>	
+							</td>
+						</tr>
+					</table>					
+				</div>	
+			</form>
+<!--
+			<div>< ?php if(isset($message)) { echo "message: ". $message; } ?></div>
+-->
+		<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px; width: 100%;">
+					<table style="margin: 0 auto;">
+						<tr>
+							<td>
+								<a href="PasswordRecovery.php">Forgot Password</a>	
+							</td>
+						</tr>
+					</table>					
+				</div>
+		</div>
+	</body>
+</html>

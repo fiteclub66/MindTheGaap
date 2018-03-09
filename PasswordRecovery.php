@@ -33,19 +33,19 @@
 						<b>What is your username?</b><br>
 						<input type="text" id="username" name="username" size="80">
 						<br><br>
-						<b>Question 1: What is the meaning of life?</b><br>
+						<b>Question 1: What was the name of your favorite pet?</b><br>
 						<input type="text" id="answer1" name="answer1" size="80">
 						<br><br>
-						<b>Question 2: What is the average flying speed of a swallow?</b><br>
+						<b>Question 2: In what city were you born?</b><br>
 						<input type="text" id="answer2" name="answer2" size="80"><br><br>
-						<b>Question 3:  What is is the name of the disease the kids have in school of rock when pretending to be sick?</b><br>
+						<b>Question 3:  What is your mother's maiden name?</b><br>
 						<input type="text" id="answer3" name="answer3" size="80">
 						<br><br>
 						<table class="table" cellspacing="5" style="border: none">
 							<tr>
 								<td><button type="button" name="BtnSubmit" class="btn btn-success">Submit</td>
 								<td><button type="reset" name="BtnClear" class="btn btn-primary">Clear All</td>
-								<td><button type="reset" name="cancel" class="btn btn-warning">Cancel</td>
+								<td><a href="index.php"><button type="button" name="cancel" class="btn btn-warning">Cancel</button></a></td>
 							</tr>
 						</table>
 					</div>

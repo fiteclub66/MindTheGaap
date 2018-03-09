@@ -1,3 +1,9 @@
+<?php 
+	session_start();
+	if ($_SESSION['username'] == null) {
+		header('Location: /index.php');
+	}
+?>
 <html lang="en">
 	<head>
 		<title>MtG Home Page</title>

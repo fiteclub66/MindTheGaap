@@ -1,3 +1,9 @@
+<?php 
+	session_start();
+	if ($_SESSION['username'] == null) {
+		header('Location: /index.php');
+	}
+?>
 <?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_UsersGeneral.php"); ?> 
 
 <html lang="en">

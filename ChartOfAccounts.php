@@ -1,3 +1,9 @@
+<?php 
+	session_start();
+	if ($_SESSION['username'] == null) {
+		header('Location: /index.php');
+	}
+?>
 <?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_ChartOfAccounts.php") ?>
 
 <html lang="en">
@@ -22,7 +28,7 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<table id="example" name="example" class="display table-striped" cellspacing="10" width="90%" style="margin-left: auto; margin-right: auto; color: #DD9787">
+				<table id="example" name="example" class="display table-striped" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto; color: #DD9787">
 			        <thead>
 			            <tr>
 			                <th>NAME</th>

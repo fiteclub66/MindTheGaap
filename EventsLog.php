@@ -1,3 +1,9 @@
+<?php 
+	session_start();
+	if ($_SESSION['username'] == null) {
+		header('Location: /index.php');
+	}
+?>
 <?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_EventsLog.php") ?>
 
 <html lang="en">
@@ -48,12 +54,12 @@
 					<tbody style="margin-bottom: 10px;">
 			            <?php while($data = $result->fetch_assoc()) { ?>
 						<tr>
-							<th><?php echo $data["eventId"]; ?></th>
-			                <th><?php echo $data["changeField"]; ?></th>
-			                <th><?php echo $data["beforeValue"]; ?></th>
-			                <th><?php echo $data["afterValue"]; ?></th>
-			                <th><?php echo $data["username"]; ?></th>
-			                <th><?php echo $data["time"]; ?></th>
+							<td><?php echo $data["eventId"]; ?></td>
+			                <td><?php echo $data["changeField"]; ?></td>
+			                <td><?php echo $data["beforeValue"]; ?></td>
+			                <td><?php echo $data["afterValue"]; ?></td>
+			                <td><?php echo $data["username"]; ?></td>
+			                <td><?php echo $data["time"]; ?></td>
 						</tr>
 						<?php } ?>
 			        </tbody>
@@ -61,7 +67,7 @@
 			</div>
 		</div>
 
-		<script type="text/javascript">
+				<script type="text/javascript">
 			//SINGLE SEARCH BAR FOR WHOLE DATATABLE
 			// $(document).ready(function() {
 			//     $('#example').DataTable();

@@ -27,7 +27,10 @@
 			</li>
     	</ul>			
   	</div>
-  	<div class="float-right" style="margin-top: 8px">
-		<a href="#" style="color:#ffffff; font-size: 16px"><span class="glyphicon glyphicon-log-out" style="color:#F6E7CB"></span> LOGOUT</a>
+  	<form action="includes/dcf_Logout.php" method="post" id="logoutForm">
+  	<div class="float-right" style=": 0px">
+		<!--<a href="#" style="color:#ffffff; font-size: 16px"><span class="glyphicon glyphicon-log-out" style="color:#F6E7CB"></span> LOGOUT</a> -->
+		<button type="submit" value="Logout" style="background:none!important; border: none; padding: 0 !important; color:#ffffff; font-size: 16px; height: 5px">LOGOUT</button>
 	</div>
+	</form>
 </nav>
