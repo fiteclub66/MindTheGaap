@@ -4,6 +4,7 @@
 		header('Location: /index.php');
 	}
 ?>
+<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_EditChartOfAccounts.php") ?>
 <html lang="en">
 	<head>
 		<title>Edit Account - Chart of Accounts</title>
@@ -30,46 +31,49 @@
 					<!-- <div class="row col-xs-2 col-sm-2 col-md-2 col-lg-2">
 					</div> -->
 					<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<form id="editCOAForm" name="editCOAForm">
+						<form action="includes/dcf_Write_EditChartOfAccounts.php" method="post">
 							<table style="border-spacing: 40px 20px">
 								<col width="300px">
 								<col width="450px">
 								<tr>
-									<td style="text-align: right; font-size: 28; color: #DD9787; padding-bottom: 10px">Account Name</td>
-									<td style="font-size: 28; color: #DD9787; padding-left: 50px">
-										<div class="form-group">
-											<select class="form-control" id="sel1">
-											    <option value="" disabled="true" selected style="color: #D3D3D3">Account Name</option>
-											    <option value="105">105 - Cash</option>
-											    <option value="106">106 - Petty Cash</option>
-											    <option value="201">201 - Accounts Receivable</option>
-											    <option value="208">208 - Accounts Payable</option>
-											</select>
-										</div>
-									</td>
+									<td style="text-align: right; font-size: 28; color: #DD9787; padding-bottom: 0px;">Account Name</td>
+									<td style="text-align: left; font-size: 22; color: #A9A9A9; padding-left: 50px; padding-bottom:0px; padding-top: 0px;"><?php echo $data["accountName"] ?></td>
+									
 								</tr>
 								<tr>
-									<td style="text-align: right; font-size: 28; color: #DD9787">Active</td>
-									<td style="font-size: 28; color: #DD9787; padding-left: 50px">
-										<input type="checkbox" name="editCOAActive">
+									<td style="text-align: right; font-size: 28; color: #DD9787;">Balance</td>
+									<td style="text-align: left; font-size: 22; color: #A9A9A9; padding-left: 50px; padding-bottom:0px; padding-top: 0px;">$<?php echo number_format(doubleval($data["balance"]), 2, '.', ','); ?></td>
+								</tr>
+								<tr>
+									<td style="text-align: right; font-size: 28; color: #DD9787; padding-top: 10px;">Active</td>
+									<td style="font-size: 28; color: #DD9787; padding-left: 50px; padding-top: 20px;">
+										<input type="checkbox" name="active" id="active" value="Active" <?php if ($data['active'] == "Active") {echo "checked";} ?>>
 									</td>
 								</tr>
 								<tr>
 									<td style="text-align: right; font-size: 28; color: #DD9787; padding-top: 17px; vertical-align: text-top;">Comments</td>
 									<td style="font-size: 28; color: #DD9787; padding-left: 50px; padding-top: 20px">
-										<textarea id="editCOAComments" name="comments" class="form-control" rows="4" placeholder="Comments"></textarea>
+										<textarea id="comments" name="comments" class="form-control" rows="4"><?php echo $data["comments"];?></textarea>
 									</td>
 								</tr>
+<!--
+								<tr>
+									<td></td>?php echo "systemId: " . $data["comments"]; ?></td>
+									<td></td>?php echo "value from button on other page: " . $_POST['editButtonSelected']; ?></td>
+								</tr>
+-->
 							</table>
-						</form>	
+							
+							
 				</div>
 			</div>
 			<div class="row col-xs-5 col-sm-4 col-md-4 col-lg-3 float-right" style="margin-top: 75px">
-				<a href="http://www.mindthegaap.info/ChartOfAccounts.php"><button type="" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">CANCEL</button></a> &nbsp;
-				<a href="http://www.mindthegaap.info/ChartOfAccounts.php"><button type="" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">UPDATE</button></a>
+				<a href="http://www.mindthegaap.info/ChartOfAccounts.php"><button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">CANCEL</button></a> &nbsp;
+				<button type="submit" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">UPDATE</button>
 			</div>
 		</div>
-
+		<input type="hidden" name="editButtonSelected" id="edit_ButtonSelected" value=<?php echo $_POST['editButtonSelected']; ?>/>
+	</form>
 			</div>
 		</div>
 

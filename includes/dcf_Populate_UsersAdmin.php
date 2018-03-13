@@ -6,6 +6,11 @@ $dbname = "mindthegaap";
 
 //include $_SERVER['DOCUMENT_ROOT']."/test3.php";
 
+session_start();
+if ($_SESSION['username'] == null) {
+	header('Location: /index.php');
+}
+
 //Create Connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 //Check connection
@@ -13,7 +18,7 @@ if ($conn->connect_error) {
 	die ("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT userId, firstName, lastName, username, position, active FROM mindthegaap.Users";
+$sql = "SELECT userId, firstName, lastName, username, position, active, systemId FROM mindthegaap.Users";
 $result = $conn->query($sql);
 $data;
 if ($result->num_rows > 0) {

@@ -4,7 +4,10 @@ $username = "tylerdurden";
 $password = "QxCrlmfP269g13";
 $dbname = "mindthegaap";
 
-//include $_SERVER['DOCUMENT_ROOT']."/test3.php";
+session_start();
+if ($_SESSION['username'] == null) {
+	header('Location: /index.php');
+}
 
 //Create Connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -13,12 +16,15 @@ if ($conn->connect_error) {
 	die ("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT userId, firstName, lastName, position, active FROM mindthegaap.Users WHERE systemId = ".$_SESSION['systemId'].";";
+//$systemId = mysqli_real_escape_string($link, $_REQUEST['systemId']);
+$systemId = $_POST['editButtonSelected'];
+
+$sql = "SELECT accountName, accountId, category, subcategory, accountOrder, normalSide, comments, systemId FROM mindthegaap.Accounts WHERE systemId = '$systemId'";
 $result = $conn->query($sql);
 $data;
 if ($result->num_rows > 0) {
 	//output data of each row
-	$data = $result->fetch_array(MYSQLI_ASSOC);
+	$data = $result->fetch_array(MYSQLI_ASSOC); //userful for single row returns of data
 	//while($row = $result->fetch_assoc()) {
 	//	//echo $row["firstName"] . " " . $row["lastName"];
 	//}
@@ -28,3 +34,4 @@ if ($result->num_rows > 0) {
 //echo "row: " . $data["firstName"] . " " . $data["lastName"];
 $conn->close();
 ?>
+

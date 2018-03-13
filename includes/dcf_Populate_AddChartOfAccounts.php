@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 	die ("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT Accounts.systemId, Accounts.accountName, Accounts.accountId FROM Accounts WHERE NOT EXISTS(SELECT * FROM ChartOfAccounts WHERE ChartOfAccounts.accountId=Accounts.accountId)";
+$sql = "SELECT systemId, accountName, accountId FROM mindthegaap.Accounts WHERE NOT EXISTS(SELECT * FROM ChartOfAccounts WHERE ChartOfAccounts.accountId=Accounts.accountId)";
 $result = $conn->query($sql);
 $data;
 if ($result->num_rows > 0) {

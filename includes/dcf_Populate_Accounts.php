@@ -4,7 +4,7 @@ $username = "tylerdurden";
 $password = "QxCrlmfP269g13";
 $dbname = "mindthegaap";
 
-session_start();
+//session_start();
 if ($_SESSION['username'] == null) {
 	header('Location: /index.php');
 }
@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 	die ("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT accountName, category FROM mindthegaap.Accounts";
+$sql = "SELECT accountName, category, systemId FROM mindthegaap.Accounts";
 $result = $conn->query($sql);
 $data;
 if ($result->num_rows > 0) {

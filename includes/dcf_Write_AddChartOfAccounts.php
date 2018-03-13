@@ -3,6 +3,8 @@
 	$username = "tylerdurden";
 	$password = "QxCrlmfP269g13";
 	$dbname = "mindthegaap";
+	
+	session_start();
 
 	$link = mysqli_connect($servername, $username, $password, $dbname);
 				
@@ -44,7 +46,37 @@
 		echo "ERROR: Could not able to execute $sql2. " . mysqli_error($link);
 	}
 	
+	//Write Creation of accountId to EventLog
+	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Chart of Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'accountName', '', (SELECT accountName FROM mindthegaap.Accounts WHERE Accounts.systemId = '$systemId'), ".$_SESSION['systemId'].", NOW())";
+	if (mysqli_query($link, $sql)) {
+		echo "Records added successfully.";
+	} else {
+		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+	}
 	
+	//Write Creation of accountId to EventLog
+	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Chart of Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'balance', '', '$balance', ".$_SESSION['systemId'].", NOW())";
+	if (mysqli_query($link, $sql)) {
+		echo "Records added successfully.";
+	} else {
+		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+	}
+	
+	//Write Creation of accountId to EventLog
+	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Chart of Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'active', '', '$active', ".$_SESSION['systemId'].", NOW())";
+	if (mysqli_query($link, $sql)) {
+		echo "Records added successfully.";
+	} else {
+		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+	}
+	
+	//Write Creation of accountId to EventLog
+	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Chart of Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'comments', '', '$comments', ".$_SESSION['systemId'].", NOW())";
+	if (mysqli_query($link, $sql)) {
+		echo "Records added successfully.";
+	} else {
+		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+	}
 	
 	header('Location: /ChartOfAccounts.php');
 	

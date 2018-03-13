@@ -2,6 +2,7 @@
 
 	session_start();
 	
+	
 	require_once($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Login.php");
 	//print_r($_SESSION);
 	if (isset($_POST) & !empty($_POST)) {
@@ -20,6 +21,7 @@
 			$_SESSION['firstName'] = $data['firstName'];
 			$_SESSION['userId'] = $data['userId'];
 			$_SESSION['systemId'] = $data['systemId'];
+			$_SESSION['position'] = $data['position'];
 		} else {
 			$fmsg = "Invalid Username/Password";
 		}
@@ -35,6 +37,9 @@
 		<title>Login</title>
 	<!-- header is in the header.php file with all the scripts, css, and other files needed for formating -->
 	<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/header.php") ?>
+
+	<script type="text/javascript"><?php if($_SESSION['loggedOut'] == true) {echo 'alert("You have been successfully logged out");'; $_SESSION['loggedOut'] = false;} ?></script>
+
 	<body style="background-color:#FFFFFF">
 
 			<nav class="navbar navbar-toggleable-md navbar-light navbar-inverse" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px">
@@ -50,12 +55,15 @@
 			</nav>	
 		<div class="container">
 			<br/>
+<!--
+				</?php if($_SESSION['loggedOut'] = true) {echo '<div class="alert alert-success" role="alert">You have successfully logged out</div>'; $_SESSION['loggedOut'] = false;}else{echo "";} ?>
+-->
 				<?php if(isset($fmsg)){ ?><div class="alert alert-danger" role="alert"> <?php echo $fmsg; ?></div>
-				<?php } ?>
-			<div class="row" style="margin-top: 40px">
+				<?php } elseif (isset($_SEESION['message'])){?><div class="alert alert-danger" role="alert"><?php echo $_SESSION['message'];?></div><?php } ?>
+			<div class="row" style="margin-top: 20px">
 				<div class="col-xs-2 col-sm-3 col-md-2 col-lg-5"></div>
-				<div class="row col-xs-10 col-sm-9 col-md-7 col-lg-7" style="margin-left: -4%">
-					<img src="images/mainLogo.png" height="310px" width="220px"> 
+				<div class="row col-xs-10 col-sm-9 col-md-7 col-lg-7" style="margin-left: -2%">
+					<img src="images/mainLogo.png" height="250px" width="170px"> 
 				</div>
 				<div id="buttons" class="row col-xs-12 col-sm-12 col-md-2 col-lg-1 float-right">
 					<!-- <button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">EXPORT LOG</button> -->
@@ -95,7 +103,8 @@
 								<a href="PasswordRecovery.php">Forgot Password</a>	
 							</td>
 						</tr>
-					</table>					
+					</table>	
+					<br/><br/><br/>				
 				</div>
 		</div>
 	</body>

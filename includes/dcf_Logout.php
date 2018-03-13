@@ -3,10 +3,15 @@
 	
 	unset($_SESSION['username']);
 	unset($_SESSION['firstName']);
+	unset($_SESSION['position']);
 	unset($_SESSION['userId']);
-	unset($_SESSION['SystemId']);
+	unset($_SESSION['systemId']);
+	
+	session_unset();
 	session_destroy();
-	header('Location: /index.php');
-
-
+	
+	session_start();
+	$_SESSION['loggedOut'] = true;
+	
+	header('Location: /index.php');	
 ?>

@@ -14,6 +14,11 @@
 				| &nbsp;  <a href="http://www.mindthegaap.info/Accounts.php" style="color: white">ACCOUNTS</a> 
 			</li>
 			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
+				| &nbsp;  <a href="http://www.mindthegaap.info/Journal.php" style="color: white">JOURNAL</a> 
+			</li>
+			<?php if($_SESSION['position'] == "Manager") {echo '<li class="active" style="margin-top: 8px; padding-left: 15px; color: white; font-size: 16px;"> | &nbsp; <a href="http://www.mindthegaap.info/Post.php" style="color: white;">POST</a></li>';}?>
+
+			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
 				| &nbsp;  <a href="http://www.mindthegaap.info/EventsLog.php" style="color: white">LOGS</a>
 			</li>
 			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
@@ -22,8 +27,10 @@
 			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
 				| &nbsp;  <a href="http://www.mindthegaap.info/NormalSide.php" style="color: white">NORMAL SIDE</a> 
 			</li>
-			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
-				| &nbsp;  <a href="http://www.mindthegaap.info/Users_Admin.php" style="color: white">USERS</a>
+			
+			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 				
+				| &nbsp; <?php if ($_SESSION['position'] == "Administrator") {echo '<a href="http://www.mindthegaap.info/Users_Admin.php" style="color: white;">USERS</a>';} else {echo '<a href="http://www.mindthegaap.info/Users_General.php" style="color: white;">USERS</a>';}?>
+				  
 			</li>
     	</ul>			
   	</div>
@@ -34,3 +41,4 @@
 	</div>
 	</form>
 </nav>
+

@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 	die ("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT accountName, accountId, balance, active FROM mindthegaap.ChartOfAccounts";
+$sql = "SELECT accountName, accountId, balance, active, systemId FROM mindthegaap.ChartOfAccounts";
 $result = $conn->query($sql);
 $data;
 if ($result->num_rows > 0) {

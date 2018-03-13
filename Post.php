@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php 
 	session_start();
 	if ($_SESSION['username'] == null) {
@@ -11,14 +10,6 @@
 	<head>
 		<title>POST</title>
 	<!-- header is in the header.php file with all the scripts, css, and other files needed for formating --> 
-=======
-<!doctype html>
-<!doctype html>
-<html lang="en">
-	<head>
-		<title>POST</title>
-	<!-- header is in the header.php file with all the scripts, css, and other files needed for formating -->
->>>>>>> bd8e5d2d8438fd636791f61571ad281c40dcff45
 	<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/header.php") ?>
 
 	<body style="background-color:#FFFFFF">
@@ -64,11 +55,7 @@
 			                <td>$<?php echo $data["accountName"]; ?></td>
 			                <td><?php echo $data["debits"]; ?></td>
 				 			<td><?php echo $data["credits"]; ?></td>
-<<<<<<< HEAD
 			                <td><a href="http://www.mindthegaap.info/Post.php"><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">POST</button></a>
-=======
-			                <td><a href="http://www.mindthegaap.info/Post"><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">POST</button></a>
->>>>>>> bd8e5d2d8438fd636791f61571ad281c40dcff45
 				 			<td><a href="http://www.mindthegaap.info/Post.php"><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">REJECT</button></a>
 			                </td>
 			            </tr>
@@ -81,8 +68,4 @@
 	
 		</script>
 	</body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> bd8e5d2d8438fd636791f61571ad281c40dcff45

@@ -27,35 +27,38 @@
 					<a href="http://www.mindthegaap.info/Create_Accounts.php"><button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">CREATE ACCOUNT</button></a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<table id="example" name="example" class="display table-striped" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto; color: #DD9787">
-			        <thead>
-			            <tr>
-			                <th>NAME</th>
-			                <th>CATEGORY</th>
-			                <th style="color:white;">&nbsp;</th>
-			            </tr>
-			        </thead>
-			        <!-- uncomment if search bar per column is wanted -->
-			        <tfoot>
-			            <tr>
-			                <th>Name</th>
-			                <th>CATEGORY</th>
-			                <th style="color: white">&nbsp;</th>
-			            </tr>
-			        </tfoot>
-					<tbody style="margin-bottom: 10px;">
-			 <?php while($data = $result->fetch_assoc()) { ?>
-				    <tr>
-			                <td><?php echo $data["accountName"]; ?></td>
-			                <td><?php echo $data["category"]; ?></td>
-			                <td><a href="http://www.mindthegaap.info/Edit_Accounts.php"><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button></a>
-			                </td>
-			            </tr>
-				<?php } ?>
-			        </tbody>
-			    </table>
-			</div>
+			<form action="Edit_Accounts.php" method="post">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<table id="example" name="example" class="display table-striped" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto; color: #DD9787">
+						<thead>
+							<tr>
+								<th>NAME</th>
+								<th>CATEGORY</th>
+								<th style="color:white;">&nbsp;</th>
+							</tr>
+						</thead>
+						<!-- uncomment if search bar per column is wanted -->
+						<tfoot>
+							<tr>
+								<th>Name</th>
+								<th>CATEGORY</th>
+								<th style="color: white">&nbsp;</th>
+							</tr>
+						</tfoot>
+						<tbody style="margin-bottom: 10px;">
+				 <?php while($data = $result->fetch_assoc()) { ?>
+						<tr>
+								<td><?php echo $data["accountName"]; ?></td>
+								<td><?php echo $data["category"]; ?></td>
+								<td><button type="submit" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px" value = <?php echo $data["systemId"]?>>EDIT</button>
+								</td>
+							</tr>
+					<?php } ?>
+						</tbody>
+					</table>
+				</div>
+				<input type="hidden" name="editButtonSelected" id="edit_ButtonSelected" value="defaultValue"/>
+			</form>
 		</div>
 
 		<script type="text/javascript">
@@ -91,6 +94,11 @@
 			        } );
 			    } );
 			} );
+			$("button").click(function() {
+				//alert(this.value);
+				document.getElementById("edit_ButtonSelected").value = this.value;
+			});
+			//document.getElementById("edit_ButtonSelected").value = document.getElem
 		</script>
 	</body>
 </html>

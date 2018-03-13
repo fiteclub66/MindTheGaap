@@ -43,7 +43,7 @@
 						<br><br>
 						<table class="table" cellspacing="5" style="border: none">
 							<tr>
-								<td><button type="button" name="BtnSubmit" class="btn btn-success">Submit</td>
+								<td><button type="submit" id="BtnSubmit" name="BtnSubmit" class="btn btn-success">Submit</td>
 								<td><button type="reset" name="BtnClear" class="btn btn-primary">Clear All</td>
 								<td><a href="index.php"><button type="button" name="cancel" class="btn btn-warning">Cancel</button></a></td>
 							</tr>

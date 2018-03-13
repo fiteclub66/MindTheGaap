@@ -27,41 +27,44 @@
 					<a href="http://www.mindthegaap.info/Add_ChartOfAccounts.php"><button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">ADD ACCOUNT</button></a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<table id="example" name="example" class="display table-striped" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto; color: #DD9787">
-			        <thead>
-			            <tr>
-			                <th>NAME</th>
-			                <th>NUM</th>
-			                <th>BALANCE</th>
-			                <th>STATUS</th>
-			                <th style="color:white;">&nbsp;</th>
-			            </tr>
-			        </thead>
-			        <!-- uncomment if search bar per column is wanted -->
-			        <!-- <tfoot>
-			            <tr>
-			                <th>Name</th>
-			                <th>Num</th>
-			                <th>Balance</th>
-			                <th>Status</th>
-			                <th style="color: white">&nbsp;</th>
-			            </tr>
-			        </tfoot> -->
-					<tbody style="margin-bottom: 10px;">
-			 <?php while($data = $result->fetch_assoc()) { ?>
-				    <tr>
-			                <td><?php echo $data["accountName"]; ?></td>
-			                <td><?php echo $data["accountId"]; ?></td>
-			                <td>$<?php echo $data["balance"]; ?></td>
-			                <td><?php echo $data["active"]; ?></td>
-			                <td><a href="http://www.mindthegaap.info/Edit_ChartOfAccounts.php"><button type="button" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px">EDIT</button></a>
-			                </td>
-			            </tr>
-				<?php } ?>
-			        </tbody>
-			    </table>
-			</div>
+			<form action="Edit_ChartOfAccounts.php" method="post">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<table id="example" name="example" class="display table-striped" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto; color: #DD9787">
+						<thead>
+							<tr>
+								<th>NAME</th>
+								<th>NUM</th>
+								<th>BALANCE</th>
+								<th>STATUS</th>
+								<th style="color:white;">&nbsp;</th>
+							</tr>
+						</thead>
+						<!-- uncomment if search bar per column is wanted -->
+						<tfoot>
+							<tr>
+								<th>Name</th>
+								<th>Num</th>
+								<th>Balance</th>
+								<th>Status</th>
+								<th style="color: white">&nbsp;</th>
+							</tr>
+						</tfoot>
+						<tbody style="margin-bottom: 10px;">
+				 <?php while($data = $result->fetch_assoc()) { ?>
+						<tr>
+								<td><?php echo $data["accountName"]; ?></td>
+								<td><?php echo $data["accountId"]; ?></td>
+								<td>$<?php echo number_format(doubleval($data["balance"]), 2, '.', ','); ?></td>
+								<td><?php echo $data["active"]; ?></td>
+								<td><button type="submit" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px" value=<?php echo $data["systemId"]; ?>>EDIT</button>
+								</td>
+							</tr>
+					<?php } ?>
+						</tbody>
+					</table>
+				</div>
+				<input type="hidden" name="editButtonSelected" id="edit_ButtonSelected" value="defaultValue"/>
+			</form>
 		</div>
 
 		<script type="text/javascript">
@@ -71,32 +74,37 @@
 					"bSort": false
 					});
 			} );
-
+			
+			//used for passing which edit button is selected to backend for pre-populating edit screen fields
+			$("button").click(function() {
+				//alert(this.value);
+				document.getElementById("edit_ButtonSelected").value = this.value;
+			});
 
 			//DATATABLE THAT ALLOWS FOR SEARCHING INDIVIDUAL COLUMNS 
-			// $(document).ready(function() {
-			//     // Setup - add a text input to each footer cell
-			//     $('#example tfoot th').each( function () {
-			//         var title = $(this).text();
-			//         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-			//     } );
+			 $(document).ready(function() {
+			     // Setup - add a text input to each footer cell
+			     $('#example tfoot th').each( function () {
+			         var title = $(this).text();
+			         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+			     } );
 			 
-			//     // DataTable
-			//     var table = $('#example').DataTable();
+			     // DataTable
+			     var table = $('#example').DataTable();
 			 
-			//     // Apply the search
-			//     table.columns().every( function () {
-			//         var that = this;
+			     // Apply the search
+			     table.columns().every( function () {
+			         var that = this;
 			 
-			//         $( 'input', this.footer() ).on( 'keyup change', function () {
-			//             if ( that.search() !== this.value ) {
-			//                 that
-			//                     .search( this.value )
-			//                     .draw();
-			//             }
-			//         } );
-			//     } );
-			// } );
+			         $( 'input', this.footer() ).on( 'keyup change', function () {
+			             if ( that.search() !== this.value ) {
+			                 that
+			                     .search( this.value )
+			                     .draw();
+			             }
+			         } );
+			     } );
+			 } );
 		</script>
 	</body>
 </html>
