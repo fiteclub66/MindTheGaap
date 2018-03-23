@@ -1,7 +1,7 @@
 <?php
 
 	session_start();
-	
+	$_SESSION['loggedOut'] = "initial";
 	
 	require_once($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Login.php");
 	//print_r($_SESSION);
@@ -28,7 +28,11 @@
 	}
 	if (isset($_SESSION['username'])) {
 		$smsg = "User already logged in";
-		header('Location: ChartOfAccounts.php');
+		if($_SESSION['position'] == "User") {
+			header('Location: ChartOfAccounts_Users.php');
+		} else {
+			header('Location: ChartOfAccounts.php');
+		}
 	}
 
 ?>
@@ -38,7 +42,7 @@
 	<!-- header is in the header.php file with all the scripts, css, and other files needed for formating -->
 	<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/header.php") ?>
 
-	<script type="text/javascript"><?php if($_SESSION['loggedOut'] == true) {echo 'alert("You have been successfully logged out");'; $_SESSION['loggedOut'] = false;} ?></script>
+	<?php if($_SESSION['loggedOut'] == true) {echo '<script type="text/javascript">alert("You have been successfully logged out");</script>'; $_SESSION['loggedOut'] = false;} else { $_SESSION['loggedOut'] = false;} ?>
 
 	<body style="background-color:#FFFFFF">
 

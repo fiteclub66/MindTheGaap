@@ -39,7 +39,7 @@
 
 
 	//write form data to Accounts table using SystemId that was just created in query above
-	$sql2 = "INSERT INTO mindthegaap.ChartOfAccounts (accountId, accountName, active, balance, comments, initiated, initiator, systemId) VALUES ((SELECT accountId FROM mindthegaap.Accounts WHERE Accounts.systemId = '$systemId'), (SELECT accountName FROM mindthegaap.Accounts WHERE Accounts.systemId = '$systemId'), '$active', '$balance', '$comments', NOW(), 1, (SELECT MAX(systemId) FROM mindthegaap.SystemId))";
+	$sql2 = "INSERT INTO mindthegaap.ChartOfAccounts (accountId, accountName, active, balance, comments, initiated, initiator, systemId, linkedAccount) VALUES ((SELECT accountId FROM mindthegaap.Accounts WHERE Accounts.systemId = '$systemId'), (SELECT accountName FROM mindthegaap.Accounts WHERE Accounts.systemId = '$systemId'), '$active', '$balance', '$comments', NOW(), 1, (SELECT MAX(systemId) FROM mindthegaap.SystemId), '$systemId')";
 	if (mysqli_query($link, $sql2)) {
 		echo "Records added successfully.";
 	} else {

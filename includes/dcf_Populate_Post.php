@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 	die ("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT EventLog.eventId, EventLog.changeField, EventLog.beforeValue, EventLog.afterValue, EventLog.time, Users.username FROM EventLog, Users WHERE Users.systemId = EventLog.editorSystemId";
+$sql = "SELECT date, journalGroup, referenceId, accountName, creditDebit, amount, status, filename, type, comments , (select count(*) from mindthegaap.Journals b where b.journalGroup = a.journalGroup) AS 'numParts' FROM mindthegaap.Journals a WHERE status = 'Pending' ORDER BY journalGroup ASC,date DESC, creditDebit DESC, amount DESC";
 $result = $conn->query($sql);
 $data;
 if ($result->num_rows > 0) {

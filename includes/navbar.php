@@ -8,10 +8,10 @@
   	<div class="collapse navbar-collapse" id="navbarNav">
     	<ul class="navbar-nav">
       		<li class="funky_font" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;">
-			    | &nbsp;  <a href="http://www.mindthegaap.info/ChartOfAccounts.php" style="color: white">CHARTS OF ACCOUNTS</a>
+			    | &nbsp;  <?php if ($_SESSION['position'] == 'User'){echo '<a href="http://www.mindthegaap.info/ChartOfAccounts_Users.php" style="color: white;">CHART OF ACCOUNTS</a>';} else {echo '<a href="http://www.mindthegaap.info/ChartOfAccounts.php" style="color: white;">CHART OF ACCOUNTS</a>';}?>
 			</li>
 			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
-				| &nbsp;  <a href="http://www.mindthegaap.info/Accounts.php" style="color: white">ACCOUNTS</a> 
+				| &nbsp;  <?php if ($_SESSION['position'] == 'User'){echo '<a href="http://www.mindthegaap.info/Accounts_Users.php" style="color: white">ACCOUNTS</a>';} else {echo '<a href="http://www.mindthegaap.info/Accounts.php" style="color: white">ACCOUNTS</a>';} ?>
 			</li>
 			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
 				| &nbsp;  <a href="http://www.mindthegaap.info/Journal.php" style="color: white">JOURNAL</a> 
@@ -29,8 +29,10 @@
 			</li>
 			
 			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 				
-				| &nbsp; <?php if ($_SESSION['position'] == "Administrator") {echo '<a href="http://www.mindthegaap.info/Users_Admin.php" style="color: white;">USERS</a>';} else {echo '<a href="http://www.mindthegaap.info/Users_General.php" style="color: white;">USERS</a>';}?>
-				  
+				| &nbsp; <?php if ($_SESSION['position'] == "Administrator") {echo '<a href="http://www.mindthegaap.info/Users_Admin.php" style="color: white;">USERS</a>';} else {echo '<a href="http://www.mindthegaap.info/Users_General.php" style="color: white;">USERS</a>';}?>				  
+			</li>
+			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
+				| &nbsp;  <a href="http://www.mindthegaap.info/PostedJournals.php" style="color: white">POSTED JOURNALS</a> 
 			</li>
     	</ul>			
   	</div>

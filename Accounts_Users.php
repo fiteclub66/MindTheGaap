@@ -23,9 +23,7 @@
 				<div class="row col-xs-10 col-sm-10 col-md-7 col-lg-7">
 					<h1 style="color: #DD9787; border-bottom: 3px solid #A6C48A;">ACCOUNTS</h1>
 				</div>
-				<div class="row col-xs-12 col-sm-12 col-md-3 col-lg-4">
-					<a href="http://www.mindthegaap.info/Create_Accounts.php"><button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">CREATE ACCOUNT</button></a>
-				</div>
+				
 			</div>
 			<form action="Edit_Accounts.php" method="post">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -50,7 +48,7 @@
 						<tr>
 								<td><?php echo $data["accountName"]; ?></td>
 								<td><?php echo $data["category"]; ?></td>
-								<td><button type="submit" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px" value = <?php echo $data["systemId"]?>>EDIT</button>
+								<td><button type="submit" class="btn btn-success" disabled style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px" value = <?php echo $data["systemId"]?>>EDIT</button>
 								</td>
 							</tr>
 					<?php } ?>

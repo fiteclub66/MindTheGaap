@@ -23,9 +23,7 @@
 				<div class="row col-xs-10 col-sm-10 col-md-7 col-lg-7">
 					<h1 style="color: #DD9787; border-bottom: 3px solid #A6C48A;">CHART OF ACCOUNTS</h1>
 				</div>
-				<div class="row col-xs-12 col-sm-12 col-md-3 col-lg-4">
-					<a href="http://www.mindthegaap.info/Add_ChartOfAccounts.php"><button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">ADD ACCOUNT</button></a>
-				</div>
+				
 			</div>
 			<form action="Edit_ChartOfAccounts.php" method="post">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -38,8 +36,7 @@
 								<th>STATUS</th>
 								<th>CATEGORY</th>
 								<th>SUBCATEGORY</th>
-								<th>NORMAL SIDE</th>								
-								<th style="color:white;">&nbsp;</th>
+								<th>NORMAL SIDE</th>
 							</tr>
 						</thead>
 						<!-- uncomment if search bar per column is wanted -->
@@ -51,8 +48,7 @@
 								<th></th>
 								<th></th>
 								<th></th>
-								<th></th>
-								<th style="color: white">&nbsp;</th>
+								<th>&nbsp;</th>
 							</tr>
 						</tfoot>
 						<tbody style="margin-bottom: 10px;">
@@ -64,9 +60,7 @@
 								<td><?php echo $data["active"]; ?></td>
 								<td><?php echo $data["category"];?></td>
 								<td><?php echo $data["subcategory"];?></td>
-								<td><?php echo $data["normalSide"];?></td>								
-								<td><button type="submit" class="btn btn-success" style="background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px" value=<?php echo $data["systemId"]; ?>>EDIT</button>
-								</td>
+								<td><?php echo $data["normalSide"];?></td>							
 							</tr>
 					<?php } ?>
 						</tbody>
@@ -80,8 +74,7 @@
 			//SINGLE SEARCH BAR FOR WHOLE DATATABLE
 			$(document).ready(function() {
 			    $('#example').DataTable( {
-					"bSort": true,
-					"aaSorting": []
+					"bSort": false
 					});
 			} );
 			

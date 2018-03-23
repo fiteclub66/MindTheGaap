@@ -56,6 +56,7 @@
 											    <option value="Liability" <?php if($data["category"] == "Liability"){echo "selected";}?>>Liability</option>
 											    <option value="Equity" <?php if($data["category"] == "Equity"){echo "selected";}?>>Equity</option>
 											    <option value="Revenue" <?php if($data["category"] == "Revenue"){echo "selected";}?>>Revenue</option>
+											    <option value="Expense" <?php if($data["category"] == "Expense"){echo "selected";}?>>Expense</option>
 											    </select>
 										</div>
 									</td>

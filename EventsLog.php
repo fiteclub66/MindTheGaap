@@ -34,8 +34,8 @@
 			            <tr>
 			                <th>EVENT</th>
 			                <th>CHANGE</th>
-			                <th>OLD VALUE</th>
-			                <th>NEW VALUE</th>
+			                <th>FROM</th>
+			                <th>TO</th>
 			                <th>AUTHOR</th>
 			                <th>DATE</th>
 			            </tr>
@@ -45,8 +45,8 @@
 			            <tr>
 			                <th>Event</th>
 			                <th>Change</th>
-			                <th>Old</th>
-			                <th>New</th>
+			                <th>From</th>
+			                <th>To</th>
 			                <th>Author</th>
 			                <th>Date</th>
 			            </tr>

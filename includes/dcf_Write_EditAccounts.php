@@ -167,7 +167,7 @@
 		}
 		
 		//make edit in Accounts table
-		$sql = "UPDATE mindthegaap.Accounts SET normalSide='$normalSide' WHERE systemId='$systemId'";
+		$sql = "UPDATE mindthegaap.Accounts SET comments='$comments' WHERE systemId='$systemId'";
 		if (mysqli_query($link, $sql)) {
 			echo "Records added successfully.";
 		} else {
