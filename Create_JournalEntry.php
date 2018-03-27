@@ -178,9 +178,6 @@ echo $date;
     </form>
 </div>
 
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
 <script type="text/javascript">
 $(function() {
     $('#subBtn').click(function(e){
