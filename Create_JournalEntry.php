@@ -10,7 +10,7 @@ if(!empty($_GET['date'])){
 }
 echo $date;
 ?>
-
+<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_CreateJournalEntry.php") ?>
 <html lang="en">
 <head>
 		
@@ -75,11 +75,12 @@ echo $date;
                     <div class="form-group">
                         <select class="form-control" id="debitAccountName0" name="debitAccountName0">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Account</option>
-                            <!-- php for filling debit accounts-->
-                            <option value="Cash">105 Cash</option>
-                            <option value="Petty Cash">106 Petty Cash</option>
+                            <!-- php for filling debit accounts-->                            
+                            <?php if ($result->num_rows > 0) {while($dataDebits = $result->fetch_assoc()) { ?>			
+						    <?php echo "<option value=".$dataDebits['systemId'].">" . $dataDebits["accountId"] . " - " . $dataDebits["accountName"] . "</option>"; ?>
+							<?php }} ?>
                         </select>
-                    </div>
+                    </div>                    
                 </td>
                 <td style="padding-top:15px; padding-left: 15px">
                     <div id = "debInput" class="input-group mb-3">
@@ -105,11 +106,12 @@ echo $date;
                     <div class="form-group">
                         <select class="form-control" id="creditAccountName0" name="creditAccountName0">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Account</option>
-                            <!-- php for filling debit accounts-->
-								<option value="Accounts Receivable">205 Accounts Receivable</option>
-                                <option value="Salaries">307 Salaries</option>
+                            <!-- php for filling debit accounts-->                            
+                            <?php if ($result2->num_rows > 0) {while($dataCredits = $result2->fetch_assoc()) { ?>			
+						    <?php echo "<option value=".$dataCredits['systemId'].">" . $dataCredits["accountId"] . " - " . $dataCredits["accountName"] . "</option>"; ?>
+							<?php }} ?>
                         </select>
-                    </div>
+                    </div>      
                 </td>
                 <td></td>
                 <td></td>

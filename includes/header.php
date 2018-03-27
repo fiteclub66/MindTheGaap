@@ -28,6 +28,7 @@
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.16/api/page.jumpToData().js"></script>
 
 
 	  	<!-- Bootstrap CSS -->

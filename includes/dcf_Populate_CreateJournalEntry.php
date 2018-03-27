@@ -6,7 +6,6 @@ $dbname = "mindthegaap";
 
 session_start();
 
-//include $_SERVER['DOCUMENT_ROOT']."/test3.php";
 
 //Create Connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -15,17 +14,10 @@ if ($conn->connect_error) {
 	die ("Connection failed: " . $conn->connect_error);
 }
 
-$_SESSION['postedJournalPage'] = $_POST['accountName'];
 
-
-if (isset($_SESSION['postedJournalPage'])) {
-	$sql = "SELECT date, referenceId, creditDebit, amount FROM mindthegaap.Journals WHERE status = 'Approved' AND accountName = (SELECT accountName FROM mindthegaap.ChartOfAccounts WHERE systemid = ".$_SESSION['postedJournalPage'].") ORDER BY date DESC";
-} else {
-	$sql = "SELECT date, referenceId, creditDebit, amount FROM mindthegaap.Journals WHERE status = 'Approved' AND accountName = 'Cash' ORDER BY date DESC";
-}
-
+$sql = "SELECT ChartOfAccounts.accountName, ChartOfAccounts.systemId, ChartOfAccounts.accountId, ChartOfAccounts.linkedAccount, Accounts.systemId FROM mindthegaap.ChartOfAccounts, mindthegaap.Accounts WHERE ChartOfAccounts.linkedAccount = Accounts.systemId AND Accounts.normalSide = 'Left'";
 $result = $conn->query($sql);
-$data;
+$dataDebits;
 if ($result->num_rows > 0) {
 	//output data of each row
 	//$data = $result->fetch_array(MYSQLI_ASSOC); userful for single row returns of data
@@ -36,12 +28,13 @@ if ($result->num_rows > 0) {
 	echo "0 results";
 }
 
-$sql2 = "SELECT accountName, accountId FROM mindthegaap.ChartOfAccounts WHERE systemId = ".$_SESSION['postedJournalPage']."";
+
+$sql2 = "SELECT ChartOfAccounts.accountName, ChartOfAccounts.systemId, ChartOfAccounts.accountId, ChartOfAccounts.linkedAccount, Accounts.systemId FROM mindthegaap.ChartOfAccounts, mindthegaap.Accounts WHERE ChartOfAccounts.linkedAccount = Accounts.systemId AND Accounts.normalSide = 'Right'";
 $result2 = $conn->query($sql2);
-$dataInfo;
+$dataCredits;
 if ($result2->num_rows > 0) {
 	//output data of each row
-	$dataInfo = $result2->fetch_array(MYSQLI_ASSOC); //userful for single row returns of data
+	//$data = $result->fetch_array(MYSQLI_ASSOC); userful for single row returns of data
 	//while($row = $result->fetch_assoc()) {
 	//	//echo $row["firstName"] . " " . $row["lastName"];
 	//}
@@ -49,7 +42,8 @@ if ($result2->num_rows > 0) {
 	echo "0 results";
 }
 
-header('Location: /PostedJournals.php');
+
 //echo "row: " . $data["firstName"] . " " . $data["lastName"];
 $conn->close();
 ?>
+

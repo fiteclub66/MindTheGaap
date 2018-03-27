@@ -41,7 +41,7 @@
 	}
 	$oldStatus = $oldData['status'];
 	$oldComments = $oldData['comments'];
-	$newComments = $oldComments . ". Reject Reason: " . $rejectReason;
+	$newComments = $oldComments . $rejectReason;
 	$conn->close();
 	
 	

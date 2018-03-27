@@ -27,7 +27,8 @@
 					<a href="http://www.mindthegaap.info/Add_ChartOfAccounts.php"><button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">ADD ACCOUNT</button></a>
 				</div>
 			</div>
-			<form action="Edit_ChartOfAccounts.php" method="post">
+			<!-- <form action="Edit_ChartOfAccounts.php" method="post"> -->
+			<form action="submitDecision.php" method="post">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<table id="example" name="example" class="display table-striped" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto; color: #DD9787">
 						<thead>
@@ -58,8 +59,8 @@
 						<tbody style="margin-bottom: 10px;">
 				 <?php while($data = $result->fetch_assoc()) { ?>
 						<tr>
-								<td><?php echo $data["accountName"]; ?></td>
-								<td><?php echo $data["accountId"]; ?></td>
+								<td><?php echo $data["accountName"]; ?></td>															
+								<td><button type="submit" class="btn btn-link" style='color:#DD9787;' name="postedJournals" value=<?php echo $data['systemId']?>><?php echo $data['accountId'] ?></td>
 								<td>$<?php echo number_format(doubleval($data["balance"]), 2, '.', ','); ?></td>
 								<td><?php echo $data["active"]; ?></td>
 								<td><?php echo $data["category"];?></td>
@@ -90,7 +91,7 @@
 				//alert(this.value);
 				document.getElementById("edit_ButtonSelected").value = this.value;
 			});
-
+			
 			//DATATABLE THAT ALLOWS FOR SEARCHING INDIVIDUAL COLUMNS 
 			 $(document).ready(function() {
 			     // Setup - add a text input to each footer cell
@@ -101,7 +102,11 @@
 			 
 			     // DataTable
 			     var table = $('#example').DataTable();
-			 
+				 var $tester = false;
+			     if ($tester == true) {
+ 					table.page.jumpToData( "Notes Payable", 0 );
+ 					$tester = false;
+				 }
 			     // Apply the search
 			     table.columns().every( function () {
 			         var that = this;

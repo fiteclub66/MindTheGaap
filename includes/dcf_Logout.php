@@ -6,6 +6,7 @@
 	unset($_SESSION['position']);
 	unset($_SESSION['userId']);
 	unset($_SESSION['systemId']);
+	unset($_SESSION['postedJournalPage']);
 	
 	session_unset();
 	session_destroy();

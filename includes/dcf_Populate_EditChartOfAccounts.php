@@ -17,7 +17,8 @@ if ($conn->connect_error) {
 }
 
 //$systemId = mysqli_real_escape_string($link, $_REQUEST['systemId']);
-$systemId = $_POST['editButtonSelected'];
+//$systemId = $_POST['editButtonSelected'];
+$systemId = $_SESSION['editSystemId'];
 
 $sql = "SELECT accountName, accountId, active, comments, balance, systemId FROM mindthegaap.ChartOfAccounts WHERE systemId = '$systemId'";
 $result = $conn->query($sql);

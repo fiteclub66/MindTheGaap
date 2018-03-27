@@ -32,7 +32,7 @@
 				| &nbsp; <?php if ($_SESSION['position'] == "Administrator") {echo '<a href="http://www.mindthegaap.info/Users_Admin.php" style="color: white;">USERS</a>';} else {echo '<a href="http://www.mindthegaap.info/Users_General.php" style="color: white;">USERS</a>';}?>				  
 			</li>
 			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
-				| &nbsp;  <a href="http://www.mindthegaap.info/PostedJournals.php" style="color: white">POSTED JOURNALS</a> 
+				| &nbsp;  <a href="http://www.mindthegaap.info/PostedJournals.php" style="color: white">ACCOUNT LEDGER</a> 
 			</li>
     	</ul>			
   	</div>

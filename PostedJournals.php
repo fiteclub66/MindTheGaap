@@ -1,13 +1,16 @@
 <?php 
 	session_start();
-	if ($_SESSION['username'] == null) {
-		header('Location: /index.php');
-	}
+	//if ($_SESSION['username'] == null) {
+		//header('Location: /index.php');
+	//}
+	//echo "variable: ".$_SESSION['postedJournalPage'];
 ?>
 <?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_PostedJournals.php") ?>
+<!--</?php include ($_SERVER['DOCUMENT_ROOT']."/includes/testAll.php") ?> -->
+
 <html>
 	<head>
-		<title>Posted Journals</title>
+		<title>Account Ledger</title>
 		<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/header.php") ?>
 	<body style="background-color:#FFFFFF">
 		<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/navbar.php") ?>
@@ -15,7 +18,7 @@
 			<div class="row" style="margin-top: 40px">
 				<div class="row col-xs-2 col-sm-2 col-md-2 col-lg-1"></div>
 				<div class="row col-xs-10 col-sm-10 col-md-7 col-lg-7">
-					<h1 style="color: #DD9787; border-bottom: 3px solid #A6C48A;">POSTED JOURNALS</h1>
+					<h1 style="color: #DD9787; border-bottom: 3px solid #A6C48A;">ACCOUNT LEDGER</h1>
 				</div>
 
 				<div class="row col-xs-12 col-sm-12 col-md-3 col-lg-4">
@@ -25,17 +28,18 @@
 -->
 				</div>
 			</div>
-			<form action="dcf_ReadPopulate_PostedJournals.php" method="post">
+			<form action="includes/dcf_ReadPopulate_PostedJournals.php" method="post" id = "formSubmit">
 				<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12"  style="margin-top: 40px">
-					<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9"><h2 id="title" style="color: #A6C48A">Value of DropDown</h2></div>
 					<div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<select class="form-control pull-right" id="account_Name" name="accountName"> <!-- onchange="this.form.submit()" -->
 						    <option value="" disabled="true" selected style="color: #D3D3D3;">Account Name</option>
-						    <?php while($dropdownData = $result2->fetch_assoc()) { ?>			
-						    <?php echo "<option value=".$dropdownData['systemId'].">" . $dropdownData["accountId"] . " - " . $dropdownData["accountName"] . "</option>"; ?>
-							<?php } ?>
+						    <?php if ($result2->num_rows > 0) {while($dropdownData = $result2->fetch_assoc()) { ?>	
+							<option value=<?php echo $dropdownData['systemId']?> <?php if($dropdownData['systemId'] == $_SESSION['postedJournalPage']) {echo "selected";} ?>> <?php echo $dropdownData["accountId"] . " - " . $dropdownData["accountName"] ?></option>					    
+							<?php }} ?>
 						</select>
 					</div>
+					<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" style="text-align: right"><h2 id="title" style="color: #A6C48A"><?php if ($result3->num_rows > 0) {while($titleFill = $result3->fetch_assoc()) {echo $titleFill['accountId'] . " - " . $titleFill['accountName']; }}?></h2></div>
+					
 				</div>
 				<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 30px">
 					<table id="example" name="example" class="display table-striped" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto; color: #DD9787">
@@ -66,10 +70,10 @@
 						</tfoot>
 						<tbody style="margin-bottom: 10px;">
 							<?php $currentDate =''; $fileCounter = 0; $currentGroupNumber = 1; $commentsCounter = 1; $statusCounter = 0; $runningBalance = 0;?>
-							<?php while($data = $result->fetch_assoc()) { ?> 
+							<?php if ($result->num_rows > 0) {while($data = $result->fetch_assoc()) { ?> 
 								
 								<tr>
-									<td><?php if($data['date'] != $currentDate && $data['creditDebit'] == "debit"){ echo $data["date"]; $currentDate = $data['date'];} ?></td>
+									<td><?php echo $data["date"]; ?></td>
 									<td height="55px"><?php echo $data["referenceId"]; ?></td>					
 									<td style="text-align: right">
 										<?php if ($data['creditDebit'] == 'debit'){
@@ -85,7 +89,7 @@
 									</td>
 									<td style="text-align: right"><?php echo number_format(doubleval($runningBalance), 2, '.', ',') ?></td>
 								</tr>
-							<?php } ?>
+							<?php }} ?>
 									
 						</tbody>
 					</table>
@@ -152,12 +156,25 @@
 			document.getElementById("edit_ButtonSelected").value = this.value;
 		});
 		
-		var select = document.getElementById("account_Name");
-		select.onchange = function(){
-			var selectedString = select.options[select.selectedIndex].value;
-			//alert(selectedString);
-			$("#title").text(document.getElementById("account_Name").name);
-		}
+		//var select = document.getElementById("account_Name");
+		//select.onchange = function(){
+			//var selectedString = select.options[select.selectedIndex].value;
+			////alert(selectedString);
+			//$("#title").text(document.getElementById("account_Name").name);
+		//}
+		
+		$('#formSubmit').change(
+			function(){
+				 //$(this).closest('form').trigger('submit');
+				 /* or:
+				 $('#formElementId').trigger('submit');
+					or:*/
+				 $('#formSubmit').submit();
+				 
+			}
+		);
+		
+		
 	</script>
 	</body>
 </html>
