@@ -212,31 +212,16 @@ $(function() {
         return n === +n && n !== (n|0);
     }
 
-    var pastDate = new Date();
-    pastDate.setDate(pastDate.getDate() - 7);
-    var futureDate = new Date();
-    $('.datetimepicker-input').datepicker({
-        minDate: pastDate,
-        maxDate: futureDate,
-        dateFormat: "yy-mm-dd",
-        onSelect: function(dateText, inst) {
-            var selectedDate = $(this).val();
-        }
-    });
-    $('.create-button').click(function(e){
-        e.preventDefault();
-        $('.the-date').datepicker("show");
-    });
-	// $('#datetimepicker6').datetimepicker({
-	// 	//defaultDate: "3/1/2018",
-	// 	format: 'YYYY-MM-DD HH:mm:SS', 
-	// 	useCurrent: true,
-	// 	disabledDate: [
-	// 		moment("12/25/2018"),
-	// 		new Date(2018, 11 - 1, 21),
-	// 		"11/22/2018 00:53"
-	// 	]
-	// });
+	$('#datetimepicker6').datetimepicker({
+		//defaultDate: "3/1/2018",
+		format: 'YYYY-MM-DD HH:mm:SS', 
+		useCurrent: true,
+		disabledDate: [
+			moment("12/25/2018"),
+			new Date(2018, 11 - 1, 21),
+			"11/22/2018 00:53"
+		]
+	});
 });
 </script>
 <script type="text/javascript">
