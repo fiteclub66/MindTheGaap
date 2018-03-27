@@ -3,6 +3,7 @@ session_start();
 if ($_SESSION['username'] == null) {
     header('Location: /index.php');
 }
+
 if(!empty($_GET['date'])){
     $date = $_GET['date'];
 }else{
@@ -25,7 +26,7 @@ echo $date;
 <!-- horizontal navigation bar at the top of each page is in the navbar.php file -->
 <?php include ($_SERVER['DOCUMENT_ROOT']."/includes/navbar.php") ?>
 <div class="container">
-	<form action="includes/dcf_Write_CreateJournalEntry.php" method="post"
+	<form action="includes/dcf_Write_CreateJournalEntry.php" method="post" class="journal-entry-form">
     <div class="row" style="margin-top: 40px">
         <div class="row col-xs-2 col-sm-2 col-md-2 col-lg-1"></div>
         <div class="row col-xs-10 col-sm-10 col-md-7 col-lg-7">
@@ -87,7 +88,7 @@ echo $date;
                         <div class="input-group-prepend" style="font-size: 20; padding-top: 5px; padding-right:5px">
                             <span class="input-group-text" >$</span>
                         </div>
-                        <input id="debit0" name="debit0" type="text" class="form-control" placeholder="0" style="text-align:right;" aria-label="Amount (to the nearest dollar)" onkeydown="checkKey(event)" onchange="validateFloatKeyPress(this)">
+                        <input id="debit0" name="debit0" type="text" class="form-control debit-input" placeholder="0" style="text-align:right;" aria-label="Amount (to the nearest dollar)" onkeydown="checkKey(event)" onchange="validateFloatKeyPress(this)">
                     </div>
                 </td>
                 <td>
@@ -121,7 +122,7 @@ echo $date;
                         <div class="input-group-prepend" style="font-size: 20; padding-top: 5px; padding-right:5px">
                             <span class="input-group-text" >$</span>
                         </div>
-                        <input id="credit0" name="credit0" type="text" class="form-control" placeholder="0" style="text-align:right;" aria-label="Amount (to the nearest dollar)" onkeydown="checkKey(event)" onchange="validateFloatKeyPress(this)">
+                        <input id="credit0" name="credit0" type="text" class="form-control credit-input" placeholder="0" style="text-align:right;" aria-label="Amount (to the nearest dollar)" onkeydown="checkKey(event)" onchange="validateFloatKeyPress(this)">
                     </div>
                 </td>
                 <td>
@@ -178,11 +179,38 @@ echo $date;
     
     </form>
 </div>
+
 <script type="text/javascript">
-
-
-
 $(function() {
+    $('#subBtn').click(function(e){
+        e.preventDefault();
+        var totalDebit = 0;
+        var totalCredit = 0;
+        $('.debit-input').each(function(){
+            if($(this).val()!='' && !isNaN($(this).val())) {
+                totalDebit += parseFloat($(this).val());
+            }
+        });
+        $('.credit-input').each(function(){
+            if($(this).val()!='' && !isNaN($(this).val())) {
+                totalCredit += parseFloat($(this).val());
+            }
+        });
+        if(totalDebit==totalCredit) {
+            $(this).parents('.journal-entry-form').submit();
+        } else if(totalDebit>totalCredit) {
+            alert("Debits are higher than Credits");
+        } else if(totalDebit<totalCredit) {
+            alert("Credits are higher than Debits");
+        }else {
+            alert("Something went wrong");
+        }
+    });
+
+    function isFloat(n){
+        return n === +n && n !== (n|0);
+    }
+
 	$('#datetimepicker6').datetimepicker({
 		//defaultDate: "3/1/2018",
 		format: 'YYYY-MM-DD HH:mm:SS', 
@@ -222,7 +250,7 @@ $(function() {
             "                            <div class=\"input-group-prepend\" style=\"font-size: 20; padding-top: 5px; padding-right:5px\">\n" +
             "                                <span class=\"input-group-text\" >$</span>\n" +
             "                            </div>\n" +
-            "                            <input id=\"debit\" name=\"debit\" type=\"text\" class=\"form-control\" placeholder=\"0\" style=\"text-align:right;\" aria-label=\"Amount (to the nearest dollar)\" onkeydown=\"checkKey(event)\" onchange=\"validateFloatKeyPress(this)\">\n" +
+            "                            <input id=\"debit\" name=\"debit\" type=\"text\" class=\"form-control debit-input\" placeholder=\"0\" style=\"text-align:right;\" aria-label=\"Amount (to the nearest dollar)\" onkeydown=\"checkKey(event)\" onchange=\"validateFloatKeyPress(this)\">\n" +
             "                        </div>\n" +
             "                    </td>\n" +
             "                    <td>\n" +
@@ -273,7 +301,7 @@ $(function() {
             "                            <div class=\"input-group-prepend\" style=\"font-size: 20; padding-top: 5px; padding-right:5px\">\n" +
             "                                <span class=\"input-group-text\" >$</span>\n" +
             "                            </div>\n" +
-            "                            <input id=\"credit\" name=\"credit\" type=\"text\" class=\"form-control\" placeholder=\"0\" style=\"text-align:right;\" aria-label=\"Amount (to the nearest dollar)\" onkeydown=\"checkKey(event)\" onchange=\"validateFloatKeyPress(this)\">\n" +
+            "                            <input id=\"credit\" name=\"credit\" type=\"text\" class=\"form-control credit-input\" placeholder=\"0\" style=\"text-align:right;\" aria-label=\"Amount (to the nearest dollar)\" onkeydown=\"checkKey(event)\" onchange=\"validateFloatKeyPress(this)\">\n" +
             "                        </div>\n" +
             "                    </td>\n" +
             "                    <td>\n" +
@@ -345,34 +373,34 @@ $(function() {
         $('#credit').attr( 'id' , credID );
         $('#minusBtn').attr( 'id', mbLabel);
     };*/
-    document.getElementById('subBtn').onclick = function () {
-        var d=0,c=0;
-        for(var i = 0; i <= dCount; ++i)
-        {
-            d = parseFloat($('#'+("debit"+i)).val());
-            if(isNaN(d))
-                d = 0;
-            debTotal += (d);
-        }
-        for(var j = 0; j <= cCount; ++j)
-        {
-            c = parseFloat($('#'+("credit"+j)).val());
-            if(isNaN(c))
-                c = 0;
-            credTotal += (c);
-        }
-        if(debTotal==credTotal) {
-            //alert("Balanced");
-        } else if(debTotal>credTotal) {
-            alert("Debits are higher than Credits");
-        } else if(debTotal<credTotal) {
-            alert("Credits are higher than Debits");
-        }else {
-            alert("Something went wrong");
-        }
-        debTotal=0;
-        credTotal=0;
-    }
+    // document.getElementById('subBtn').onclick = function () {
+    //     var d=0,c=0;
+    //     for(var i = 0; i <= dCount; ++i)
+    //     {
+    //         d = parseFloat($('#'+("debit"+i)).val());
+    //         if(isNaN(d))
+    //             d = 0;
+    //         debTotal += (d);
+    //     }
+    //     for(var j = 0; j <= cCount; ++j)
+    //     {
+    //         c = parseFloat($('#'+("credit"+j)).val());
+    //         if(isNaN(c))
+    //             c = 0;
+    //         credTotal += (c);
+    //     }
+    //     if(debTotal==credTotal) {
+    //         //alert("Balanced");
+    //     } else if(debTotal>credTotal) {
+    //         alert("Debits are higher than Credits");
+    //     } else if(debTotal<credTotal) {
+    //         alert("Credits are higher than Debits");
+    //     }else {
+    //         alert("Something went wrong");
+    //     }
+    //     debTotal=0;
+    //     credTotal=0;
+    // }
     //OLD KEYDOWN
     /*    $(document).ready(function() {
             $(".amtInput").keydown(function (e) {
