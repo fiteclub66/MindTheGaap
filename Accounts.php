@@ -27,6 +27,23 @@
 					<a href="http://www.mindthegaap.info/Create_Accounts.php"><button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">CREATE ACCOUNT</button></a>
 				</div>
 			</div>
+			<?php if(!empty($_GET['addsuccess'])){ ?>
+				<div class="row">
+					<div class="col col-xs-2  col-lg-1"></div>
+					<div class="col col-xs-8  col-lg-10">
+						<?php if($_GET['addsuccess']=='true'){ ?>
+							<div class="alert alert-success" role="alert">
+							  Account has been successfully created.
+							</div>
+						<?php }else{ ?>
+							<div class="alert alert-danger" role="alert">
+							  There was a problem in account creation.
+							</div>
+						<?php } ?>
+					</div>
+					<div class="col col-xs-8 col-lg-1"></div>
+				</div>
+			<?php } ?>
 			<form action="Edit_Accounts.php" method="post">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<table id="example" name="example" class="display table-striped" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto; color: #DD9787">

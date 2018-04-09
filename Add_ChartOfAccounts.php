@@ -53,7 +53,7 @@
 								</tr>
 									<td style="text-align: right; font-size: 28; color: #DD9787; padding-bottom: 10px">Initial Balance</td>
 									<td style="font-size: 28; color: #DD9787; padding-left: 50px;">
-										<input id="addCOABalance" name="addCOABalance" class="form-control" rows="4" placeholder="Balance"></input>
+										<input id="addCOABalance" type="text" name="addCOABalance" class="form-control" rows="4" placeholder="Balance" onchange="validateFloatKeyPress(this);"></input>
 									</td>
 								</tr>
 								<tr>
@@ -99,7 +99,11 @@
                         e.preventDefault();
                     }
                 });
-		});
+			});
+		    function validateFloatKeyPress(el) {
+		        var v = parseFloat(el.value);
+		        el.value = (isNaN(v)) ? '' : v.toFixed(2);
+		    }
 		</script>
 	</body>
 </html>

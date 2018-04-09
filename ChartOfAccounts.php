@@ -27,6 +27,24 @@
 					<a href="http://www.mindthegaap.info/Add_ChartOfAccounts.php"><button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">ADD ACCOUNT</button></a>
 				</div>
 			</div>
+
+			<?php if(!empty($_GET['addsuccess'])){ ?>
+				<div class="row">
+					<div class="col col-xs-2  col-lg-1"></div>
+					<div class="col col-xs-8  col-lg-10">
+						<?php if($_GET['addsuccess']=='true'){ ?>
+							<div class="alert alert-success" role="alert">
+							  An account has been successfully added.
+							</div>
+						<?php }else{ ?>
+							<div class="alert alert-danger" role="alert">
+							  There was a problem in adding the account.
+							</div>
+						<?php } ?>
+					</div>
+					<div class="col col-xs-8 col-lg-1"></div>
+				</div>
+			<?php } ?>
 			<!-- <form action="Edit_ChartOfAccounts.php" method="post"> -->
 			<form action="submitDecision.php" method="post">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
