@@ -28,6 +28,18 @@ if ($result->num_rows > 0) {
 	echo "0 results";
 }
 
+//$sql3 = "SELECT ChartOfAccounts.accountName, ChartOfAccounts.systemId, ChartOfAccounts.accountId, ChartOfAccounts.linkedAccount, Accounts.systemId FROM mindthegaap.ChartOfAccounts, mindthegaap.Accounts WHERE ChartOfAccounts.linkedAccount = Accounts.systemId AND Accounts.normalSide = 'Left'";
+//$result3 = $conn->query($sql3);
+//$dataDebits;
+//if ($result3->num_rows > 0) {
+	////output data of each row
+	////$data = $result->fetch_array(MYSQLI_ASSOC); userful for single row returns of data
+	////while($row = $result->fetch_assoc()) {
+	////	//echo $row["firstName"] . " " . $row["lastName"];
+	////}
+//} else {
+	//echo "0 results";
+//}
 
 $sql2 = "SELECT ChartOfAccounts.accountName, ChartOfAccounts.systemId, ChartOfAccounts.accountId, ChartOfAccounts.linkedAccount, Accounts.systemId FROM mindthegaap.ChartOfAccounts, mindthegaap.Accounts WHERE ChartOfAccounts.linkedAccount = Accounts.systemId AND Accounts.normalSide = 'Right'";
 $result2 = $conn->query($sql2);
