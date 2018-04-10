@@ -43,6 +43,7 @@ echo $date;
         </div>
     </div>
     <div class="row d-none error-wrap">
+        <div class="col col-xs-2  col-lg-1"></div>
         <div class="col col-xs-8  col-lg-10">
             <div class="alert alert-danger" role="alert"></div>
         </div>
