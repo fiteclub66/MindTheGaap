@@ -33,8 +33,10 @@
 	$sql = "INSERT INTO mindthegaap.SystemId (tableRelation, id) VALUES ('Users', (SELECT (MAX(userId) + 1) FROM mindthegaap.Users))";
 	if (mysqli_query($link, $sql)) {
 		echo "Records added successfully.";
+		$success = true;
 	} else {
 		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		$success = false;
 	}
 
 
@@ -86,9 +88,14 @@
 		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
+	if($success){
+		$successQString = '?addsuccess=true';
+	}else{
+		$successQString =  '?addsuccess=false';
+	}
 	
 	
-	header('Location: /Users_Admin.php');
+	header('Location: /Users_Admin.php'.$successQString);
 	
 	//$conn->close();
 	//myslqi_close($link);	

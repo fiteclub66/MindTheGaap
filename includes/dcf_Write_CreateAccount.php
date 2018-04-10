@@ -35,8 +35,10 @@
 	$sql = "INSERT INTO mindthegaap.Accounts (accountId, accountName, category, subcategory, accountOrder, normalSide, comments, creationDate, creator, systemId) VALUES ('$accountId', '$accountName', '$category', '$subcategory','$accountOrder', '$normalSide', '$comments', NOW(), ".$_SESSION['systemId'].", (SELECT MAX(systemId) FROM mindthegaap.SystemId))";
 	if (mysqli_query($link, $sql)) {
 		echo "Records added successfully.";
+		$success = true;
 	} else {
 		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		$success = false;
 	}
 	
 	//Write Creation of accountId to EventLog
@@ -95,8 +97,13 @@
 		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
+	if($success){
+		$successQString = '?addsuccess=true';
+	}else{
+		$successQString =  '?addsuccess=false';
+	}
 	
-	header('Location: /Accounts.php');
+	header('Location: /Accounts.php'.$successQString);
 	
 	//$conn->close();
 	//myslqi_close($link);	

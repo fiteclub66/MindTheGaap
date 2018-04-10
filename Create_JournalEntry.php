@@ -42,6 +42,11 @@ echo $date;
             </select>
         </div>
     </div>
+    <div class="row d-none error-wrap">
+        <div class="col col-xs-8  col-lg-10">
+            <div class="alert alert-danger" role="alert"></div>
+        </div>
+    </div>
     <!-- BIG OLE STINKIN TABLE -->
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <table id="example" name="example" class="display table-striped" cellspacing="10" width="90%" style="margin-left: auto; margin-right: auto; color: #DD9787">
@@ -76,8 +81,13 @@ echo $date;
 				<td></td>
                 <td style="font-size: 28; color: #DD9787; padding-top: 15px">
                     <div class="form-group">
+<<<<<<< HEAD
                         <select class="form-control" id="debitAccountName0" name="debitAccountName0" onchange="checkOptD(id)">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Select Account</option>
+=======
+                        <select class="debitAccountName form-control" id="debitAccountName0" name="debitAccountName0">
+                            <option value="" disabled="true" selected style="color: #D3D3D3">Account</option>
+>>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927
                             <!-- php for filling debit accounts-->                            
                             <?php if ($result->num_rows > 0) {while($dataDebits = $result->fetch_assoc()) { ?>			
 						    <?php echo "<option value=".$dataDebits['systemId'].">" . $dataDebits["accountId"] . " - " . $dataDebits["accountName"] . "</option>"; ?>
@@ -108,8 +118,13 @@ echo $date;
                 <td></td>
                 <td style="font-size: 28; color: #DD9787; padding-top: 15px">
                     <div class="form-group">
+<<<<<<< HEAD
                         <select class="form-control" id="creditAccountName0" name="creditAccountName0" onchange="checkOptC(id)">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Select Account</option>
+=======
+                        <select class="creditAccountName form-control" id="creditAccountName0" name="creditAccountName0">
+                            <option value="" disabled="true" selected style="color: #D3D3D3">Account</option>
+>>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927
                             <!-- php for filling debit accounts-->                            
                             <?php if ($result2->num_rows > 0) {while($dataCredits = $result2->fetch_assoc()) { ?>			
 						    <?php echo "<option value=".$dataCredits['systemId'].">" . $dataCredits["accountId"] . " - " . $dataCredits["accountName"] . "</option>"; ?>
@@ -149,6 +164,7 @@ echo $date;
                     <div class="input-group">
                         <textarea id="description" name="description" class="form-control" aria-label="With textarea" maxlength="140" placeholder="Details..."></textarea>
                     </div>
+                        <small>Please enter a comment up to 140 characters only.</small>
                 </td>
                 <td></td>
             </tr>
@@ -188,26 +204,66 @@ echo $date;
 $(function() {
     $('#subBtn').click(function(e){
         e.preventDefault();
+        var error = false;
         var totalDebit = 0;
         var totalCredit = 0;
         $('.debit-input').each(function(){
             if($(this).val()!='' && !isNaN($(this).val())) {
                 totalDebit += parseFloat($(this).val());
             }
+            if($(this).val()==''){
+                error = true;
+                $('.error-wrap').removeClass('d-none');
+                $('.error-wrap .alert').html('Error! Please enter the debit amount.');
+            }
         });
         $('.credit-input').each(function(){
             if($(this).val()!='' && !isNaN($(this).val())) {
                 totalCredit += parseFloat($(this).val());
             }
+            if($(this).val()==''){
+                error = true;
+                $('.error-wrap').removeClass('d-none');
+                $('.error-wrap .alert').html('Error! Please enter the credit amount.');
+            }
         });
-        if(totalDebit==totalCredit) {
-            $(this).parents('.journal-entry-form').submit();
-        } else if(totalDebit>totalCredit) {
-            alert("Debits are higher than Credits");
-        } else if(totalDebit<totalCredit) {
-            alert("Credits are higher than Debits");
-        }else {
-            alert("Something went wrong");
+
+        $('.creditAccountName option:selected').each(function(){
+            if($(this).text()=="Account"){
+                error = true;
+                $('.error-wrap').removeClass('d-none');
+                $('.error-wrap .alert').html('Error! Please select the credit account name.'); 
+            }
+        });
+
+        $('.debitAccountName option:selected').each(function(){
+            if($(this).text()=="Account"){
+                error = true;
+                $('.error-wrap').removeClass('d-none');
+                $('.error-wrap .alert').html('Error! Please select the debit account name.'); 
+            }
+        });
+
+        if($('#datetime').val()===""){
+            error = true;
+            $('.error-wrap').removeClass('d-none');
+            $('.error-wrap .alert').html('Error! Please select a date.');
+        }
+
+
+        if(!error){
+            if(totalDebit==totalCredit) {
+                $(this).parents('.journal-entry-form').submit();
+            } else if(totalDebit>totalCredit) {
+                $('.error-wrap').removeClass('d-none');
+                $('.error-wrap .alert').html('Error! Debits are higher than Credits.');
+            } else if(totalDebit<totalCredit) {
+                $('.error-wrap').removeClass('d-none');
+                $('.error-wrap .alert').html('Error! Credits are higher than Debits.');
+            }else {
+                $('.error-wrap').removeClass('d-none');
+                $('.error-wrap .alert').html('Error! Something went wrong.');
+            }
         }
     });
 
@@ -301,8 +357,15 @@ $(function() {
             "                    <td></td>\n" +
             "                    <td style=\"font-size: 28; color: #DD9787; padding-top: 15px\">\n" +
             "                        <div class=\"form-group\">\n" +
+<<<<<<< HEAD
             "                            <select class=\"form-control\" id=\"debitAccountName\" name=\"debitAccountName\" onchange=\"checkOptD(id)\">\n" +
             "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Select Account</option>\n" +
+=======
+            "                            <select class=\"debitAccountName form-control\" id=\"debitAccountName\" name=\"debitAccountName\">\n" +
+            "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Account</option>\n" +
+            "                                <option value=\"Cash\">105 Cash</option>\n" +
+            "                                <option value=\"Petty Cash\">106 Petty Cash</option>\n" +
+>>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927
             "                            </select>\n" +
             "                        </div>\n" +
             "                    </td>\n" +
@@ -355,8 +418,19 @@ $(function() {
             "                    <td></td>\n" +
             "                    <td style=\"font-size: 28; color: #DD9787; padding-top: 15px\">\n" +
             "                        <div class=\"form-group\">\n" +
+<<<<<<< HEAD
             "                            <select class=\"form-control\" id=\"creditAccountName\" name=\"creditAccountName\" onchange=\"checkOptC(id)\">\n" +
             "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Select Account</option>\n" +
+=======
+            "                            <select class=\"creditAccountName form-control\" id=\"creditAccountName\" name=\"creditAccountName\">\n" +
+            "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Account</option>\n" +
+            "                                <option>105 Cash</option>\n" +
+            "                                <option>106 Petty Cash</option>\n" +
+            "                                <option>201 Get Bent</option>\n" +
+            "                                <option>314 Filler</option>\n" +
+            "                                <option>125 Anything</option>\n" +
+            "                                <option>743 IDK</option>\n" +
+>>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927
             "                            </select>\n" +
             "                        </div>\n" +
             "                    </td>\n" +

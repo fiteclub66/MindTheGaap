@@ -42,8 +42,10 @@
 	$sql2 = "INSERT INTO mindthegaap.ChartOfAccounts (accountId, accountName, active, balance, comments, initiated, initiator, systemId, linkedAccount) VALUES ((SELECT accountId FROM mindthegaap.Accounts WHERE Accounts.systemId = '$systemId'), (SELECT accountName FROM mindthegaap.Accounts WHERE Accounts.systemId = '$systemId'), '$active', '$balance', '$comments', NOW(), 1, (SELECT MAX(systemId) FROM mindthegaap.SystemId), '$systemId')";
 	if (mysqli_query($link, $sql2)) {
 		echo "Records added successfully.";
+		$success = true;
 	} else {
 		echo "ERROR: Could not able to execute $sql2. " . mysqli_error($link);
+		$success = false;
 	}
 	
 	//Write Creation of accountId to EventLog
@@ -78,7 +80,13 @@
 		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
-	header('Location: /ChartOfAccounts.php');
+	if($success){
+		$successQString = '?addsuccess=true';
+	}else{
+		$successQString =  '?addsuccess=false';
+	}
+	
+	header('Location: /ChartOfAccounts.php'.$successQString);
 	
 	//$conn->close();
 	//myslqi_close($link);	
