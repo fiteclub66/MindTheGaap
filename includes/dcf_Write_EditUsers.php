@@ -67,8 +67,10 @@
 		$sql = "UPDATE mindthegaap.Users SET firstName='$newFirstName' WHERE systemId='$systemId'";
 		if (mysqli_query($link, $sql)) {
 			echo "Records added successfully.";
+			$success = true;
 		} else {
 			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			$success = false;
 		}
 	}
 	if($oldLastName != $newLastName) {

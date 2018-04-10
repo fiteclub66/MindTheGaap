@@ -26,12 +26,18 @@
 					<!-- <button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">EXPORT LOG</button> -->
 				</div>
 			</div>
+				<div class="row d-none error-wrap">
+					<div class="col col-xs-2  col-lg-1"></div>
+					<div class="col col-xs-8  col-lg-10">
+						<div class="alert alert-danger" role="alert"></div>
+					</div>
+				</div>
 
 				<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 50px">
 					<!-- <div class="row col-xs-2 col-sm-2 col-md-2 col-lg-2">
 					</div> -->
 					<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<form action="includes/dcf_Write_EditChartOfAccounts.php" method="post">
+						<form action="includes/dcf_Write_EditChartOfAccounts.php" class="editCharOfAccountForm" method="post">
 							<table style="border-spacing: 40px 20px">
 								<col width="300px">
 								<col width="450px">
@@ -42,7 +48,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right; font-size: 28; color: #DD9787;">Balance</td>
-									<td style="text-align: left; font-size: 22; color: #A9A9A9; padding-left: 50px; padding-bottom:0px; padding-top: 0px;">$<?php echo number_format(doubleval($data["balance"]), 2, '.', ','); ?></td>
+									<td style="text-align: left; font-size: 22; color: #A9A9A9; padding-left: 50px; padding-bottom:0px; padding-top: 0px;">$<?php echo number_format(doubleval($data["balance"]), 2, '.', ','); ?><input class="balance-hidden" type="hidden" name="balance-hidden" value="<?php echo($data["balance"]); ?>"></td>
 								</tr>
 								<tr>
 									<td style="text-align: right; font-size: 28; color: #DD9787; padding-top: 10px;">Active</td>
@@ -69,7 +75,7 @@
 			</div>
 			<div class="row col-xs-5 col-sm-4 col-md-4 col-lg-3 float-right" style="margin-top: 75px">
 				<a href="http://www.mindthegaap.info/ChartOfAccounts.php"><button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">CANCEL</button></a> &nbsp;
-				<button type="submit" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">UPDATE</button>
+				<button type="submit" class="btn btn-success update-button" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">UPDATE</button>
 			</div>
 		</div>
 		<input type="hidden" name="editButtonSelected" id="edit_ButtonSelected" value=<?php echo $_POST['editButtonSelected']; ?>/>
@@ -78,7 +84,23 @@
 		</div>
 
 		<script type="text/javascript">
-			
+			$(document).ready(function(){
+				$('.update-button').click(function(e){
+					e.preventDefault();
+					var balance = $('.balance-hidden').val();
+					var activeSelected =  $('#active:checked').length;
+					if(!activeSelected){
+						if(balance==0){
+							$('.editCharOfAccountForm').submit();
+						}else{
+							$('.error-wrap').removeClass('d-none');
+							$('.error-wrap .alert').html('You can not deactivate an account with balance higher than zero');
+						}
+					}else{
+						$('.editCharOfAccountForm').submit();
+					}
+				})
+			});
 		</script>
 	</body>
 </html>

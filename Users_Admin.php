@@ -28,6 +28,25 @@
 					<a href="http://www.mindthegaap.info/Create_Users.php"><button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">CREATE USER</button></a>
 				</div>
 			</div>
+			<?php if(!empty($_GET['addsuccess']) || !empty($_GET['editsuccess'])){ ?>
+				<div class="row">
+					<div class="col col-xs-2  col-lg-1"></div>
+					<div class="col col-xs-8  col-lg-10">
+						<?php if(!empty($_GET['addsuccess']) && $_GET['addsuccess']=='true'){ ?>
+							<div class="alert alert-success" role="alert">User has been successfully created.</div>
+						<?php }else if(!empty($_GET['addsuccess']) && $_GET['addsuccess']=='false'){ ?>
+							<div class="alert alert-danger" role="alert">There was a problem in user creation.</div>
+						<?php } ?>
+
+						<?php if(!empty($_GET['editsuccess']) && $_GET['editsuccess']=='true'){ ?>
+							<div class="alert alert-success" role="alert">User has been successfully updated.</div>
+						<?php }else if(!empty($_GET['editsuccess']) && $_GET['editsuccess']=='false'){ ?>
+							<div class="alert alert-danger" role="alert">There was a problem in updating user.</div>
+						<?php } ?>
+					</div>
+					<div class="col col-xs-8 col-lg-1"></div>
+				</div>
+			<?php } ?>
 			<form action="Edit_Users.php" method="post">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<table id="example" name="example" class="display table-striped" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto; color: #DD9787">
