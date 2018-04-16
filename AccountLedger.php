@@ -5,7 +5,7 @@
 	//}
 	//echo "variable: ".$_SESSION['postedJournalPage'];
 ?>
-<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_PostedJournals.php") ?>
+<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_AccountLedger.php") ?>
 <!--</?php include ($_SERVER['DOCUMENT_ROOT']."/includes/testAll.php") ?> -->
 
 <html>
@@ -28,7 +28,7 @@
 -->
 				</div>
 			</div>
-			<form action="includes/dcf_ReadPopulate_PostedJournals.php" method="post" id = "formSubmit">
+			<form action="includes/dcf_ReadPopulate_AccountLedger.php" method="post" id = "formSubmit">
 				<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12"  style="margin-top: 40px">
 					<div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<select class="form-control pull-right" id="account_Name" name="accountName"> <!-- onchange="this.form.submit()" -->
@@ -73,7 +73,7 @@
 							<?php if ($result->num_rows > 0) {while($data = $result->fetch_assoc()) { ?> 
 								
 								<tr>
-									<td><?php echo $data["date"]; ?></td>
+									<td><?php echo date("m-d-Y", strtotime($data["date"])); ?></td>
 									<td height="55px"><?php echo $data["referenceId"]; ?></td>					
 									<td style="text-align: right">
 										<?php if ($data['creditDebit'] == 'debit'){

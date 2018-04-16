@@ -49,7 +49,7 @@ if ($result2->num_rows > 0) {
 	echo "0 results";
 }
 
-header('Location: /PostedJournals.php');
+header('Location: /AccountLedger.php');
 //echo "row: " . $data["firstName"] . " " . $data["lastName"];
 $conn->close();
 ?>

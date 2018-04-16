@@ -1,8 +1,8 @@
 <?php
 session_start();
-if ($_SESSION['username'] == null) {
-    header('Location: /index.php');
-}
+//if ($_SESSION['username'] == null) {
+//    header('Location: /index.php');
+//}
 
 if(!empty($_GET['date'])){
     $date = $_GET['date'];
@@ -50,7 +50,7 @@ echo $date;
     </div>
     <!-- BIG OLE STINKIN TABLE -->
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <table id="example" name="example" class="display table-striped" cellspacing="10" width="90%" style="margin-left: auto; margin-right: auto; color: #DD9787">
+        <table id="example" name="example" class="display table-striped" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto; color: #DD9787">
             <thead>
             <tr>
                 <th width="25%">DATE</th>
@@ -82,13 +82,12 @@ echo $date;
 				<td></td>
                 <td style="font-size: 28; color: #DD9787; padding-top: 15px">
                     <div class="form-group">
-<<<<<<< HEAD
+<!--<<<<<< HEAD 
                         <select class="form-control" id="debitAccountName0" name="debitAccountName0" onchange="checkOptD(id)">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Select Account</option>
-=======
+<!--======= -->
                         <select class="debitAccountName form-control" id="debitAccountName0" name="debitAccountName0">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Account</option>
->>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927
                             <!-- php for filling debit accounts-->                            
                             <?php if ($result->num_rows > 0) {while($dataDebits = $result->fetch_assoc()) { ?>			
 						    <?php echo "<option value=".$dataDebits['systemId'].">" . $dataDebits["accountId"] . " - " . $dataDebits["accountName"] . "</option>"; ?>
@@ -119,13 +118,13 @@ echo $date;
                 <td></td>
                 <td style="font-size: 28; color: #DD9787; padding-top: 15px">
                     <div class="form-group">
-<<<<<<< HEAD
+<!--<<<<<< HEAD 
                         <select class="form-control" id="creditAccountName0" name="creditAccountName0" onchange="checkOptC(id)">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Select Account</option>
-=======
+<!--======= -->
                         <select class="creditAccountName form-control" id="creditAccountName0" name="creditAccountName0">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Account</option>
->>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927
+<!-->>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927 -->
                             <!-- php for filling debit accounts-->                            
                             <?php if ($result2->num_rows > 0) {while($dataCredits = $result2->fetch_assoc()) { ?>			
 						    <?php echo "<option value=".$dataCredits['systemId'].">" . $dataCredits["accountId"] . " - " . $dataCredits["accountName"] . "</option>"; ?>
@@ -274,7 +273,7 @@ $(function() {
 
 	$('#datetimepicker6').datetimepicker({
 		//defaultDate: "3/1/2018",
-		format: 'MM-DD-YYYY HH:mm:SS', 
+		format: 'MM-DD-YYYY', 
 		useCurrent: true,
 		minDate: new Date(), 
 		disabledDate: [
@@ -358,15 +357,15 @@ $(function() {
             "                    <td></td>\n" +
             "                    <td style=\"font-size: 28; color: #DD9787; padding-top: 15px\">\n" +
             "                        <div class=\"form-group\">\n" +
-<<<<<<< HEAD
+//<<<<<<< HEAD
             "                            <select class=\"form-control\" id=\"debitAccountName\" name=\"debitAccountName\" onchange=\"checkOptD(id)\">\n" +
-            "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Select Account</option>\n" +
-=======
-            "                            <select class=\"debitAccountName form-control\" id=\"debitAccountName\" name=\"debitAccountName\">\n" +
             "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Account</option>\n" +
-            "                                <option value=\"Cash\">105 Cash</option>\n" +
-            "                                <option value=\"Petty Cash\">106 Petty Cash</option>\n" +
->>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927
+//=======
+//            "                            <select class=\"debitAccountName form-control\" id=\"debitAccountName\" name=\"debitAccountName\">\n" +
+//            "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Account</option>\n" +
+//            "                                <option value=\"Cash\">105 Cash</option>\n" +
+//            "                                <option value=\"Petty Cash\">106 Petty Cash</option>\n" +
+//>>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927
             "                            </select>\n" +
             "                        </div>\n" +
             "                    </td>\n" +
@@ -419,19 +418,19 @@ $(function() {
             "                    <td></td>\n" +
             "                    <td style=\"font-size: 28; color: #DD9787; padding-top: 15px\">\n" +
             "                        <div class=\"form-group\">\n" +
-<<<<<<< HEAD
+//<<<<<<< HEAD
             "                            <select class=\"form-control\" id=\"creditAccountName\" name=\"creditAccountName\" onchange=\"checkOptC(id)\">\n" +
-            "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Select Account</option>\n" +
-=======
-            "                            <select class=\"creditAccountName form-control\" id=\"creditAccountName\" name=\"creditAccountName\">\n" +
             "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Account</option>\n" +
-            "                                <option>105 Cash</option>\n" +
-            "                                <option>106 Petty Cash</option>\n" +
-            "                                <option>201 Get Bent</option>\n" +
-            "                                <option>314 Filler</option>\n" +
-            "                                <option>125 Anything</option>\n" +
-            "                                <option>743 IDK</option>\n" +
->>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927
+//=======
+//            "                            <select class=\"creditAccountName form-control\" id=\"creditAccountName\" name=\"creditAccountName\">\n" +
+//            "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Account</option>\n" +
+//            "                                <option>105 Cash</option>\n" +
+//            "                                <option>106 Petty Cash</option>\n" +
+//            "                                <option>201 Get Bent</option>\n" +
+//            "                                <option>314 Filler</option>\n" +
+//            "                                <option>125 Anything</option>\n" +
+//            "                                <option>743 IDK</option>\n" +
+//>>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927
             "                            </select>\n" +
             "                        </div>\n" +
             "                    </td>\n" +

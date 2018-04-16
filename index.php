@@ -22,6 +22,7 @@
 			$_SESSION['userId'] = $data['userId'];
 			$_SESSION['systemId'] = $data['systemId'];
 			$_SESSION['position'] = $data['position'];
+			$_SESSION['financialDate'] = date('Y-m-d');
 		} else {
 			$fmsg = "Invalid Username/Password";
 		}

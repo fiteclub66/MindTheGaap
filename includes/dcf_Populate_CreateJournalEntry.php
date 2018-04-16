@@ -15,7 +15,8 @@ if ($conn->connect_error) {
 }
 
 
-$sql = "SELECT ChartOfAccounts.accountName, ChartOfAccounts.systemId, ChartOfAccounts.accountId, ChartOfAccounts.linkedAccount, Accounts.systemId FROM mindthegaap.ChartOfAccounts, mindthegaap.Accounts WHERE ChartOfAccounts.linkedAccount = Accounts.systemId AND Accounts.normalSide = 'Left'";
+//$sql = "SELECT ChartOfAccounts.accountName, ChartOfAccounts.systemId, ChartOfAccounts.accountId, ChartOfAccounts.linkedAccount, Accounts.systemId FROM mindthegaap.ChartOfAccounts, mindthegaap.Accounts WHERE ChartOfAccounts.linkedAccount = Accounts.systemId AND Accounts.normalSide = 'Left'";
+$sql = "SELECT ChartOfAccounts.accountName, ChartOfAccounts.systemId, ChartOfAccounts.accountId, ChartOfAccounts.linkedAccount, Accounts.systemId FROM mindthegaap.ChartOfAccounts, mindthegaap.Accounts WHERE ChartOfAccounts.linkedAccount = Accounts.systemId";
 $result = $conn->query($sql);
 $dataDebits;
 if ($result->num_rows > 0) {
@@ -41,7 +42,8 @@ if ($result->num_rows > 0) {
 	//echo "0 results";
 //}
 
-$sql2 = "SELECT ChartOfAccounts.accountName, ChartOfAccounts.systemId, ChartOfAccounts.accountId, ChartOfAccounts.linkedAccount, Accounts.systemId FROM mindthegaap.ChartOfAccounts, mindthegaap.Accounts WHERE ChartOfAccounts.linkedAccount = Accounts.systemId AND Accounts.normalSide = 'Right'";
+//$sql2 = "SELECT ChartOfAccounts.accountName, ChartOfAccounts.systemId, ChartOfAccounts.accountId, ChartOfAccounts.linkedAccount, Accounts.systemId FROM mindthegaap.ChartOfAccounts, mindthegaap.Accounts WHERE ChartOfAccounts.linkedAccount = Accounts.systemId AND Accounts.normalSide = 'Right'";
+$sql2 = "SELECT ChartOfAccounts.accountName, ChartOfAccounts.systemId, ChartOfAccounts.accountId, ChartOfAccounts.linkedAccount, Accounts.systemId FROM mindthegaap.ChartOfAccounts, mindthegaap.Accounts WHERE ChartOfAccounts.linkedAccount = Accounts.systemId";
 $result2 = $conn->query($sql2);
 $dataCredits;
 if ($result2->num_rows > 0) {

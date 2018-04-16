@@ -95,7 +95,8 @@
 						<?php $currentDate =''; $fileCounter = 0; $editButtonCounter = 0; $currentGroupNumber = 1; $commentsCounter = 1;?>
 						<?php while($data = $result->fetch_assoc()) { ?>
 							<tr>
-								<td><?php if($data['date'] != $currentDate && $data['creditDebit'] == "debit"){ echo $data["date"]; $currentDate = $data['date'];} ?></td>
+								<td><?php if($editButtonCounter == 0 && $data['creditDebit'] == 'debit'){ echo date("m-d-Y", strtotime($data["date"])); $currentDate = $data['date'];} ?></td>
+								<!--<td></?php echo $data["date"];?></td>-->
 								<td height="55px"><?php echo $data["referenceId"]; ?></td>
 								<td width="25%"<?php if($data['creditDebit'] == 'credit') {echo 'style="padding-left: 75px;"';}?>><?php echo $data["accountName"]; ?></td>
 								<td width="10%" style="text-align: right"><?php if ($data['creditDebit'] == 'debit'){echo number_format(doubleval($data["amount"]), 2, '.', ',');} ?></td>
@@ -106,10 +107,11 @@
 									<button type="button" id="rejectButton" class="btn btn-success" data-toggle="modal" data-target="#myModal" style="background-color: #DD9787; border-bottom: 5px solid #990000; border-top: 0px; border-left: 0px; border-right: 0px; padding-bottom: -5px" value="'.$data["journalGroup"].'">REJECT</button>'; $editButtonCounter++;} elseif ($data['creditDebit'] == "credit") {$editButtonCounter = 0;} ?>
 								</td>
 							</tr>
-							<?php if($commentsCounter == $data['numParts']) {echo '<tr><td></td><td></td><td>'.$data['comments'].'</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'; $commentsCounter = 1;} else {$commentsCounter++;} ?>
+							<!--</?php if($commentsCounter == $data['numParts']) {echo '<tr><td></td><td></td><td>'.$data['comments'].'</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'; $commentsCounter = 1;} else {$commentsCounter++;} ?> -->
 						<?php } ?>
 			        </tbody>
 			    </table>
+			    <br><br><br>
 			</div>
 			
 			<!-- THE MODAL -->
