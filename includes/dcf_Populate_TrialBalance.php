@@ -22,7 +22,7 @@ if ($conn->connect_error) {
 	die ("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT DISTINCT accountName, accountSystemId FROM mindthegaap.Journals";
+$sql = "SELECT DISTINCT Journals.accountName, Journals.accountSystemId FROM mindthegaap.Journals, mindthegaap.Accounts WHERE Journals.accountSystemId = Accounts.systemId ORDER BY Accounts.accountOrder ASC";
 
 $result = $conn->query($sql);
 $result2;

@@ -9,7 +9,7 @@
 		$date = "";
 	}
 ?>
-<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_TrialBalance.php"); ?>
+<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_IncomeStatement.php"); ?>
 
 <html lang="en">
 	<head>
@@ -35,8 +35,12 @@
 				<h3>Company Name</h3>
 				<h4>Income Statement</h4>
 				<!--<h6>For the Period Ending on </?php echo date("m/d/Y"); ?></h6> -->
+<!--
 				<h6>For the Period Ending on <span id="dateInsert" name="dateInsert" onload="test()"></span></h5>
+-->
+			<h6>For the Period Ending on <?php $dummyDate = $_SESSION['financialDate']; echo date("m/d/Y", strtotime($dummyDate));?></h5>
 			</div>
+			<form action="IncomeStatement.php" method="post">
 			<div class="row">
 				<div class="col-xs-0 col-sm-0 col-md-7 col-lg-9"></div>
 				<div class="col-xs-12 col-sm-12 col-md-5 col-lg-3">
@@ -49,33 +53,131 @@
 					</div>
 				</div>
 			</div>
+			</form>
 			<div>
-				<br><br>
-				<table id="example" name="example" class="display" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto;"> <!--color: #DD9787 -->
+				<!--</?php print_r($result); ?> -->
+				<table id="example" name="example" class="display" cellspacing="10" width="40%" style="margin-left: auto; margin-right: auto;"> <!--color: #DD9787 -->
 						<thead>
 							<tr>
 								<th style="color: white;">&nbsp;</th>
-								<th><u>DEBIT</u></th>
-								<th><u>CREDIT</u></th>
+								<th style="text-align: center;">&nbsp;</th>
 							</tr>
-						</thead>
-						<!-- uncomment if search bar per column is wanted -->
-						<!--<tfoot>
-							<tr>
-								<th>Name</th>
-								<th>CATEGORY</th>
-								<th style="color: white">&nbsp;</th>
-							</tr>
-						</tfoot> -->
+						</thead>						
 						<tbody style="margin-bottom: 10px;">
-				<!-- </?php while($data = $result->fetch_assoc()) { ?> -->
-						<tr>
-								<td>Accounts with balances greater than 0 go here<!--</?php echo $data["accountName"]; ?>--></td>
-								<td>$<!--</?php echo $data["category"]; ?>--></td>
-								<td></td>
+							<tr>
+								<td><b>Revenues</b></td>
 							</tr>
-				<!--	</?php } ?> -->
+							<?php 
+								$firstEntry = true;
+								$revenueTotal = 0;
+								
+								while($revenueData = $revenueResults->fetch_assoc()) { 
+								
+								if ($revenueResults->num_rows > 0) {
+									
+									$currentAccount = $revenueData['accountName'];
+									$currentSystemId = $revenueData['accountSystemId'];
+									$selectedDate = $_SESSION['financialDate'];
+									$ridiculousSQL = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='REG' GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='REG' GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
+									
+									$revenueResult2 = $conn->query($ridiculousSQL);
+									
+									while($revenueData2 = $revenueResult2->fetch_assoc()) { 
+										$currentNormalSide = $revenueData2['normalSide'];
+										?>
+										<tr height="35px" >
+											<td style="padding-left: 55px;"><?php echo $revenueData2["accountName"]; ?></td>
+											<!-- if($data2['balance'] > 0) //for if he doesn't want $0 balances showing{ -->
+											<td style="text-align: right"><?php $revenueTotal = $revenueTotal + (float)$revenueData2['balance']; if($firstEntry == true){echo "$"; $firstEntry = false;} $revenueData2['balance'] = number_format((float)$revenueData2['balance'], 0, ".", ","); if (substr($revenueData2['balance'], 0, 1) == "-"){ $revenueData2['balance'] = str_replace("-", "(", $revenueData2['balance']); $revenueData2['balance'] = $revenueData2['balance'] . ")"; echo $revenueData2['balance']; } else {echo $revenueData2['balance'];} ?></<td>										
+										</tr>		
+									<?php } ?>
+							<?php } ?>
+						<?php } ?>
+							<tr height="25px">
+								<td><b>Total Revenues</b></td>
+								<td style="text-align: right; border-bottom: solid 1px; border-top: solid 1px;">
+								<!--<td style="text-align: right;">
+									<span style="border-bottom: 1px solid #000; border-top: 1px solid #000;"> -->
+									<span>
+										<?php 
+											$revenueTotalPrint = number_format($revenueTotal, 0, ".", ",");
+											if (substr($revenueTotalPrint, 0, 1) == "-"){ 
+												$revenueTotalPrint = str_replace("-", "(", $revenueTotalPrint); 
+												$revenueTotalPrint = $revenueTotalPrint . ")";											
+											}
+											echo $revenueTotalPrint; 
+										?>
+									</span>
+								</td>	
+							</tr>
+							<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+							<tr>
+								<td><b>Expenses</b></td>
+							</tr>
+							<?php 
+								$expenseTotal = 0;
+								
+								while($expenseData = $expenseResults->fetch_assoc()) { 
+								
+								if ($expenseResults->num_rows > 0) {
+									
+									$currentAccount = $expenseData['accountName'];
+									$currentSystemId = $expenseData['accountSystemId'];
+									$selectedDate = $_SESSION['financialDate'];
+									$ridiculousSQL2 = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='REG' GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='REG' GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
+									
+									$expenseResults2 = $conn->query($ridiculousSQL2);
+									
+									while($expenseData2 = $expenseResults2->fetch_assoc()) { 
+										$currentNormalSide = $expenseData2['normalSide'];
+										?>
+										<tr height="35px" >
+											<td><?php echo $expenseData2["accountName"]; ?></td>
+											<!-- if($data2['balance'] > 0) //for if he doesn't want $0 balances showing{ -->
+											<td style="text-align: right"><?php $expenseTotal = $expenseTotal + (float)$expenseData2['balance'];  $expenseData2['balance'] = number_format((float)$expenseData2['balance'], 0, ".", ","); if (substr($expenseData2['balance'], 0, 1) == "-"){ $expenseData2['balance'] = str_replace("-", "(", $expenseData2['balance']); $expenseData2['balance'] = $expenseData2['balance'] . ")"; echo $expenseData2['balance']; } else {echo $expenseData2['balance'];} ?></<td>										
+										</tr>		
+									<?php } ?>
+							<?php } ?>
+						<?php } ?>
+							<tr height="25px">
+								<td><b>Total Expenses</b></td>
+								<!--<td style="text-align: right;">
+									<span style="border-bottom: 1px solid #000; border-top: 1px solid #000;"> -->
+									<td style="border-bottom: solid 1px; border-top: solid 1px; text-align: right;">
+										<?php 
+											$expenseTotalPrint = number_format($expenseTotal, 0, ".", ",");
+											if (substr($expenseTotalPrint, 0, 1) == "-"){ 
+												$expenseTotalPrint = str_replace("-", "(", $expenseTotalPrint); 
+												$expenseTotalPrint = $expenseTotalPrint . ")"; 
+											}
+											echo $expenseTotalPrint;
+										?>
+									</span>
+								</td>	
+							</tr>
+							<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+							<tr height="25px">
+								<td style="text-align: left;"><b>Net Income/Loss</b></td>
+								<td style="text-align: right; border-bottom: double 3px; border-top: solid 1px;">
+									<span>$
+										<?php 
+											$netAmount = $revenueTotal - $expenseTotal;
+											$netAmountPrint = number_format(($revenueTotal - $expenseTotal), 0, ".", ",");
+											if (substr($netAmountPrint, 0, 1) == "-"){ 
+													$netAmountPrint = str_replace("-", "(", $netAmountPrint); 
+													$netAmountPrint = $netAmountPrint . ")"; 
+												}
+											echo $netAmountPrint;
+											//echo "R: " . $revenueTotal . "  E: " . $expenseTotal;
+										?>
+									</span>
+								</td>
+								<!--<td style="text-align: right;"><span style="text-decoration: underline; border-bottom: 1px solid #000; border-top: 1px solid #000;">$</?php echo number_format(abs($expenseTotal), 0, ".", ",");?></span></td> -->	
+							</tr>
+							
+							
 						</tbody>
+						
 					</table>
 			</div>
 			
@@ -85,7 +187,7 @@
 			$('#datetimepicker6').datetimepicker({
 			defaultDate: new Date(),
 			format: 'MM/DD/YYYY', 
-			useCurrent: true,
+			useCurrent: false,
 			maxDate: new Date(), 
 			disabledDate: [
 				new Date()
@@ -97,9 +199,6 @@
 			//]
 			//startDate: '-7d',
 			//endDate: '+0d'
-		});
-		$( document ).ready(function() {
-			document.getElementById('dateInsert').innerHTML = document.getElementById('datetime').value;
 		});
 		</script>
 	</body>
