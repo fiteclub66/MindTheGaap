@@ -14,7 +14,7 @@
 
 <html lang="en">
 	<head>
-		<title>Retained Eanrings</title>
+		<title>Retained Earnings</title>
 	
 	<!-- header is in the header.php file with all the scripts, css, and other files needed for formating --> 
 	<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/header.php"); ?>
@@ -68,7 +68,15 @@
 							<tr height="30px">
 								<td>Beginning Retained Earnings, 1/1/2018</td>
 								<td style="text-align: right;">$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-								<?php $beginningRE = 0 ; echo $beginningRE; ?></td>
+									<?php 
+											$beginningREPrint = number_format($beginningRE, 0, ".", ",");
+											if (substr($beginningREPrint, 0, 1) == "-"){ 
+												$beginningREPrint = str_replace("-", "(", $beginningREPrint); 
+												$beginningREPrint = $beginningREPrint . ")";											
+											}
+											echo $beginningREPrint;
+									?>
+								</td>
 							</tr>
 							<tr height="30px">
 								<td>Add: Net Income</td>
@@ -86,7 +94,7 @@
 							<tr height="30px">
 								<td>Less: Dividends</td>
 								<td style="text-align: right;">
-									<?php $dividends = 0;
+									<?php 
 										$dividendsPrint = number_format($dividends, 0, ".", ",");
 										if (substr($dividentsPrint, 0, 1) == "-"){ 
 											$dividendsPrint = str_replace("-", "(", $dividendsPrint); 
