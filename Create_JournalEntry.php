@@ -86,7 +86,7 @@ echo $date;
                         <select class="form-control" id="debitAccountName0" name="debitAccountName0" onchange="checkOptD(id)">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Select Account</option>
 <!--======= -->
-                        <select class="debitAccountName form-control" id="debitAccountName0" name="debitAccountName0">
+                        <select class="accountName debitAccountName form-control" id="debitAccountName0" name="debitAccountName0">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Account</option>
                             <!-- php for filling debit accounts-->                            
                             <?php if ($result->num_rows > 0) {while($dataDebits = $result->fetch_assoc()) { ?>			
@@ -122,7 +122,7 @@ echo $date;
                         <select class="form-control" id="creditAccountName0" name="creditAccountName0" onchange="checkOptC(id)">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Select Account</option>
 <!--======= -->
-                        <select class="creditAccountName form-control" id="creditAccountName0" name="creditAccountName0">
+                        <select class="accountName creditAccountName form-control" id="creditAccountName0" name="creditAccountName0">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Account</option>
 <!-->>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927 -->
                             <!-- php for filling debit accounts-->                            
@@ -247,6 +247,17 @@ $(function() {
                 error = true;
                 $('.error-wrap').removeClass('d-none');
                 $('.error-wrap .alert').html('Error! You can not select the same debit accounts.');
+            }
+        });
+
+        var allAccountNamesArray = [];
+        $('.accountName option:selected').each(function(){
+            if(!allAccountNamesArray.includes($(this).text())){
+                allAccountNamesArray.push($(this).text());
+            }else{
+                error = true;
+                $('.error-wrap').removeClass('d-none');
+                $('.error-wrap .alert').html('Error! You can not select an account name twice in the same journal transaction.');
             }
         });
 
@@ -384,7 +395,7 @@ $(function() {
             "                    <td style=\"font-size: 28; color: #DD9787; padding-top: 15px\">\n" +
             "                        <div class=\"form-group\">\n" +
 //<<<<<<< HEAD
-            "                            <select class=\"form-control debitAccountName\" id=\"debitAccountName\" name=\"debitAccountName\" >\n" +
+            "                            <select class=\"form-control debitAccountName accountName\" id=\"debitAccountName\" name=\"debitAccountName\" >\n" +
             "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Account</option>\n" +
 //=======
 //            "                            <select class=\"debitAccountName form-control\" id=\"debitAccountName\" name=\"debitAccountName\">\n" +
@@ -445,7 +456,7 @@ $(function() {
             "                    <td style=\"font-size: 28; color: #DD9787; padding-top: 15px\">\n" +
             "                        <div class=\"form-group\">\n" +
 //<<<<<<< HEAD
-            "                            <select class=\"creditAccountName form-control\" id=\"creditAccountName\" name=\"creditAccountName\" >\n" +
+            "                            <select class=\"creditAccountName form-control accountName\" id=\"creditAccountName\" name=\"creditAccountName\" >\n" +
             "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Account</option>\n" +
 //=======
 //            "                            <select class=\"creditAccountName form-control\" id=\"creditAccountName\" name=\"creditAccountName\">\n" +
