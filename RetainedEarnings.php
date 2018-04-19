@@ -10,6 +10,7 @@
 	}
 ?>
 <?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_RetainedEarnings.php"); ?>
+<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/NetIncomeCalculation.php"); ?>
 
 <html lang="en">
 	<head>
@@ -32,11 +33,15 @@
 				
 			</div>
 			<div style="text-align: center;" id="tester">
-				<h3>Mind The Gaap</h3>
-				<h4>Retained Earnings</h4>
+				<h3>Company Name</h3>
+				<h4>Retained Earning</h4>
 				<!--<h6>For the Period Ending on </?php echo date("m/d/Y"); ?></h6> -->
+<!--
 				<h6>For the Period Ending on <span id="dateInsert" name="dateInsert" onload="test()"></span></h5>
+-->
+			<h6>For the Period Ending on <?php $dummyDate = $_SESSION['financialDate']; echo date("m/d/Y", strtotime($dummyDate));?></h5>
 			</div>
+			<form action="IncomeStatement.php" method="post">
 			<div class="row">
 				<div class="col-xs-0 col-sm-0 col-md-7 col-lg-9"></div>
 				<div class="col-xs-12 col-sm-12 col-md-5 col-lg-3">
@@ -49,33 +54,72 @@
 					</div>
 				</div>
 			</div>
+			</form>
 			<div>
-				<br><br>
-				<table id="example" name="example" class="display" cellspacing="10" width="100%" style="margin-left: auto; margin-right: auto;"> <!--color: #DD9787 -->
+				<!--</?php print_r($result); ?> -->
+				<table id="example" name="example" class="display" cellspacing="10" width="40%" style="margin-left: auto; margin-right: auto;"> <!--color: #DD9787 -->
 						<thead>
 							<tr>
 								<th style="color: white;">&nbsp;</th>
-								<th><u>DEBIT</u></th>
-								<th><u>CREDIT</u></th>
+								<th style="text-align: center;">&nbsp;</th>
 							</tr>
-						</thead>
-						<!-- uncomment if search bar per column is wanted -->
-						<!--<tfoot>
-							<tr>
-								<th>Name</th>
-								<th>CATEGORY</th>
-								<th style="color: white">&nbsp;</th>
-							</tr>
-						</tfoot> -->
+						</thead>						
 						<tbody style="margin-bottom: 10px;">
-				<!-- </?php while($data = $result->fetch_assoc()) { ?> -->
-						<tr>
-								<td>Accounts with balances greater than 0 go here<!--</?php echo $data["accountName"]; ?>--></td>
-								<td>$<!--</?php echo $data["category"]; ?>--></td>
-								<td></td>
+							<tr height="30px">
+								<td>Beginning Retained Earnings, 1/1/2018</td>
+								<td style="text-align: right;">$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+									<?php 
+											$beginningREPrint = number_format($beginningRE, 0, ".", ",");
+											if (substr($beginningREPrint, 0, 1) == "-"){ 
+												$beginningREPrint = str_replace("-", "(", $beginningREPrint); 
+												$beginningREPrint = $beginningREPrint . ")";											
+											}
+											echo $beginningREPrint;
+									?>
+								</td>
 							</tr>
-				<!--	</?php } ?> -->
+							<tr height="30px">
+								<td>Add: Net Income</td>
+								<td style="text-align: right;">
+									<?php 
+										$netIncomePrint = number_format($netIncome, 0, ".", ",");
+										if (substr($netIncomePrint, 0, 1) == "-"){ 
+											$netIncomePrint = str_replace("-", "(", $netIncomePrint); 
+											$netIncomePrint = $netIncomePrint . ")";											
+										}
+										echo $netIncomePrint;
+									?>
+								</td>
+							</tr>
+							<tr height="30px">
+								<td>Less: Dividends</td>
+								<td style="text-align: right;">
+									<?php 
+										$dividendsPrint = number_format($dividends, 0, ".", ",");
+										if (substr($dividentsPrint, 0, 1) == "-"){ 
+											$dividendsPrint = str_replace("-", "(", $dividendsPrint); 
+											$dividendsPrint = $dividendsPrint . ")";											
+										}
+										echo $dividendsPrint;
+									?> 
+								</td>
+							</tr>
+							<tr height="30px">
+								<td>End Retained Earnings, <?php echo date("m/d/Y", strtotime($dummyDate)); ?> </td>
+								<td style="text-align: right; border-top: solid 1px; border-bottom: double 3px;">
+									<?php 
+										$endRE = $beginningRE + $netIncome - $dividends; 
+										$endREPrint = number_format($endRE, 0, ".", ",");
+										if (substr($endREPrint, 0, 1) == "-"){ 
+											$endREPrint = str_replace("-", "(", $endREPrint); 
+											$endREPrint = $endREPrint . ")";											
+										}
+										echo "$ " .$endREPrint;
+									?>
+								</td>
+							</tr>	
 						</tbody>
+						
 					</table>
 			</div>
 			
@@ -85,7 +129,7 @@
 			$('#datetimepicker6').datetimepicker({
 			defaultDate: new Date(),
 			format: 'MM/DD/YYYY', 
-			useCurrent: true,
+			useCurrent: false,
 			maxDate: new Date(), 
 			disabledDate: [
 				new Date()
@@ -97,9 +141,6 @@
 			//]
 			//startDate: '-7d',
 			//endDate: '+0d'
-		});
-		$( document ).ready(function() {
-			document.getElementById('dateInsert').innerHTML = document.getElementById('datetime').value;
 		});
 		</script>
 	</body>

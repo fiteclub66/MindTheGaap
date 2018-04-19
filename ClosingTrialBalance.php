@@ -97,8 +97,8 @@
 										<tr style="border-bottom: solid 1px;" height="35px" >
 											<td><?php echo $data2["accountName"]; ?></td>
 											<!-- if($data2['balance'] > 0) //for if he doesn't want $0 balances showing{ -->
-											<td style="text-align: center"><?php if($currentNormalSide == "Left"){$debitTotal = $debitTotal + (float)$data2['balance']; if($firstDebit == true){echo "$"; $firstDebit = false;} $data2['balance'] = number_format((float)$data2['balance'], 0, ".", ","); if (substr($data2['balance'], 0, 1) == "-"){ $data2['balance'] = str_replace("-", "[", $data2['balance']); $data2['balance'] = $data2['balance'] . "]"; echo $data2['balance']; } else {echo $data2['balance'];}} ?></<td>
-											<td style="text-align: center"><?php if($currentNormalSide == "Right"){$creditTotal = $creditTotal + (float)$data2['balance']; if($firstCredit == true){echo "$"; $firstCredit = false;} $data2['balance'] = number_format((float)$data2['balance'], 0, ".", ","); if (substr($data2['balance'], 0, 1) == "-"){ $data2['balance'] = str_replace("-", "[", $data2['balance']); $data2['balance'] = $data2['balance'] . "]"; echo $data2['balance']; } else {echo $data2['balance'];}} ?></td>
+											<td style="text-align: center"><?php if($currentNormalSide == "Left"){$debitTotal = $debitTotal + (float)$data2['balance']; if($firstDebit == true){echo "$"; $firstDebit = false;} $data2['balance'] = number_format((float)$data2['balance'], 0, ".", ","); if (substr($data2['balance'], 0, 1) == "-"){ $data2['balance'] = str_replace("-", "(", $data2['balance']); $data2['balance'] = $data2['balance'] . ")"; echo $data2['balance']; } else {echo $data2['balance'];}} ?></<td>
+											<td style="text-align: center"><?php if($currentNormalSide == "Right"){$data2['balance'] = ((float)$data2['balance'] * -1);$creditTotal = $creditTotal + (float)$data2['balance']; if($firstCredit == true){echo "$"; $firstCredit = false;} $data2['balance'] = number_format((float)$data2['balance'], 0, ".", ","); if (substr($data2['balance'], 0, 1) == "-"){ $data2['balance'] = str_replace("-", "(", $data2['balance']); $data2['balance'] = $data2['balance'] . ")"; echo $data2['balance']; } else {echo $data2['balance'];}} ?></td>
 										</tr>		
 									<?php } ?>
 							<?php } ?>
@@ -111,6 +111,7 @@
 							</tr>
 						</tbody>
 					</table>
+					</br></br></br>
 			</div>
 			
 		<!--</form> -->

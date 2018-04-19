@@ -35,8 +35,8 @@
 					<a class="dropdown-item" href="http://www.mindthegaap.info/AdjustedTrialBalance.php">Adjusted Trial Balance</a>
 					<a class="dropdown-item" href="http://www.mindthegaap.info/ClosingTrialBalance.php">Closing Trial Balance</a>
 					<a class="dropdown-item" href="http://www.mindthegaap.info/IncomeStatement.php">Income Statement</a>
-					<a class="dropdown-item" href="http://www.mindthegaap.info/BalanceSheet.php">Balance Sheet</a>
 					<a class="dropdown-item" href="http://www.mindthegaap.info/RetainedEarnings.php">Retained Earnings</a>
+					<a class="dropdown-item" href="http://www.mindthegaap.info/BalanceSheet.php">Balance Sheet</a>				
 				</div>
 			</li>';} ?>
 			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 

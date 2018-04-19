@@ -228,6 +228,7 @@ $(function() {
             }
         });
 
+
         
         var creditAccountNamesArray = [];
         $('.creditAccountName option:selected').each(function(){
@@ -282,11 +283,7 @@ $(function() {
             $('.error-wrap').removeClass('d-none');
             $('.error-wrap .alert').html('Error! Please select a date.');
         }
-        if($('#type option:selected').val()===""){
-            error = true;
-            $('.error-wrap').removeClass('d-none');
-            $('.error-wrap .alert').html('Error! Please select an entry type.');
-        }
+
 
         if(!error){
             if(totalDebit==totalCredit) {
@@ -355,31 +352,31 @@ $(function() {
 		}
 	}
 	
-	// function checkOptD(id){
-	// 	var selectedOpt = $('#'+id+' option:selected');
-	// 	for(var i=0;i<=dCount;++i){
-	// 		var compOpt = $('#debitAccountName'+i+' option:selected');
-	// 		if( (selectedOpt.text() == compOpt.text())) {
-	// 			if(id != ('debitAccountName'+i)){
-	// 				alert("Error: You cannot select the same account.");
-	// 				$('#'+id+' option:contains("Select")').prop('selected', true);
-	// 			}
-	// 		}
-	// 	}
-	// }
+	function checkOptD(id){
+		var selectedOpt = $('#'+id+' option:selected');
+		for(var i=0;i<=dCount;++i){
+			var compOpt = $('#debitAccountName'+i+' option:selected');
+			if( (selectedOpt.text() == compOpt.text())) {
+				if(id != ('debitAccountName'+i)){
+					alert("Error: You cannot select the same account.");
+					$('#'+id+' option:contains("Select")').prop('selected', true);
+				}
+			}
+		}
+	}
 	
-	// function checkOptC(id){
-	// 	var selectedOpt = $('#'+id+' option:selected');
-	// 	for(var i=0;i<=cCount;++i){
-	// 		var compOpt = $('#creditAccountName'+i+' option:selected');
-	// 		if( (selectedOpt.text() == compOpt.text())) {
-	// 			if(id != ('creditAccountName'+i)){
-	// 				alert("Error: You cannot select the same account.");
-	// 				$('#'+id+' option:contains("Select")').prop('selected', true);
-	// 			}
-	// 		}
-	// 	}
-	// }
+	function checkOptC(id){
+		var selectedOpt = $('#'+id+' option:selected');
+		for(var i=0;i<=cCount;++i){
+			var compOpt = $('#creditAccountName'+i+' option:selected');
+			if( (selectedOpt.text() == compOpt.text())) {
+				if(id != ('creditAccountName'+i)){
+					alert("Error: You cannot select the same account.");
+					$('#'+id+' option:contains("Select")').prop('selected', true);
+				}
+			}
+		}
+	}
     
     function appendD() {
         getAllDebits();
@@ -395,7 +392,11 @@ $(function() {
             "                    <td style=\"font-size: 28; color: #DD9787; padding-top: 15px\">\n" +
             "                        <div class=\"form-group\">\n" +
 //<<<<<<< HEAD
-            "                            <select class=\"form-control debitAccountName accountName\" id=\"debitAccountName\" name=\"debitAccountName\" >\n" +
+                                        //commented this out as one of the 3 conflicts
+            "                            //<select class=\"form-control debitAccountName accountName\" id=\"debitAccountName\" name=\"debitAccountName\" >\n" +
+
+            "                            <select class=\"form-control\" id=\"debitAccountName\" name=\"debitAccountName\" onchange=\"checkOptD(id)\">\n" +
+
             "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Account</option>\n" +
 //=======
 //            "                            <select class=\"debitAccountName form-control\" id=\"debitAccountName\" name=\"debitAccountName\">\n" +
@@ -456,7 +457,11 @@ $(function() {
             "                    <td style=\"font-size: 28; color: #DD9787; padding-top: 15px\">\n" +
             "                        <div class=\"form-group\">\n" +
 //<<<<<<< HEAD
-            "                            <select class=\"creditAccountName form-control accountName\" id=\"creditAccountName\" name=\"creditAccountName\" >\n" +
+                                        //commented this out as one of the three conflicts
+            "                            //<select class=\"creditAccountName form-control accountName\" id=\"creditAccountName\" name=\"creditAccountName\" >\n" +
+=======
+            "                            <select class=\"form-control\" id=\"creditAccountName\" name=\"creditAccountName\" onchange=\"checkOptC(id)\">\n" +
+
             "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Account</option>\n" +
 //=======
 //            "                            <select class=\"creditAccountName form-control\" id=\"creditAccountName\" name=\"creditAccountName\">\n" +
