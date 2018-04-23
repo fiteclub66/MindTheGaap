@@ -314,6 +314,8 @@ $(function() {
         useCurrent: true,
         //maxDate: new Date(),
         //minDate: new Date(), 
+        minDate: new Date(), 
+>>>>>>> 42fc49c9d7da28082c461374da16d257ff3a9914
         disabledDate: [
             new Date()
         ]
@@ -656,4 +658,3 @@ $(function() {
     
 </script>
 </body>
-</html>
