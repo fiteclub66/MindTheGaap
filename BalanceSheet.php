@@ -43,7 +43,7 @@
 <!--
 				<h6>For the Period Ending on <span id="dateInsert" name="dateInsert" onload="test()"></span></h5>
 -->
-			<h6>For the Period Ending on <?php $dummyDate = $_SESSION['financialDate']; echo date("m/d/Y", strtotime($dummyDate));?></h5>
+			<h6>As of <?php $dummyDate = $_SESSION['financialDate']; echo date("m/d/Y", strtotime($dummyDate));?></h5>
 			</div>
 			<form action="BalanceSheet.php" method="post">
 			<div class="row">
@@ -78,26 +78,26 @@
 							</tr>
 							<?php 
 								$firstEntry = true;
-								$revenueTotal = 0;
+								$total_ShortAssets = 0;
 								
-								while($revenueData = $revenueResults->fetch_assoc()) { 
+								if ($results_AssetsShort->num_rows > 0) {
 								
-								if ($revenueResults->num_rows > 0) {
+									while($data_AssetsShort = $results_AssetsShort->fetch_assoc()) { 								
 									
-									$currentAccount = $revenueData['accountName'];
-									$currentSystemId = $revenueData['accountSystemId'];
+									$currentAccount = $data_AssetsShort['accountName'];
+									$currentSystemId = $data_AssetsShort['accountSystemId'];
 									$selectedDate = $_SESSION['financialDate'];
-									$ridiculousSQL = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='REG' GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='REG' GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
+									$ridiculousSQL = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
 									
-									$revenueResult2 = $conn->query($ridiculousSQL);
+									$results_AssetsShort2 = $conn->query($ridiculousSQL);
 									
-									while($revenueData2 = $revenueResult2->fetch_assoc()) { 
-										$currentNormalSide = $revenueData2['normalSide'];
+									while($data_AssetsShort2 = $results_AssetsShort2->fetch_assoc()) { 
+										$currentNormalSide = $data_AssetsShort2['normalSide'];
 										?>
 							<tr height="35px" >
-								<td style="padding-left: 70px;"><?php echo $revenueData2["accountName"]; ?></td>
+								<td style="padding-left: 70px;"><?php echo $data_AssetsShort2["accountName"]; ?></td>
 								<!-- if($data2['balance'] > 0) //for if he doesn't want $0 balances showing{ -->
-								<td style="text-align: right"><?php $revenueTotal = $revenueTotal + (float)$revenueData2['balance']; if($firstEntry == true){echo "$"; $firstEntry = false;} $revenueData2['balance'] = number_format((float)$revenueData2['balance'], 0, ".", ","); if (substr($revenueData2['balance'], 0, 1) == "-"){ $revenueData2['balance'] = str_replace("-", "(", $revenueData2['balance']); $revenueData2['balance'] = $revenueData2['balance'] . ")"; echo $revenueData2['balance']; } else {echo $revenueData2['balance'];} ?></<td>										
+								<td style="text-align: right"><?php $total_ShortAssets = $total_ShortAssets + (float)$data_AssetsShort2['balance']; if($firstEntry == true){echo "$ &nbsp;"; $firstEntry = false;} $data_AssetsShort2['balance'] = number_format((float)$data_AssetsShort2['balance'], 2, ".", ","); if (substr($data_AssetsShort2['balance'], 0, 1) == "-"){ $data_AssetsShort2['balance'] = str_replace("-", "(", $data_AssetsShort2['balance']); $data_AssetsShort2['balance'] = $data_AssetsShort2['balance'] . ")"; echo $data_AssetsShort2['balance']; } else {echo $data_AssetsShort2['balance'];} ?></<td>										
 							</tr>		
 									<?php } ?>
 							<?php } ?>
@@ -105,26 +105,47 @@
 							<tr>
 								<td style="padding-left: 35px;">Total Current Assets</td>
 								<td style="border-top: solid 1px; text-align: right;"></td>
-								<td style="text-align: right;"><?php echo '$ total current assets'; ?></td>
+								<td style="text-align: right;"><?php echo "$ &nbsp" . number_format($total_ShortAssets, 2, ".", ","); ?></td>
 							</tr>
 							<tr>
-								<td style="padding-left: 35px;">Long-Term Assets</td>
+								<td style="padding-left: 35px;">Fixed Assets</td>
 								<td></td>
 								<td></td>
 							</tr>
-						<?php //Loop here for long-term asset print outs ?>
+						<?php 
+								$firstEntry = true;
+								$total_FixedAssets = 0;
+								
+								if ($results_AssetsFixed->num_rows > 0) {
+								
+									while($data_AssetsFixed = $results_AssetsFixed->fetch_assoc()) { 						
+									
+									$currentAccount = $data_AssetsFixed['accountName'];
+									$currentSystemId = $data_AssetsFixed['accountSystemId'];
+									$selectedDate = $_SESSION['financialDate'];
+									$ridiculousSQL = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
+									
+									$results_AssetsFixed2 = $conn->query($ridiculousSQL);
+									
+									while($data_AssetsFixed2 = $results_AssetsFixed2->fetch_assoc()) { 
+										$currentNormalSide = $data_AssetsFixed2['normalSide'];
+										?>
+							<tr height="35px" >
+								<td style="padding-left: 70px;"><?php echo $data_AssetsFixed2["accountName"]; ?></td>
+								<!-- if($data2['balance'] > 0) //for if he doesn't want $0 balances showing{ -->
+								<td style="text-align: right"><?php $total_FixedAssets = $total_FixedAssets + (float)$data_AssetsFixed2['balance']; $data_AssetsFixed2['balance'] = number_format((float)$data_AssetsFixed2['balance'], 2, ".", ","); if (substr($data_AssetsFixed2['balance'], 0, 1) == "-"){ $data_AssetsFixed2['balance'] = str_replace("-", "(", $data_AssetsFixed2['balance']); $data_AssetsFixed2['balance'] = $data_AssetsFixed2['balance'] . ")"; echo $data_AssetsFixed2['balance']; } else {echo $data_AssetsFixed2['balance'];} ?></<td>										
+							</tr>		
+									<?php } ?>
+							<?php } ?>
+						<?php } ?>
 							<tr>
-								<td style="padding-left: 70px;">pull long-term assets pull</td>
-							</tr>
-						<?php //end long-term ass loop here ?>
-							<tr>
-								<td style="padding-left: 35px;">Total Long-Term Assets</td>
+								<td style="padding-left: 35px;">Total Fixed Assets</td>
 								<td style="border-top: solid 1px;"></td>
-								<td style="text-align: right;"><?php echo 'total long-term assets'; ?></td>		
+								<td style="text-align: right;"><?php echo number_format($total_FixedAssets, 2, ".", ","); ?></td>		
 							</tr>
 							<tr><td><b>Total Assets</b></td>
 								<td></td>
-								<td style="text-align: right; border-top: solid 1px; border-bottom: double 3px;"><?php echo 'totalAssets'; ?></td>
+								<td style="text-align: right; border-top: solid 1px; border-bottom: double 3px;"><?php $totalAssets = $total_ShortAssets + $total_FixedAssets; echo number_format($totalAssets, 2, ".", ","); ?></td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
 							<tr>
@@ -142,38 +163,77 @@
 								<td></td>
 								<td></td>
 							</tr>
-							<tr height="25px">
-								<td style="padding-left: 70px;">pull liabilities</td>
-								<td style="text-align: right;">
-								<!--<td style="text-align: right;">
-									<span style="border-bottom: 1px solid #000; border-top: 1px solid #000;"> -->
-									<span>
-										<?php 
-											$revenueTotalPrint = number_format($revenueTotal, 0, ".", ",");
-											if (substr($revenueTotalPrint, 0, 1) == "-"){ 
-												$revenueTotalPrint = str_replace("-", "(", $revenueTotalPrint); 
-												$revenueTotalPrint = $revenueTotalPrint . ")";											
-											}
-											//echo $revenueTotalPrint; 
-											//echo "pull current liabilities";
+							<?php 
+								$firstEntry = true;
+								$total_ShortLiabilities = 0;								
+								
+								if ($results_LiabilitiesShort->num_rows > 0) {
+									
+									while($data_LiabilitiesShort = $results_LiabilitiesShort->fetch_assoc()) { 																
+									
+									$currentAccount = $data_LiabilitiesShort['accountName'];
+									$currentSystemId = $data_LiabilitiesShort['accountSystemId'];
+									$selectedDate = $_SESSION['financialDate'];
+									$ridiculousSQL = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
+									
+									$results_LiabilitiesShort2 = $conn->query($ridiculousSQL);
+									
+									while($data_LiabilitiesShort2 = $results_LiabilitiesShort2->fetch_assoc()) { 
+										$currentNormalSide = $data_LiabilitiesFixed2['normalSide'];
 										?>
-									</span>
-								</td>	
-							</tr>
+							<tr height="35px" >
+								<td style="padding-left: 70px;"><?php echo $data_LiabilitiesShort2["accountName"]; ?></td>
+								<!-- if($data2['balance'] > 0) //for if he doesn't want $0 balances showing{ -->
+								<td style="text-align: right"><?php $total_ShortLiabilities = $total_ShortLiabilities + (float)$data_LiabilitiesShort2['balance']; $data_LiabilitiesShort2['balance'] = number_format((float)$data_LiabilitiesShort2['balance'], 2, ".", ","); if (substr($data_LiabilitiesShort2['balance'], 0, 1) == "-"){ $data_LiabilitiesShort2['balance'] = str_replace("-", "(", $data_LiabilitiesShort2['balance']); $data_LiabilitiesShort2['balance'] = $data_LiabilitiesShort2['balance'] . ")"; echo $data_LiabilitiesShort2['balance']; } else {echo $data_LiabilitiesShort2['balance'];} ?></<td>										
+							</tr>		
+									<?php } ?>
+							<?php } ?>
+						<?php } ?>
 							<tr>
 								<td style="padding-left: 35px;">Total Current Liabilites</td>
 								<td style="border-top: solid 1px; text-align: right">&nbsp;</td>
-								<td style="text-align: right;"><?php echo 'total current liabilities'; ?></td>
+								<td style="text-align: right;"><?php echo number_format($total_ShortLiabilities, 2, ".", ","); ?></td>
 							</tr>
 							<tr>
-								<td style="padding-left: 35px;">Unearned Revenue</td>
+								<td style="padding-left: 35px;">Non-Current Liabilities</td>
 								<td></td>
-								<td style="text-align: right;"><?php echo '$unearned revenue'; ?></td>
+								<td></td>
+							</tr>
+								<?php 
+								$LastEntry = true;
+								$total_FixedLiabilities = 0;								
+								
+								if ($results_LiabilitiesFixed->num_rows > 0) {
+									
+									while($data_LiabilitiesFixed = $results_LiabilitiesFixed->fetch_assoc()) { 																
+									
+									$currentAccount = $data_LiabilitiesFixed['accountName'];
+									$currentSystemId = $data_LiabilitiesFixed['accountSystemId'];
+									$selectedDate = $_SESSION['financialDate'];
+									$ridiculousSQL = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
+									
+									$results_LiabilitiesFixed2 = $conn->query($ridiculousSQL);
+									
+									while($data_LiabilitiesFixed2 = $results_LiabilitiesFixed2->fetch_assoc()) { 
+										$currentNormalSide = $data_LiabilitiesFixed2['normalSide'];
+										?>
+							<tr height="35px" >
+								<td style="padding-left: 70px;"><?php echo $data_LiabilitiesFixed2["accountName"]; ?></td>
+								<!-- if($data2['balance'] > 0) //for if he doesn't want $0 balances showing{ -->
+								<td style="text-align: right"><?php $total_FixedLiabilities = $total_FixedLiabilities + (float)$data_LiabilitiesFixed2['balance']; $data_LiabilitiesFixed2['balance'] = number_format((float)$data_LiabilitiesFixed2['balance'], 2, ".", ","); if (substr($data_LiabilitiesFixed2['balance'], 0, 1) == "-"){ $data_LiabilitiesFixed2['balance'] = str_replace("-", "(", $data_LiabilitiesFixed2['balance']); $data_LiabilitiesFixed2['balance'] = $data_LiabilitiesFixed2['balance'] . ")"; echo "$ &nbsp;" . $data_LiabilitiesFixed2['balance']; } else {echo "$ &nbsp;" . $data_LiabilitiesFixed2['balance'];} ?></<td>										
+							</tr>		
+									<?php } ?>
+							<?php } ?>
+						<?php } ?>
+							<tr>
+								<td style="padding-left: 35px;">Total Non-Current Liabilites</td>
+								<td style="border-top: solid 1px; text-align: right">&nbsp;</td>
+								<td style="text-align: right;"><?php echo number_format($total_FixedLiabilities, 2, ".", ","); ?></td>
 							</tr>
 							<tr>
 								<td>Total Liabilities</td>
 								<td style="padding-top: solid 1px;">&nbsp;</td>
-								<td style="text-align: right; border-top: solid 1px; border-bottom: solid 1px"><?php echo "$ Total Liablities"; ?></td>
+								<td style="text-align: right; border-top: solid 1px; border-bottom: solid 1px"><?php $total_Liabilites = $total_FixedLiabilities + $total_ShortLiabilities; echo number_format($total_Liabilites, 2, ".", ","); ?></td>
 							</tr>
 							<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 							<tr>
@@ -181,26 +241,48 @@
 								<td></td>
 								<td></td>
 							</tr>
-							<tr>
-								<td style="padding-left: 35px;">Contributed Capital</td>
+							<?php 
+								$firstEntry = true;
+								$total_Equity = 0;								
+								
+								if ($results_Equity->num_rows > 0) {
+									
+									while($data_Equity = $results_Equity->fetch_assoc()) { 																
+									
+									$currentAccount = $data_Equity['accountName'];
+									$currentSystemId = $data_Equity['accountSystemId'];
+									$selectedDate = $_SESSION['financialDate'];
+									$ridiculousSQL = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
+									
+									$results_Equity2 = $conn->query($ridiculousSQL);
+									
+									while($data_Equity2 = $results_Equity2->fetch_assoc()) { 
+										$currentNormalSide = $data_Equity2['normalSide'];
+										?>
+							<tr height="35px" >
+								<td style="padding-left: 35px;"><?php echo $data_Equity2["accountName"]; ?></td>
 								<td></td>
-								<td style="text-align: right;"> <?php echo "$ ContributedCapital"; ?></td>
-							</tr>
+								<!-- if($data2['balance'] > 0) //for if he doesn't want $0 balances showing{ -->
+								<td style="text-align: right"><?php $total_Equity = $total_Equity + (float)$data_Equity2['balance']; $data_Equity2['balance'] = number_format((float)$data_Equity2['balance'], 2, ".", ","); if (substr($data_Equity2['balance'], 0, 1) == "-"){ $data_Equity2['balance'] = str_replace("-", "(", $data_Equity2['balance']); $data_Equity2['balance'] = $data_Equity2['balance'] . ")"; echo $data_Equity2['balance']; } else {echo $data_Equity2['balance'];} ?></<td>										
+							</tr>		
+									<?php } ?>
+							<?php } ?>
+						<?php } ?>
 							<tr>
 								<td style="padding-left: 35px;">Retained Earnings</td>
 								<td></td>
-								<td style="text-align: right;"><?php echo "$ RetainedEarnings"; ?></td>
+								<td style="text-align: right;"><?php echo number_format($retainedEarnings, 2, ".", ","); ?></td>
 							</tr>
 							<tr>
 								<td>Total Stockholders' Equity</td>
 								<td></td>
-								<td style="text-align: right; border-top: solid 1px; border-bottom: solid 1px;"><?php echo "$ Total St. Equity"; ?></td>
+								<td style="text-align: right; border-top: solid 1px; border-bottom: solid 1px;"><?php $total_StakeholderEquity = $total_Equity + $retainedEarnings; echo number_format($total_StakeholderEquity, 2, ".", ","); ?></td>
 							</tr>
 							<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 							<tr>
 								<td><b>Total Liabilities & Stockholders' Equity</b></td>
 								<td></td>
-								<td style="text-align: right; border-top: solid 1px; border-bottom: double 3px;"><?php echo "$ Total L + E"; ?></td>
+								<td style="text-align: right; border-top: solid 1px; border-bottom: double 3px;"><?php $total_LiabilitesEquities = $total_Liabilites + $total_StakeholderEquity;  echo "$ &nbsp;" . number_format($total_LiabilitesEquities, 2, ".", ",");?></td>
 							</tr>							
 						</tbody>
 					</table>
@@ -214,7 +296,7 @@
 			defaultDate: new Date(),
 			format: 'MM/DD/YYYY', 
 			useCurrent: false,
-			maxDate: new Date(), 
+			//maxDate: new Date(), 
 			disabledDate: [
 				new Date()
 			]

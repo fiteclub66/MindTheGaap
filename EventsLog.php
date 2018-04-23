@@ -59,7 +59,7 @@
 			                <td><?php echo $data["beforeValue"]; ?></td>
 			                <td><?php echo $data["afterValue"]; ?></td>
 			                <td><?php echo $data["username"]; ?></td>
-			                <td><?php echo $data["time"]; ?></td>
+			                <td><?php echo date("m/d/Y", strtotime($data["time"])); ?></td> 
 						</tr>
 						<?php } ?>
 			        </tbody>

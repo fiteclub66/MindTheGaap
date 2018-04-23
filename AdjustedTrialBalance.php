@@ -61,8 +61,6 @@
 						<thead>
 							<tr>
 								<th style="color: white;">&nbsp;</th>
-								<th style="text-align: center;"><u>DEBIT</u></th>
-								<th style="text-align: center;"><u>CREDIT</u></th>
 							</tr>
 						</thead>
 						<!-- uncomment if search bar per column is wanted -->
@@ -87,7 +85,6 @@
 									$currentAccount = $data['accountName'];
 									$currentSystemId = $data['accountSystemId'];
 									$selectedDate = $_SESSION['financialDate'];
-									$ridiculousSQL = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
 									
 									$result2 = $conn->query($ridiculousSQL);
 									
@@ -106,8 +103,6 @@
 							<tr>
 								<td></td>
 								<!--border-bottom: double 3px -->
-								<td style="text-align: center;"><span style="text-decoration: underline; border-bottom: 1px solid #000;">$<?php echo number_format(abs($debitTotal), 0, ".", ",");?></span></td>
-								<td style="text-align: center;"><span style="text-decoration: underline; border-bottom: 1px solid #000;">$<?php echo number_format(abs($creditTotal), 0, ".", ",");?></span></td>
 							</tr>
 						</tbody>
 					</table>

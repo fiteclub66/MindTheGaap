@@ -9,8 +9,8 @@
 		$date = "";
 	}
 ?>
-<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_RetainedEarnings.php"); ?>
-<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/NetIncomeCalculation.php"); ?>
+<?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_RetainedEarnings.php"); ?> 
+
 
 <html lang="en">
 	<head>
@@ -41,7 +41,7 @@
 -->
 			<h6>For the Period Ending on <?php $dummyDate = $_SESSION['financialDate']; echo date("m/d/Y", strtotime($dummyDate));?></h5>
 			</div>
-			<form action="IncomeStatement.php" method="post">
+			<form action="RetainedEarnings.php" method="post">
 			<div class="row">
 				<div class="col-xs-0 col-sm-0 col-md-7 col-lg-9"></div>
 				<div class="col-xs-12 col-sm-12 col-md-5 col-lg-3">
@@ -69,12 +69,13 @@
 								<td>Beginning Retained Earnings, 1/1/2018</td>
 								<td style="text-align: right;">$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 									<?php 
-											$beginningREPrint = number_format($beginningRE, 0, ".", ",");
-											if (substr($beginningREPrint, 0, 1) == "-"){ 
-												$beginningREPrint = str_replace("-", "(", $beginningREPrint); 
-												$beginningREPrint = $beginningREPrint . ")";											
-											}
-											echo $beginningREPrint;
+											
+										$beginningREPrint = number_format($beginningRE, 2, ".", ",");
+										if (substr($beginningREPrint, 0, 1) == "-"){ 
+											$beginningREPrint = str_replace("-", "(", $beginningREPrint); 
+											$beginningREPrint = $beginningREPrint . ")";											
+										}
+										echo $beginningREPrint;
 									?>
 								</td>
 							</tr>
@@ -82,7 +83,7 @@
 								<td>Add: Net Income</td>
 								<td style="text-align: right;">
 									<?php 
-										$netIncomePrint = number_format($netIncome, 0, ".", ",");
+										$netIncomePrint = number_format($netIncome, 2, ".", ",");
 										if (substr($netIncomePrint, 0, 1) == "-"){ 
 											$netIncomePrint = str_replace("-", "(", $netIncomePrint); 
 											$netIncomePrint = $netIncomePrint . ")";											
@@ -95,8 +96,8 @@
 								<td>Less: Dividends</td>
 								<td style="text-align: right;">
 									<?php 
-										$dividendsPrint = number_format($dividends, 0, ".", ",");
-										if (substr($dividentsPrint, 0, 1) == "-"){ 
+										$dividendsPrint = number_format($dividends, 2, ".", ",");
+										if (substr($dividendsPrint, 0, 1) == "-"){ 
 											$dividendsPrint = str_replace("-", "(", $dividendsPrint); 
 											$dividendsPrint = $dividendsPrint . ")";											
 										}
@@ -109,7 +110,7 @@
 								<td style="text-align: right; border-top: solid 1px; border-bottom: double 3px;">
 									<?php 
 										$endRE = $beginningRE + $netIncome - $dividends; 
-										$endREPrint = number_format($endRE, 0, ".", ",");
+										$endREPrint = number_format($endRE, 2, ".", ",");
 										if (substr($endREPrint, 0, 1) == "-"){ 
 											$endREPrint = str_replace("-", "(", $endREPrint); 
 											$endREPrint = $endREPrint . ")";											
@@ -118,6 +119,14 @@
 									?>
 								</td>
 							</tr>	
+							<!--<tr>
+								<td>Revenue Total</td>
+								<td></?php echo $revenueTotal; ?></td>
+							</tr>
+							<tr>
+								<td>Expense Total</td>
+								<td></?php echo $expenseTotal; ?></td>
+							</tr> -->
 						</tbody>
 						
 					</table>
@@ -130,7 +139,7 @@
 			defaultDate: new Date(),
 			format: 'MM/DD/YYYY', 
 			useCurrent: false,
-			maxDate: new Date(), 
+			//maxDate: new Date(), 
 			disabledDate: [
 				new Date()
 			]

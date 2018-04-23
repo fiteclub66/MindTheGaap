@@ -78,7 +78,7 @@
 									$currentAccount = $revenueData['accountName'];
 									$currentSystemId = $revenueData['accountSystemId'];
 									$selectedDate = $_SESSION['financialDate'];
-									$ridiculousSQL = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='REG' GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='REG' GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
+									$ridiculousSQL = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
 									
 									$revenueResult2 = $conn->query($ridiculousSQL);
 									
@@ -88,7 +88,7 @@
 										<tr height="35px" >
 											<td style="padding-left: 55px;"><?php echo $revenueData2["accountName"]; ?></td>
 											<!-- if($data2['balance'] > 0) //for if he doesn't want $0 balances showing{ -->
-											<td style="text-align: right"><?php $revenueTotal = $revenueTotal + (float)$revenueData2['balance']; if($firstEntry == true){echo "$"; $firstEntry = false;} $revenueData2['balance'] = number_format((float)$revenueData2['balance'], 0, ".", ","); if (substr($revenueData2['balance'], 0, 1) == "-"){ $revenueData2['balance'] = str_replace("-", "(", $revenueData2['balance']); $revenueData2['balance'] = $revenueData2['balance'] . ")"; echo $revenueData2['balance']; } else {echo $revenueData2['balance'];} ?></<td>										
+											<td style="text-align: right"><?php $revenueTotal = $revenueTotal + (float)$revenueData2['balance']; if($firstEntry == true){echo "$"; $firstEntry = false;} $revenueData2['balance'] = number_format((float)$revenueData2['balance'], 2, ".", ","); if (substr($revenueData2['balance'], 0, 1) == "-"){ $revenueData2['balance'] = str_replace("-", "(", $revenueData2['balance']); $revenueData2['balance'] = $revenueData2['balance'] . ")"; echo $revenueData2['balance']; } else {echo $revenueData2['balance'];} ?></<td>										
 										</tr>		
 									<?php } ?>
 							<?php } ?>
@@ -100,7 +100,7 @@
 									<span style="border-bottom: 1px solid #000; border-top: 1px solid #000;"> -->
 									<span>
 										<?php 
-											$revenueTotalPrint = number_format($revenueTotal, 0, ".", ",");
+											$revenueTotalPrint = number_format($revenueTotal, 2, ".", ",");
 											if (substr($revenueTotalPrint, 0, 1) == "-"){ 
 												$revenueTotalPrint = str_replace("-", "(", $revenueTotalPrint); 
 												$revenueTotalPrint = $revenueTotalPrint . ")";											
@@ -124,7 +124,7 @@
 									$currentAccount = $expenseData['accountName'];
 									$currentSystemId = $expenseData['accountSystemId'];
 									$selectedDate = $_SESSION['financialDate'];
-									$ridiculousSQL2 = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='REG' GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='REG' GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
+									$ridiculousSQL2 = "SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountSystemId = '$currentSystemId' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND (Journals.type='REG' OR Journals.type='ADJ') GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountSystemId = '$currentSystemId' AND Journals.accountSystemId = Accounts.systemId";
 									
 									$expenseResults2 = $conn->query($ridiculousSQL2);
 									
@@ -134,7 +134,7 @@
 										<tr height="35px" >
 											<td><?php echo $expenseData2["accountName"]; ?></td>
 											<!-- if($data2['balance'] > 0) //for if he doesn't want $0 balances showing{ -->
-											<td style="text-align: right"><?php $expenseTotal = $expenseTotal + (float)$expenseData2['balance'];  $expenseData2['balance'] = number_format((float)$expenseData2['balance'], 0, ".", ","); if (substr($expenseData2['balance'], 0, 1) == "-"){ $expenseData2['balance'] = str_replace("-", "(", $expenseData2['balance']); $expenseData2['balance'] = $expenseData2['balance'] . ")"; echo $expenseData2['balance']; } else {echo $expenseData2['balance'];} ?></<td>										
+											<td style="text-align: right"><?php $expenseTotal = $expenseTotal + (float)$expenseData2['balance'];  $expenseData2['balance'] = number_format((float)$expenseData2['balance'], 2, ".", ","); if (substr($expenseData2['balance'], 0, 1) == "-"){ $expenseData2['balance'] = str_replace("-", "(", $expenseData2['balance']); $expenseData2['balance'] = $expenseData2['balance'] . ")"; echo $expenseData2['balance']; } else {echo $expenseData2['balance'];} ?></<td>										
 										</tr>		
 									<?php } ?>
 							<?php } ?>
@@ -145,14 +145,14 @@
 									<span style="border-bottom: 1px solid #000; border-top: 1px solid #000;"> -->
 									<td style="border-bottom: solid 1px; border-top: solid 1px; text-align: right;">
 										<?php 
-											$expenseTotalPrint = number_format($expenseTotal, 0, ".", ",");
+											$expenseTotalPrint = number_format($expenseTotal, 2, ".", ",");
 											if (substr($expenseTotalPrint, 0, 1) == "-"){ 
 												$expenseTotalPrint = str_replace("-", "(", $expenseTotalPrint); 
 												$expenseTotalPrint = $expenseTotalPrint . ")"; 
 											}
 											echo $expenseTotalPrint;
 										?>
-									</span>
+									
 								</td>	
 							</tr>
 							<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -162,7 +162,7 @@
 									<span>$
 										<?php 
 											$netAmount = $revenueTotal - $expenseTotal;
-											$netAmountPrint = number_format(($revenueTotal - $expenseTotal), 0, ".", ",");
+											$netAmountPrint = number_format(($netAmount), 2, ".", ",");
 											if (substr($netAmountPrint, 0, 1) == "-"){ 
 													$netAmountPrint = str_replace("-", "(", $netAmountPrint); 
 													$netAmountPrint = $netAmountPrint . ")"; 
@@ -179,6 +179,7 @@
 						</tbody>
 						
 					</table>
+					</br></br></br>
 			</div>
 			
 		<!--</form> -->
@@ -188,7 +189,7 @@
 			defaultDate: new Date(),
 			format: 'MM/DD/YYYY', 
 			useCurrent: false,
-			maxDate: new Date(), 
+			//maxDate: new Date(), 
 			disabledDate: [
 				new Date()
 			]

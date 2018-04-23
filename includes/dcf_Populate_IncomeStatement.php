@@ -22,9 +22,9 @@ if ($conn->connect_error) {
 	die ("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT DISTINCT Journals.accountName, Journals.accountSystemId FROM mindthegaap.Journals, mindthegaap.Accounts WHERE Accounts.systemId = Journals.accountSystemId AND Accounts.category = 'Revenue'";
+$sql_Revenue = "SELECT DISTINCT Journals.accountName, Journals.accountSystemId FROM mindthegaap.Journals, mindthegaap.Accounts WHERE Accounts.systemId = Journals.accountSystemId AND Accounts.category = 'Revenue' ORDER BY Accounts.accountOrder ASC";
 
-$revenueResults = $conn->query($sql);
+$revenueResults = $conn->query($sql_Revenue);
 $revenueData;
 
 //$accountNames;
@@ -39,8 +39,8 @@ if ($revenueResults->num_rows > 0) {
 	echo "0 Revenue results";
 }
 
-$sql2 = "SELECT DISTINCT Journals.accountName, Journals.accountSystemId FROM mindthegaap.Journals, mindthegaap.Accounts WHERE Accounts.systemId = Journals.accountSystemId AND Accounts.category = 'Expense'";
-$expenseResults = $conn->query($sql2);
+$sql_Expense = "SELECT DISTINCT Journals.accountName, Journals.accountSystemId FROM mindthegaap.Journals, mindthegaap.Accounts WHERE Accounts.systemId = Journals.accountSystemId AND Accounts.category = 'Expense' ORDER BY Accounts.accountOrder ASC";
+$expenseResults = $conn->query($sql_Expense);
 $expenseData;
 
 if ($expenseResults->num_rows > 0) {

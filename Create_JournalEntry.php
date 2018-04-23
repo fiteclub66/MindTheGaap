@@ -312,7 +312,8 @@ $(function() {
         //defaultDate: "3/1/2018",
         format: 'MM-DD-YYYY', 
         useCurrent: true,
-        minDate: new Date(), 
+        //maxDate: new Date(),
+        //minDate: new Date(), 
         disabledDate: [
             new Date()
         ]
