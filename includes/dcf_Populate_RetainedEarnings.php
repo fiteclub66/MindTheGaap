@@ -8,13 +8,14 @@ $dbname = "mindthegaap";
 //if ($_SESSION['username'] == null) {
 //	header('Location: /index.php');
 //}
-//include ($_SERVER['DOCUMENT_ROOT']."NetIncomeCalculation.php");
+include ($_SERVER['DOCUMENT_ROOT']."/includes/NetIncomeCalculation.php");
 
 if (isset($_POST['datetime'])) {
 	$_SESSION['financialDate'] = date("Y-m-d", strtotime($_POST['datetime']));
 } else {
 	$_SESSION['financialDate'] = date('Y-m-d');
 }
+$selectedDate = $_SESSION['financialDate'];
 
 //Create Connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -59,7 +60,7 @@ $dividends = $data2['balance'];
 
 
 $sql3 ="SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountName = 'Beginning Retained Earnings' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='CLO' GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountName = 'Beginning Retained Earnings' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='CLO' GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountName = 'Beginning Retained Earnings' AND Journals.accountSystemId = Accounts.systemId";
-$results2 = $conn->query($sql2);
+$results3 = $conn->query($sql2);
 $data2;
 
 if ($results3->num_rows > 0) {
@@ -74,6 +75,11 @@ if ($results3->num_rows > 0) {
 	$data3['balance'] = 0;
 }
 $beginningRE = $data3['balance'];
+
+//$netIncome = $netIncome;
+
+$retainedEarnings = $beginningRE + $netIncome - $dividends;
+
 
 
 $conn->close();

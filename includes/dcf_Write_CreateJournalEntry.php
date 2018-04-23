@@ -302,6 +302,6 @@ echo "</br></br># Successful Queries: " . $successfulQueries . "</br>";
 
 echo "</div></body></html>";
 
-header('Location: /Journal.php');
+ //header('Location: /Journal.php');
 
 ?>

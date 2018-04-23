@@ -3,27 +3,23 @@
 	//if ($_SESSION['username'] == null) {
 	//	header('Location: /index.php');
 	//}
+	include ($_SERVER['DOCUMENT_ROOT']."/includes/NetIncomeCalculation.php");
+	include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_Dashboard.php");
 
-	$name1 = "AT";
-	$value1 = 1;
-	$name2 = "CR";
-	$value2 = 1;
-	$name3 = "ATR"; //Add the name here
-	$value3 = 1; //Add value here
-	$name4 = "ROE"; //Add the name here
-	$value4 = 1; //Add value here
-	$name5 = "GPM"; //Add the name here
-	$value5 = 1; //Add value here
-	$name6 = "NPM"; //Add the name here
-	$value6 = 1; //Add value here
-	$name7 = "QR"; //Add the name here
-	$value7 = 1; //Add value here
-	$name8 = "CA"; //Add the name here
-	$value8 = 1; //Add value here
-	$name9 = "PM"; //Add the name here
-	$value9 = 1; //Add value here
-	$name10 = "CRS"; //Add the name here
-	$value10 = 1; //Add value here
+	$nameROA = "ROA";
+	$valueROA = (float)$netIncome/$totalAssets;
+	$nameROE = "ROE";
+	$valueROE = 1;
+	$nameNPM = "NPM"; //Add the name here
+	$valueNPM = 1; //Add value here
+	$nameORTA = "ORTA"; //Add the name here
+	$valueORTA = 1; //Add value here
+	$nameAT = "AT";
+	$valueAT = 1;
+	$nameCR = "CR"; //Add the name here
+	$valueCR = 1; //Add value here
+	$nameQR = "QR"; //Add the name here
+	$valueQR = 1; //Add value her
 
 
 	$redLow = 0;
@@ -93,17 +89,14 @@
 
 		      function drawGauges() {
 
-		        drawGauge1('gauge-1',0,20,'<?=$name1 ?>',<?=$value1 ?>,0,3,3,7,7,20); //AT
-		        drawGauge1('gauge-2',0,20,'<?=$name2 ?>',<?=$value2 ?>,0,2,2,5,5,20); //CR
-		        drawGauge1('gauge-3',0,20,'<?=$name3 ?>',<?=$value3 ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
-		        drawGauge1('gauge-4',0,20,'<?=$name4 ?>',<?=$value4 ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
-		        drawGauge1('gauge-5',0,20,'<?=$name5 ?>',<?=$value5 ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
-		        drawGauge1('gauge-6',0,20,'<?=$name6 ?>',<?=$value6 ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
-		        drawGauge1('gauge-7',0,20,'<?=$name7 ?>',<?=$value7 ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
-		        drawGauge1('gauge-8',0,20,'<?=$name8 ?>',<?=$value8 ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
-		        drawGauge1('gauge-9',0,20,'<?=$name9 ?>',<?=$value9 ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
-		        drawGauge1('gauge-10',0,20,'<?=$name10 ?>',<?=$value10 ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
-
+		        drawGauge1('gauge-1',0,20,'<?=$nameROA ?>',<?=$valueROA ?>,0,3,3,7,7,20); //AT
+		        drawGauge1('gauge-2',0,20,'<?=$nameROE ?>',<?=$valueROE ?>,0,2,2,5,5,20); //CR
+		        drawGauge1('gauge-3',0,20,'<?=$nameNPM ?>',<?=$valueNPM ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
+		        drawGauge1('gauge-4',0,20,'<?=$nameORTA ?>',<?=$valueORTA ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
+		        drawGauge1('gauge-5',0,20,'<?=$nameAT ?>',<?=$valueAT ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
+		        drawGauge1('gauge-6',0,20,'<?=$nameCR ?>',<?=$valueCR ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
+		        drawGauge1('gauge-7',0,20,'<?=$nameQR ?>',<?=$valueQR ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
+		        
 		      }
 
 		      function drawGauge1(element,min,max,name,value,redLow,redHigh,yellowLow,yellowHigh,greenLow,greenHigh){

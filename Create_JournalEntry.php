@@ -11,12 +11,12 @@ if(!empty($_GET['date'])){
 }
 echo $date;
 ?>
-					
+                    
 <?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_CreateJournalEntry.php") ?>
 <html lang="en">
-	
+    
 <head>
-	
+    
         <title>NEW JOURNAL ENTRY</title>
         <!-- header is in the header.php file with all the scripts, css, and other files needed for formating -->
 
@@ -27,7 +27,7 @@ echo $date;
 <!-- horizontal navigation bar at the top of each page is in the navbar.php file -->
 <?php include ($_SERVER['DOCUMENT_ROOT']."/includes/navbar.php") ?>
 <div class="container">
-	<form action="includes/dcf_Write_CreateJournalEntry.php" method="post" class="journal-entry-form">
+    <form action="includes/dcf_Write_CreateJournalEntry.php" method="post" class="journal-entry-form">
     <div class="row" style="margin-top: 40px">
         <div class="row col-xs-2 col-sm-2 col-md-2 col-lg-1"></div>
         <div class="row col-xs-10 col-sm-10 col-md-7 col-lg-7">
@@ -66,20 +66,20 @@ echo $date;
             </thead>
             <tbody id="tableBodD" style="margin-bottom: 10px;">
             <tr>
-				<td class="form-group">
-					<div class="input-group date" id="datetimepicker6" data-target-input="nearest" style="padding-right: 20px">
-						<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker6" size="12" id="datetime" name="datetime"/>
-						<div class="input-group-append" data-target="#datetimepicker6" data-toggle="datetimepicker"> 
-							<div class="input-group-text" style="padding-left: 5px"><i class="fa fa-calendar fa-2x" style="padding-top: 3px"></i></div>
-						</div>
-					</div>
-				</td>
-			</tr>
+                <td class="form-group">
+                    <div class="input-group date" id="datetimepicker6" data-target-input="nearest" style="padding-right: 20px">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker6" size="12" id="datetime" name="datetime"/>
+                        <div class="input-group-append" data-target="#datetimepicker6" data-toggle="datetimepicker"> 
+                            <div class="input-group-text" style="padding-left: 5px"><i class="fa fa-calendar fa-2x" style="padding-top: 3px"></i></div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
             <tr id="rowSetDebit0">
 <!--
                 <td><input type="text" id="datepicker" size="10"></td>
 -->
-				<td></td>
+                <td></td>
                 <td style="font-size: 28; color: #DD9787; padding-top: 15px">
                     <div class="form-group">
 <!--<<<<<< HEAD 
@@ -89,9 +89,9 @@ echo $date;
                         <select class="accountName debitAccountName form-control" id="debitAccountName0" name="debitAccountName0">
                             <option value="" disabled="true" selected style="color: #D3D3D3">Account</option>
                             <!-- php for filling debit accounts-->                            
-                            <?php if ($result->num_rows > 0) {while($dataDebits = $result->fetch_assoc()) { ?>			
-						    <?php echo "<option value=".$dataDebits['systemId'].">" . $dataDebits["accountId"] . " - " . $dataDebits["accountName"] . "</option>"; ?>
-							<?php }} ?>
+                            <?php if ($result->num_rows > 0) {while($dataDebits = $result->fetch_assoc()) { ?>          
+                            <?php echo "<option value=".$dataDebits['systemId'].">" . $dataDebits["accountId"] . " - " . $dataDebits["accountName"] . "</option>"; ?>
+                            <?php }} ?>
                         </select>
                     </div>                    
                 </td>
@@ -126,9 +126,9 @@ echo $date;
                             <option value="" disabled="true" selected style="color: #D3D3D3">Account</option>
 <!-->>>>>>> 27a99c5c21bcb122e5a17a7b754caddbe8f7a927 -->
                             <!-- php for filling debit accounts-->                            
-                            <?php if ($result2->num_rows > 0) {while($dataCredits = $result2->fetch_assoc()) { ?>			
-						    <?php echo "<option value=".$dataCredits['systemId'].">" . $dataCredits["accountId"] . " - " . $dataCredits["accountName"] . "</option>"; ?>
-							<?php }} ?>
+                            <?php if ($result2->num_rows > 0) {while($dataCredits = $result2->fetch_assoc()) { ?>           
+                            <?php echo "<option value=".$dataCredits['systemId'].">" . $dataCredits["accountId"] . " - " . $dataCredits["accountName"] . "</option>"; ?>
+                            <?php }} ?>
                         </select>
                     </div>      
                 </td>
@@ -228,7 +228,6 @@ $(function() {
             }
         });
 
-
         
         var creditAccountNamesArray = [];
         $('.creditAccountName option:selected').each(function(){
@@ -283,7 +282,11 @@ $(function() {
             $('.error-wrap').removeClass('d-none');
             $('.error-wrap .alert').html('Error! Please select a date.');
         }
-
+        if($('#type option:selected').val()===""){
+            error = true;
+            $('.error-wrap').removeClass('d-none');
+            $('.error-wrap .alert').html('Error! Please select an entry type.');
+        }
 
         if(!error){
             if(totalDebit==totalCredit) {
@@ -305,22 +308,23 @@ $(function() {
         return n === +n && n !== (n|0);
     }
 
-	$('#datetimepicker6').datetimepicker({
-		//defaultDate: "3/1/2018",
-		format: 'MM-DD-YYYY', 
-		useCurrent: true,
-		minDate: new Date(), 
-		disabledDate: [
-			new Date()
-		]
-		//disabledDate: [
-		//	moment(new Date),
-		//	new Date(2018, 11 - 1, 21),
-		//	"11/22/2018 00:53"
-		//]
-		//startDate: '-7d',
-		//endDate: '+0d'
-	});
+    $('#datetimepicker6').datetimepicker({
+        //defaultDate: "3/1/2018",
+        format: 'MM-DD-YYYY', 
+        useCurrent: true,
+        //maxDate: new Date(),
+        //minDate: new Date(), 
+        disabledDate: [
+            new Date()
+        ]
+        //disabledDate: [
+        //  moment(new Date),
+        //  new Date(2018, 11 - 1, 21),
+        //  "11/22/2018 00:53"
+        //]
+        //startDate: '-7d',
+        //endDate: '+0d'
+    });
 });
 </script>
 <script type="text/javascript">
@@ -332,51 +336,51 @@ $(function() {
     var dNames= []; 
     var cNames = [];
     
-	function getAllDebits() {
-		var opt = document.getElementById("debitAccountName0").options
-		for(var i=1; i<opt.length; ++i){
-			var x = opt[i];
-			dIDs[i-1] = x.value;
-			dNames[i-1] = x.text;
-			
-		}
-	}
-	
-	function getAllCredits() {
-		var opt = document.getElementById("creditAccountName0").options
-		for(var i=1; i<opt.length; ++i){
-			var x = opt[i];
-			cIDs[i-1] = x.value;
-			cNames[i-1] = x.text;
-			
-		}
-	}
-	
-	function checkOptD(id){
-		var selectedOpt = $('#'+id+' option:selected');
-		for(var i=0;i<=dCount;++i){
-			var compOpt = $('#debitAccountName'+i+' option:selected');
-			if( (selectedOpt.text() == compOpt.text())) {
-				if(id != ('debitAccountName'+i)){
-					alert("Error: You cannot select the same account.");
-					$('#'+id+' option:contains("Select")').prop('selected', true);
-				}
-			}
-		}
-	}
-	
-	function checkOptC(id){
-		var selectedOpt = $('#'+id+' option:selected');
-		for(var i=0;i<=cCount;++i){
-			var compOpt = $('#creditAccountName'+i+' option:selected');
-			if( (selectedOpt.text() == compOpt.text())) {
-				if(id != ('creditAccountName'+i)){
-					alert("Error: You cannot select the same account.");
-					$('#'+id+' option:contains("Select")').prop('selected', true);
-				}
-			}
-		}
-	}
+    function getAllDebits() {
+        var opt = document.getElementById("debitAccountName0").options
+        for(var i=1; i<opt.length; ++i){
+            var x = opt[i];
+            dIDs[i-1] = x.value;
+            dNames[i-1] = x.text;
+            
+        }
+    }
+    
+    function getAllCredits() {
+        var opt = document.getElementById("creditAccountName0").options
+        for(var i=1; i<opt.length; ++i){
+            var x = opt[i];
+            cIDs[i-1] = x.value;
+            cNames[i-1] = x.text;
+            
+        }
+    }
+    
+    // function checkOptD(id){
+    //  var selectedOpt = $('#'+id+' option:selected');
+    //  for(var i=0;i<=dCount;++i){
+    //      var compOpt = $('#debitAccountName'+i+' option:selected');
+    //      if( (selectedOpt.text() == compOpt.text())) {
+    //          if(id != ('debitAccountName'+i)){
+    //              alert("Error: You cannot select the same account.");
+    //              $('#'+id+' option:contains("Select")').prop('selected', true);
+    //          }
+    //      }
+    //  }
+    // }
+    
+    // function checkOptC(id){
+    //  var selectedOpt = $('#'+id+' option:selected');
+    //  for(var i=0;i<=cCount;++i){
+    //      var compOpt = $('#creditAccountName'+i+' option:selected');
+    //      if( (selectedOpt.text() == compOpt.text())) {
+    //          if(id != ('creditAccountName'+i)){
+    //              alert("Error: You cannot select the same account.");
+    //              $('#'+id+' option:contains("Select")').prop('selected', true);
+    //          }
+    //      }
+    //  }
+    // }
     
     function appendD() {
         getAllDebits();
@@ -392,11 +396,7 @@ $(function() {
             "                    <td style=\"font-size: 28; color: #DD9787; padding-top: 15px\">\n" +
             "                        <div class=\"form-group\">\n" +
 //<<<<<<< HEAD
-                                        //commented this out as one of the 3 conflicts
-            "                            //<select class=\"form-control debitAccountName accountName\" id=\"debitAccountName\" name=\"debitAccountName\" >\n" +
-
-            "                            <select class=\"form-control\" id=\"debitAccountName\" name=\"debitAccountName\" onchange=\"checkOptD(id)\">\n" +
-
+            "                            <select class=\"form-control debitAccountName accountName\" id=\"debitAccountName\" name=\"debitAccountName\" >\n" +
             "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Account</option>\n" +
 //=======
 //            "                            <select class=\"debitAccountName form-control\" id=\"debitAccountName\" name=\"debitAccountName\">\n" +
@@ -433,11 +433,11 @@ $(function() {
         $('#minusBtnD').attr( 'id', mbdLabel);
 
         for(var i=0; i<dIDs.length;++i){
-			$('#debitAccountName'+dCount).append($('<option>', {
-				value: dIDs[i],
-				text: dNames[i]
-			}));
-		}        
+            $('#debitAccountName'+dCount).append($('<option>', {
+                value: dIDs[i],
+                text: dNames[i]
+            }));
+        }        
         $('#'+"rowSetDebit"+dCount).show() 
         document.getElementById("num_Debits").value = dCount + 1;
     }
@@ -457,11 +457,7 @@ $(function() {
             "                    <td style=\"font-size: 28; color: #DD9787; padding-top: 15px\">\n" +
             "                        <div class=\"form-group\">\n" +
 //<<<<<<< HEAD
-                                        //commented this out as one of the three conflicts
-            "                            //<select class=\"creditAccountName form-control accountName\" id=\"creditAccountName\" name=\"creditAccountName\" >\n" +
-=======
-            "                            <select class=\"form-control\" id=\"creditAccountName\" name=\"creditAccountName\" onchange=\"checkOptC(id)\">\n" +
-
+            "                            <select class=\"creditAccountName form-control accountName\" id=\"creditAccountName\" name=\"creditAccountName\" >\n" +
             "                                <option value=\"\" disabled=\"true\" selected style=\"color: #D3D3D3\">Account</option>\n" +
 //=======
 //            "                            <select class=\"creditAccountName form-control\" id=\"creditAccountName\" name=\"creditAccountName\">\n" +
@@ -503,11 +499,11 @@ $(function() {
         $('#minusBtnC').attr( 'id', mbcLabel);
         
         for(var i=0; i<cIDs.length;++i){
-			$('#creditAccountName'+cCount).append($('<option>', {
-				value: cIDs[i],
-				text: cNames[i]
-			}));
-		}
+            $('#creditAccountName'+cCount).append($('<option>', {
+                value: cIDs[i],
+                text: cNames[i]
+            }));
+        }
         
         document.getElementById("num_Credits").value = cCount + 1;
     }
@@ -657,7 +653,7 @@ $(function() {
         $('#'+("cAccountName"+s)).attr('value', "");
     }
    
-	
+    
 </script>
 </body>
 </html>

@@ -61,8 +61,8 @@
 						<thead>
 							<tr>
 								<th style="color: white;">&nbsp;</th>
-								<th style="text-align: center;"><u>DEBIT</u></th>
-								<th style="text-align: center;"><u>CREDIT</u></th>
+								<th style="text-align: right;"><u>DEBIT</u></th>
+								<th style="text-align: right;"><u>CREDIT</u></th>
 							</tr>
 						</thead>
 						<!-- uncomment if search bar per column is wanted -->
@@ -97,8 +97,8 @@
 										<tr style="border-bottom: solid 1px;" height="35px" >
 											<td><?php echo $data2["accountName"]; ?></td>
 											<!-- if($data2['balance'] > 0) //for if he doesn't want $0 balances showing{ -->
-											<td style="text-align: center"><?php if($currentNormalSide == "Left"){$debitTotal = $debitTotal + (float)$data2['balance']; if($firstDebit == true){echo "$"; $firstDebit = false;} $data2['balance'] = number_format((float)$data2['balance'], 0, ".", ","); if (substr($data2['balance'], 0, 1) == "-"){ $data2['balance'] = str_replace("-", "(", $data2['balance']); $data2['balance'] = $data2['balance'] . ")"; echo $data2['balance']; } else {echo $data2['balance'];}} ?></<td>
-											<td style="text-align: center"><?php if($currentNormalSide == "Right"){$data2['balance'] = ((float)$data2['balance'] * -1);$creditTotal = $creditTotal + (float)$data2['balance']; if($firstCredit == true){echo "$"; $firstCredit = false;} $data2['balance'] = number_format((float)$data2['balance'], 0, ".", ","); if (substr($data2['balance'], 0, 1) == "-"){ $data2['balance'] = str_replace("-", "(", $data2['balance']); $data2['balance'] = $data2['balance'] . ")"; echo $data2['balance']; } else {echo $data2['balance'];}} ?></td>
+											<td style="text-align: right"><?php if(($currentNormalSide == "Left" && $data2['balance'] >= 0) || ($currentNormalSide == "Right" && ((float)$data2['balance'] * -1) < 0)){$debitTotal = $debitTotal + (float)$data2['balance']; if($firstDebit == true){echo "$"; $firstDebit = false;} $data2['balance'] = number_format((float)$data2['balance'], 2, ".", ","); if (substr($data2['balance'], 0, 1) == "-"){ $data2['balance'] = str_replace("-", "(", $data2['balance']); $data2['balance'] = $data2['balance'] . ")"; echo $data2['balance']; } else {echo $data2['balance'];}} ?></<td>
+											<td style="text-align: right"><?php if(($currentNormalSide == "Right" && ((float)$data2['balance'] * -1) >= 0) || ($currentNormalSide == "Left" && $data2['balance'] < 0)){$data2['balance'] = ((float)$data2['balance'] * -1);$creditTotal = $creditTotal + (float)$data2['balance']; if($firstCredit == true){echo "$"; $firstCredit = false;} $data2['balance'] = number_format((float)$data2['balance'], 2, ".", ","); if (substr($data2['balance'], 0, 1) == "-"){ $data2['balance'] = str_replace("-", "(", $data2['balance']); $data2['balance'] = $data2['balance'] . ")"; echo $data2['balance']; } else {echo $data2['balance'];}} ?></td>
 										</tr>		
 									<?php } ?>
 							<?php } ?>
@@ -106,8 +106,8 @@
 							<tr>
 								<td></td>
 								<!--border-bottom: double 3px -->
-								<td style="text-align: center;"><span style="text-decoration: underline; border-bottom: 1px solid #000;">$<?php echo number_format(abs($debitTotal), 0, ".", ",");?></span></td>
-								<td style="text-align: center;"><span style="text-decoration: underline; border-bottom: 1px solid #000;">$<?php echo number_format(abs($creditTotal), 0, ".", ",");?></span></td>
+								<td style="text-align: right;"><span style="text-decoration: underline; border-bottom: 1px solid #000;">$<?php echo number_format(abs($debitTotal), 2, ".", ",");?></span></td>
+								<td style="text-align: right;"><span style="text-decoration: underline; border-bottom: 1px solid #000;">$<?php echo number_format(abs($creditTotal), 2, ".", ",");?></span></td>
 							</tr>
 						</tbody>
 					</table>
@@ -121,7 +121,7 @@
 			defaultDate: new Date(),
 			format: 'MM/DD/YYYY', 
 			useCurrent: false,
-			maxDate: new Date(), 
+			//maxDate: new Date(), 
 			disabledDate: [
 				new Date()
 			]
