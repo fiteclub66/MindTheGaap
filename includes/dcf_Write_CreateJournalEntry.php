@@ -360,6 +360,10 @@ for ($x = 0; $x < $numCredits; $x++) {
 
 //echo "</div></body></html>";
 
+<<<<<<< HEAD
 header('Location: /Journal.php');
+=======
+ header('Location: /Journal.php');
+>>>>>>> 18fb8185ad4d73285131c800a017ea864248e9b1
 
 ?>
