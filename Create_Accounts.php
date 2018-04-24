@@ -26,7 +26,13 @@
 					<!-- <button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">EXPORT LOG</button> -->
 				</div>
 			</div>
-			<form action="includes/dcf_Write_CreateAccount.php" method="post">
+			<div class="row d-none error-wrap">
+		        <div class="col col-xs-2  col-lg-1"></div>
+		        <div class="col col-xs-8  col-lg-10">
+		            <div class="alert alert-danger" role="alert"></div>
+		        </div>
+		    </div>
+			<form action="includes/dcf_Write_CreateAccount.php" method="post" class="createAccount">
 				<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 50px">
 					<!-- <div class="row col-xs-2 col-sm-2 col-md-2 col-lg-2">
 					</div> -->
@@ -102,7 +108,7 @@
 			</div>
 			<div class="row col-xs-5 col-sm-4 col-md-4 col-lg-3 float-right" style="margin-top: 50px">
 				<a href="Accounts.php" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">CANCEL</a> &nbsp;
-				<button type="submit" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">SAVE</button> 
+				<button type="submit" class="btn btn-success save-button" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">SAVE</button> 
 			</div>
 			</form>	
 			<!-- <//?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_CreateAccount.php") ?> -->
@@ -113,7 +119,44 @@
 		</div>
 
 		<script type="text/javascript">
-			
+			$(document).ready(function(){
+				$('.save-button').click(function(e){
+					e.preventDefault();
+					var valid = true;
+					var error = '';
+					if($('#accountName').val()==""){
+						valid= false;
+						error= "Please provide the account name.";
+					}
+					if($('#accountID').val()==""){
+						valid= false;
+						error= "Please provide a valid account Id.";
+					}
+					if($('#sel_Category option:selected').val()==""){
+						valid= false;
+						error= "Please select an account category.";
+					}
+					if($('#sel_Subcategory option:selected').val()==""){
+						valid= false;
+						error= "Please select an account sub-category.";
+					}
+					if($('#accountOrder').val()==""){
+						valid= false;
+						error= "Please select the appropiate order number for this account.";
+					}
+					if($('#sel_NormalSide option:selected').val()==""){
+						valid= false;
+						error= "Please select the normal side for this account.";
+					}
+					if(!valid){
+		                $('.error-wrap').removeClass('d-none');
+		                $('.error-wrap .alert').html(error);
+					}else{
+						$('.createAccount').submit();
+					}
+					
+				});
+			});
 		</script>
 	</body>
 </html>

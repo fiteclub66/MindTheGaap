@@ -28,7 +28,13 @@
 					<!-- <button type="button" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">EXPORT LOG</button> -->
 				</div>
 			</div>
-			<form action="includes/dcf_Write_AddChartOfAccounts.php" method="post">
+			<div class="row d-none error-wrap">
+		        <div class="col col-xs-2  col-lg-1"></div>
+		        <div class="col col-xs-8  col-lg-10">
+		            <div class="alert alert-danger" role="alert"></div>
+		        </div>
+		    </div>
+			<form action="includes/dcf_Write_AddChartOfAccounts.php" method="post" class="addAccountForm">
 				<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 50px">
 					<!-- <div class="row col-xs-2 col-sm-2 col-md-2 col-lg-2">
 					</div> -->
@@ -74,7 +80,7 @@
 			</div>
 			<div class="row col-xs-5 col-sm-6 col-md-5 col-lg-3 float-right" style="margin-top: 75px">
 				<a href="http://www.mindthegaap.info/ChartOfAccounts.php"><button type="submit" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">CANCEL</button></a> &nbsp;
-				<button type="submit" class="btn btn-success" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">ADD</button>
+				<button type="submit" class="btn btn-success add-button" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px; width: 100px">ADD</button>
 			</div>
 			</form>
 		</div>
@@ -98,6 +104,15 @@
                     if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
                         e.preventDefault();
                     }
+                });
+                $('.add-button').click(function(e){
+                	e.preventDefault();
+                	if($('#account_Name option:selected').val()==""){
+		                $('.error-wrap').removeClass('d-none');
+		                $('.error-wrap .alert').html("Please select an account name.");
+					}else{
+						$('.addAccountForm').submit();
+					}
                 });
 			});
 		    function validateFloatKeyPress(el) {
