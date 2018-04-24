@@ -5,9 +5,9 @@ $password = "QxCrlmfP269g13";
 $dbname = "mindthegaap";
 
 //session_start();
-if ($_SESSION['username'] == null) {
-	header('Location: /index.php');
-}
+//if ($_SESSION['username'] == null) {
+	//header('Location: /index.php');
+//}
 
 //Create Connection
 $conn = new mysqli($servername, $username, $password, $dbname);

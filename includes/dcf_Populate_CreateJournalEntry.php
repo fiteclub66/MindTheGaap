@@ -26,7 +26,7 @@ if ($result->num_rows > 0) {
 	//	//echo $row["firstName"] . " " . $row["lastName"];
 	//}
 } else {
-	echo "0 results";
+	//echo "0 results";
 }
 
 //$sql3 = "SELECT ChartOfAccounts.accountName, ChartOfAccounts.systemId, ChartOfAccounts.accountId, ChartOfAccounts.linkedAccount, Accounts.systemId FROM mindthegaap.ChartOfAccounts, mindthegaap.Accounts WHERE ChartOfAccounts.linkedAccount = Accounts.systemId AND Accounts.normalSide = 'Left'";
@@ -53,7 +53,7 @@ if ($result2->num_rows > 0) {
 	//	//echo $row["firstName"] . " " . $row["lastName"];
 	//}
 } else {
-	echo "0 results";
+	//echo "0 results";
 }
 
 

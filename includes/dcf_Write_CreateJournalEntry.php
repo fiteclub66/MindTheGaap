@@ -104,6 +104,48 @@ $comments = $_POST['description'];
 //echo "creditAccountName0: " . $creditAccountName . "</br>";
 //$creditAmount = $_POST['credit'.$i];
 //echo "creditAmount0: " . $creditAmount . "</br>";
+if (!empty($_FILES["myFile"])) {
+	$filename = $_FILES['myFile']['name'];
+} else {
+	$filename = "no file";
+}
+
+
+define("UPLOAD_DIR", $_SERVER['DOCUMENT_ROOT']."/fileUploads/");
+
+if (!empty($_FILES["myFile"])) {
+    $myFile = $_FILES["myFile"];
+
+    if ($myFile["error"] !== UPLOAD_ERR_OK) {
+        echo "<p>An error occurred.</p>";
+        exit;
+    }
+	
+    // ensure a safe filename
+    $name = preg_replace("/[^A-Z0-9._-]/i", "_", $myFile["name"]);
+	//$filename = $name;
+	
+    // don't overwrite an existing file
+    $i = 0;
+    $parts = pathinfo($name);
+    while (file_exists(UPLOAD_DIR . $name)) {
+        $i++;
+        $name = $parts["filename"] . "-" . $i . "." . $parts["extension"];
+    }
+
+    // preserve file from temporary directory
+    $success = move_uploaded_file($myFile["tmp_name"],
+        UPLOAD_DIR . $name);
+    if (!$success) { 
+        echo "<p>Unable to save file.</p>";
+        exit;
+        header('Location: testFileUpload.php');
+    }
+
+    // set proper permissions on the new file
+    chmod(UPLOAD_DIR . $name, 0644);
+}
+
 
 $successfulQueries = 0;
 
@@ -154,7 +196,7 @@ for ($k = 0; $k < $numDebits; $k++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'accountName', '', (SELECT accountName FROM mindthegaap.Accounts WHERE systemId = '$debitAccountName'), ".$_SESSION['systemId'].", '$date')";
@@ -162,7 +204,7 @@ for ($k = 0; $k < $numDebits; $k++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'creditDebit', '', 'debit', ".$_SESSION['systemId'].", '$date')";
@@ -170,7 +212,7 @@ for ($k = 0; $k < $numDebits; $k++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'amount', '', '$debitAmount', ".$_SESSION['systemId'].", '$date')";
@@ -178,7 +220,7 @@ for ($k = 0; $k < $numDebits; $k++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'type', '', '$type', ".$_SESSION['systemId'].", '$date')";
@@ -186,7 +228,7 @@ for ($k = 0; $k < $numDebits; $k++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'status', '', 'Pending', ".$_SESSION['systemId'].", '$date')";
@@ -194,7 +236,7 @@ for ($k = 0; $k < $numDebits; $k++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'comments', '', '$comments', ".$_SESSION['systemId'].", '$date')";
@@ -202,18 +244,26 @@ for ($k = 0; $k < $numDebits; $k++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		}
+		
+		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'comments', '', '$filename', ".$_SESSION['systemId'].", '$date')";
+		if (mysqli_query($link, $sql)) {
+			//echo "Records added successfully.";
+			$successfulQueries++;
+		} else {
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 	
 
 		
 		//insert new data into Journals table
-		$sql = "INSERT INTO mindthegaap.Journals(journalGroup, date, accountName, creditDebit, amount, type, status, comments, creator, accountSystemId) VALUES ('$journalGroup', '$date', (SELECT accountName FROM mindthegaap.Accounts WHERE systemId='$debitAccountName'), 'debit', '$debitAmount', '$type', 'Pending', '$comments', ".$_SESSION['systemId'].", '$debitAccountName')";
+		$sql = "INSERT INTO mindthegaap.Journals(journalGroup, date, accountName, creditDebit, amount, type, status, filename, comments, creator, accountSystemId) VALUES ('$journalGroup', '$date', (SELECT accountName FROM mindthegaap.Accounts WHERE systemId='$debitAccountName'), 'debit', '$debitAmount', '$type', 'Pending', '$filename','$comments', ".$_SESSION['systemId'].", '$debitAccountName')";
 		if (mysqli_query($link, $sql)) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 	}
 }
@@ -234,7 +284,7 @@ for ($x = 0; $x < $numCredits; $x++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'accountName', '', (SELECT accountName FROM mindthegaap.Accounts WHERE systemId='$creditAccountName'), ".$_SESSION['systemId'].", '$date')";
@@ -242,7 +292,7 @@ for ($x = 0; $x < $numCredits; $x++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'creditDebit', '', 'credit', ".$_SESSION['systemId'].", '$date')";
@@ -250,7 +300,7 @@ for ($x = 0; $x < $numCredits; $x++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'amount', '', '$creditAmount', ".$_SESSION['systemId'].", '$date')";
@@ -258,7 +308,7 @@ for ($x = 0; $x < $numCredits; $x++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'type', '', '$type', ".$_SESSION['systemId'].", '$date')";
@@ -266,7 +316,7 @@ for ($x = 0; $x < $numCredits; $x++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'status', '', 'Pending', ".$_SESSION['systemId'].", '$date')";
@@ -274,7 +324,7 @@ for ($x = 0; $x < $numCredits; $x++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'comments', '', '$comments', ".$_SESSION['systemId'].", '$date')";
@@ -282,26 +332,34 @@ for ($x = 0; $x < $numCredits; $x++) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
-
-
-		//insert new data into Journals table
-		$sql = "INSERT INTO mindthegaap.Journals(journalGroup, date, accountName, creditDebit, amount, type, status, comments, creator, accountSystemId) VALUES ('$journalGroup', '$date', (SELECT accountName FROM mindthegaap.Accounts where systemId='$creditAccountName'), 'credit', '$creditAmount', '$type', 'Pending', '$comments', ".$_SESSION['systemId'].", '$creditAccountName')";
+		
+		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Journals', 0, 'filename', '', '$filename', ".$_SESSION['systemId'].", '$date')";
 		if (mysqli_query($link, $sql)) {
 			//echo "Records added successfully.";
 			$successfulQueries++;
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		}
+
+
+		//insert new data into Journals table
+		$sql = "INSERT INTO mindthegaap.Journals(journalGroup, date, accountName, creditDebit, amount, type, status, filename, comments, creator, accountSystemId) VALUES ('$journalGroup', '$date', (SELECT accountName FROM mindthegaap.Accounts where systemId='$creditAccountName'), 'credit', '$creditAmount', '$type', 'Pending', '$filename', '$comments', ".$_SESSION['systemId'].", '$creditAccountName')";
+		if (mysqli_query($link, $sql)) {
+			//echo "Records added successfully.";
+			$successfulQueries++;
+		} else {
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 	}
 }
 		
 		
-echo "</br></br># Successful Queries: " . $successfulQueries . "</br>";
+//echo "</br></br># Successful Queries: " . $successfulQueries . "</br>";
 
-echo "</div></body></html>";
+//echo "</div></body></html>";
 
- //header('Location: /Journal.php');
+header('Location: /Journal.php');
 
 ?>

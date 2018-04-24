@@ -33,7 +33,7 @@ if ($result->num_rows > 0) {
 	//	//echo $row["firstName"] . " " . $row["lastName"];
 	//}
 } else {
-	echo "0 results";
+	//echo "0 results";
 }
 
 $sql2 = "SELECT accountName, accountId FROM mindthegaap.ChartOfAccounts WHERE systemId = ".$_SESSION['postedJournalPage']."";
@@ -46,7 +46,7 @@ if ($result2->num_rows > 0) {
 	//	//echo $row["firstName"] . " " . $row["lastName"];
 	//}
 } else {
-	echo "0 results";
+	//echo "0 results";
 }
 
 header('Location: /AccountLedger.php');

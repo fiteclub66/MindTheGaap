@@ -5,9 +5,9 @@ $password = "QxCrlmfP269g13";
 $dbname = "mindthegaap";
 
 //session_start();
-if ($_SESSION['username'] == null) {
-	header('Location: /index.php');
-}
+//if ($_SESSION['username'] == null) {
+	//header('Location: /index.php');
+//}
 
 //Create Connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -26,7 +26,7 @@ if ($result->num_rows > 0) {
 	//	//echo $row["firstName"] . " " . $row["lastName"];
 	//}
 } else {
-	echo "0 results";
+	//echo "0 results";
 }
 //echo "row: " . $data["firstName"] . " " . $data["lastName"];
 $conn->close();

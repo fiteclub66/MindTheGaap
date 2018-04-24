@@ -58,10 +58,9 @@ $expenseAccountData;
 $expenseTotal = 0;
 
 while($expenseAccountData = $expenseAccountResults->fetch_assoc()) { 
-if ($expenseAccountResults->num_rows > 0) {							
-
 	
-		
+	if ($expenseAccountResults->num_rows > 0) {							
+			
 		$currentAccount = $expenseAccountData['accountName'];
 		$currentSystemId = $expenseAccountData['accountSystemId'];
 		$selectedDate = $_SESSION['financialDate'];

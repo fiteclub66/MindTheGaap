@@ -37,7 +37,7 @@
 		//	//echo $row["firstName"] . " " . $row["lastName"];
 		//}
 	} else {
-		echo "0 results";
+		//echo "0 results";
 	}
 	$oldActive = $oldData['active'];
 	$oldComments = $oldData['comments']; 
@@ -50,33 +50,33 @@
 		//write to EventLog
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('ChartOfAccounts', '$systemId', 'active', '$oldActive', '$newActive', ".$_SESSION['systemId'].", NOW())";
 		if (mysqli_query($link, $sql)) {
-			echo "Records added successfully.";
+			//echo "Records added successfully.";
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		//make edit in ChartOfAccounts table
 		$sql = "UPDATE mindthegaap.ChartOfAccounts SET active='$newActive' WHERE systemId='$systemId'";
 		if (mysqli_query($link, $sql)) {
-			echo "Records added successfully.";
+			//echo "Records added successfully.";
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 	}
 	if($oldComments != $newComments) {
 		$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('ChartOfAccounts', '$systemId', 'comments', '$oldComments', '$newComments', ".$_SESSION['systemId'].", NOW())";
 		if (mysqli_query($link, $sql)) {
-			echo "Records added successfully.";
+			//echo "Records added successfully.";
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 		
 		//make edit in Accounts table
 		$sql = "UPDATE mindthegaap.ChartOfAccounts SET comments='$newComments' WHERE systemId='$systemId'";
 		if (mysqli_query($link, $sql)) {
-			echo "Records added successfully.";
+			//echo "Records added successfully.";
 		} else {
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+			//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		}
 	}
 	

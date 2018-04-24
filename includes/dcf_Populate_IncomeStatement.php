@@ -36,7 +36,7 @@ if ($revenueResults->num_rows > 0) {
 	//}
 	
 } else {
-	echo "0 Revenue results";
+	//echo "0 Revenue results";
 }
 
 $sql_Expense = "SELECT DISTINCT Journals.accountName, Journals.accountSystemId FROM mindthegaap.Journals, mindthegaap.Accounts WHERE Accounts.systemId = Journals.accountSystemId AND Accounts.category = 'Expense' ORDER BY Accounts.accountOrder ASC";
@@ -51,7 +51,7 @@ if ($expenseResults->num_rows > 0) {
 	//}
 	
 } else {
-	echo "0 Expense results";
+	//echo "0 Expense results";
 }
 
 //$conn->close();

@@ -132,7 +132,7 @@
 										$currentNormalSide = $expenseData2['normalSide'];
 										?>
 										<tr height="35px" >
-											<td><?php echo $expenseData2["accountName"]; ?></td>
+											<td style="padding-left: 55px"><?php echo $expenseData2["accountName"]; ?></td>
 											<!-- if($data2['balance'] > 0) //for if he doesn't want $0 balances showing{ -->
 											<td style="text-align: right"><?php $expenseTotal = $expenseTotal + (float)$expenseData2['balance'];  $expenseData2['balance'] = number_format((float)$expenseData2['balance'], 2, ".", ","); if (substr($expenseData2['balance'], 0, 1) == "-"){ $expenseData2['balance'] = str_replace("-", "(", $expenseData2['balance']); $expenseData2['balance'] = $expenseData2['balance'] . ")"; echo $expenseData2['balance']; } else {echo $expenseData2['balance'];} ?></<td>										
 										</tr>		

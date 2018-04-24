@@ -3,31 +3,26 @@
 	//if ($_SESSION['username'] == null) {
 	//	header('Location: /index.php');
 	//}
-	include ($_SERVER['DOCUMENT_ROOT']."/includes/NetIncomeCalculation.php");
+	//include ($_SERVER['DOCUMENT_ROOT']."/includes/NetIncomeCalculation.php");
 	include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_Dashboard.php");
+	//include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_BalanceSheet.php");
 
 	$nameROA = "ROA";
-	$valueROA = (float)$netIncome/$totalAssets;
+	$valueROA = (float)(($netIncome/$totalAssets) * 100);
 	$nameROE = "ROE";
-	$valueROE = 1;
+	$valueROE = (float)(($netIncome/$total_StakeholderEquity) * 100);
 	$nameNPM = "NPM"; //Add the name here
-	$valueNPM = 1; //Add value here
+	$valueNPM = 1; //$netProfit/sales WTF is sales?
 	$nameORTA = "ORTA"; //Add the name here
-	$valueORTA = 1; //Add value here
+	$valueORTA = (float)(($revenueTotal/$totalAssets) * 100); //GrossProfit/TotalAssets
 	$nameAT = "AT";
 	$valueAT = 1;
 	$nameCR = "CR"; //Add the name here
-	$valueCR = 1; //Add value here
+	$valueCR = (float)($currentAssets/$currentLiabilities); //currentAssets/currentLiabilities
 	$nameQR = "QR"; //Add the name here
 	$valueQR = 1; //Add value her
 
 
-	$redLow = 0;
-	$redHigh = 5;
-	$yellowLow = 5;
-	$yellowHigh = 10;
-	$greenLow = 10;
-	$greenHigh = 20;
 ?>
 <?php include ($_SERVER['DOCUMENT_ROOT']."/includes/dcf_Populate_Post.php"); ?>
 
@@ -89,13 +84,13 @@
 
 		      function drawGauges() {
 
-		        drawGauge1('gauge-1',0,20,'<?=$nameROA ?>',<?=$valueROA ?>,0,3,3,7,7,20); //AT
-		        drawGauge1('gauge-2',0,20,'<?=$nameROE ?>',<?=$valueROE ?>,0,2,2,5,5,20); //CR
-		        drawGauge1('gauge-3',0,20,'<?=$nameNPM ?>',<?=$valueNPM ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
-		        drawGauge1('gauge-4',0,20,'<?=$nameORTA ?>',<?=$valueORTA ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
-		        drawGauge1('gauge-5',0,20,'<?=$nameAT ?>',<?=$valueAT ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
-		        drawGauge1('gauge-6',0,20,'<?=$nameCR ?>',<?=$valueCR ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
-		        drawGauge1('gauge-7',0,20,'<?=$nameQR ?>',<?=$valueQR ?>,<?=$redLow ?>,<?=$redHigh ?>,<?=$yellowLow ?>,<?=$yellowHigh ?>,<?=$greenLow ?>,<?=$greenHigh ?>);
+		        drawGauge1('gauge-1',0,30,'<?=$nameROA ?>',<?=$valueROA ?>,0,5,5,10,10,30); //ROA
+		        drawGauge1('gauge-2',0,30,'<?=$nameROE ?>',<?=$valueROE ?>,0,5,5,10,10,30); //ROE
+		        drawGauge1('gauge-3',0,30,'<?=$nameNPM ?>',<?=$valueNPM ?>,0,5,5,10,10,30); //NPM - don't have sales cuz idk what sales are
+		        drawGauge1('gauge-4',0,30,'<?=$nameORTA ?>',<?=$valueORTA ?>,0,5,5,10,10,30); //ORTA
+		        drawGauge1('gauge-5',0,20,'<?=$nameAT ?>',<?=$valueAT ?>,0,3,3,7,7,20); //AT - don't have sales cuz idk what sales are
+		        drawGauge1('gauge-6',0,20,'<?=$nameCR ?>',<?=$valueCR ?>,0,2,2,5,5,20); //CR
+		        drawGauge1('gauge-7',0,20,'<?=$nameQR ?>',<?=$valueQR ?>,0,2,2,4,4,20); //QR - don't have sales cuz idk what Inventory is
 		        
 		      }
 

@@ -32,10 +32,10 @@
 	//write event to SystemId table
 	$sql = "INSERT INTO mindthegaap.SystemId (tableRelation, id) VALUES ('Users', (SELECT (MAX(userId) + 1) FROM mindthegaap.Users))";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 		$success = true;
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		$success = false;
 	}
 
@@ -43,49 +43,49 @@
 	//write form data to Accounts table using SystemId that was just created in query above
 	$sql = "INSERT INTO mindthegaap.Users (firstName, lastName, position, username, password, active, systemId, securityAnswer1, securityAnswer2, securityAnswer3) VALUES ('$firstName', '$lastName', '$position','$username', '$password', '$active', (SELECT MAX(systemId) FROM mindthegaap.SystemId), '$securityAnswer1','$securityAnswer2', '$securityAnswer3')";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	//Write Creation of firstName to EventLog
 	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'firstName', '', '$firstName', ".$_SESSION['systemId'].", NOW())";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	//Write Creation of lastName to EventLog
 	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'lastName', '', '$lastName', ".$_SESSION['systemId'].", NOW())";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	//Write Creation of position to EventLog
 	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'position', '', '$position', ".$_SESSION['systemId'].", NOW())";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	//Write Creation of username to EventLog
 	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'username', '', '$username', ".$_SESSION['systemId'].", NOW())";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	//Write Creation of active to EventLog
 	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'active', '', '$active', ".$_SESSION['systemId'].", NOW())";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	if($success){

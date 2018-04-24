@@ -25,76 +25,76 @@
 	//write event to SystemId table
 	$sql = "INSERT INTO mindthegaap.SystemId (tableRelation, id) VALUES ('Accounts', '$accountId')";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 
 
 	//write form data to Accounts database table using SystemId that was just created in query above
 	$sql = "INSERT INTO mindthegaap.Accounts (accountId, accountName, category, subcategory, accountOrder, normalSide, comments, creationDate, creator, systemId) VALUES ('$accountId', '$accountName', '$category', '$subcategory','$accountOrder', '$normalSide', '$comments', NOW(), ".$_SESSION['systemId'].", (SELECT MAX(systemId) FROM mindthegaap.SystemId))";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 		$success = true;
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 		$success = false;
 	}
 	
 	//Write Creation of accountId to EventLog
 	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'accountId', '', '$accountId', ".$_SESSION['systemId'].", NOW())";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	//Write Creation of accountName to EventLog
 	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'accountName', '', '$accountName', ".$_SESSION['systemId'].", NOW())";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	//Write Creation of category to EventLog
 	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'category', '', '$category', ".$_SESSION['systemId'].", NOW())";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	//Write Creation of subcategory to EventLog
 	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'subcategory', '', '$subcategory', ".$_SESSION['systemId'].", NOW())";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	//Write Creation of accountOrder to EventLog
 	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'accountOrder', '', '$accountOrder', ".$_SESSION['systemId'].", NOW())";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	//Write Creation of normalSide to EventLog
 	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'normalSide', '', '$normalSide', ".$_SESSION['systemId'].", NOW())";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	//Write Creation of comments to EventLog
 	$sql = "INSERT INTO mindthegaap.EventLog (tablename, objectSystemId, changeField, beforeValue, afterValue, editorSystemId, time) VALUES ('Accounts', (SELECT MAX(systemId) FROM mindthegaap.SystemId), 'comments', '', '$comments', ".$_SESSION['systemId'].", NOW())";
 	if (mysqli_query($link, $sql)) {
-		echo "Records added successfully.";
+		//echo "Records added successfully.";
 	} else {
-		echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+		//echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 	}
 	
 	if($success){

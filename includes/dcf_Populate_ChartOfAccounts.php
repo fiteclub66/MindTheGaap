@@ -25,7 +25,7 @@ if ($result->num_rows > 0) {
 	//	//echo $row["firstName"] . " " . $row["lastName"];
 	//}
 } else {
-	echo "0 results";
+	//echo "0 results";
 }
 //echo "row: " . $data["firstName"] . " " . $data["lastName"];
 $conn->close();

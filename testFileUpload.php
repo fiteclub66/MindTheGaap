@@ -12,6 +12,7 @@
 				<br>
 				<input type="submit" value="Upload">
 			</form>
+			<a href="fileUploads/MTG_Code_Notes.txt" target="_blank">test</a>
 		</div>
 	</body>
 </html>

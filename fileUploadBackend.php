@@ -1,5 +1,5 @@
 <?php
-define("UPLOAD_DIR", "fileUploads");
+define("UPLOAD_DIR", "fileUploads/");
 
 if (!empty($_FILES["myFile"])) {
     $myFile = $_FILES["myFile"];
@@ -26,10 +26,13 @@ if (!empty($_FILES["myFile"])) {
     if (!$success) { 
         echo "<p>Unable to save file.</p>";
         exit;
+        header('Location: testFileUpload.php');
     }
 
     // set proper permissions on the new file
     chmod(UPLOAD_DIR . $name, 0644);
 }
+
+header('Location: testFileUpload.php');
 
 ?>

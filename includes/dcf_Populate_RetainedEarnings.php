@@ -38,7 +38,7 @@ if ($results->num_rows > 0) {
 	//}
 	
 } else {
-	echo "0 Revenue results";
+	//echo "0 Revenue results";
 }
 
 $sql2 ="SELECT DISTINCT Journals.accountName, IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Debit' AND Journals.accountName = 'Dividends' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='CLO' GROUP BY Journals.accountName), 0) - IFNULL((SELECT SUM(Journals.amount) FROM Journals WHERE Journals.creditDebit = 'Credit' AND Journals.accountName = 'Dividends' AND Journals.status = 'Approved' AND Journals.date <= '$selectedDate' AND Journals.type='CLO' GROUP BY Journals.accountName), 0) AS 'balance', Accounts.normalSide FROM Journals, Accounts WHERE Journals.accountName = 'Dividends' AND Journals.accountSystemId = Accounts.systemId";

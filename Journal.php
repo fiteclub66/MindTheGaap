@@ -63,13 +63,13 @@
 							<?php while($data = $result->fetch_assoc()) { ?> 
 								
 								<tr>
-									<td><?php if($statusCounter == 0 && $data['creditDebit'] == 'debit'){ echo date("m-d-Y", strtotime($data["date"])); $currentDate = $data['date'];} ?></td>									
+									<td><?php if($statusCounter == 0 && $data['creditDebit'] == 'debit'){ echo date("m-d-Y", strtotime($data["date"])); $currentDate = $data['date'];} ?></td>							
 									<td width="25%"<?php if($data['creditDebit'] == 'credit') {echo 'style="padding-left: 75px;"';}?></td><?php echo $data["accountName"]; ?></td>
 									<td height="55px"><?php echo $data["referenceId"]; ?></td>
 									<td style="text-align: right"><?php if ($data['creditDebit'] == 'debit'){echo number_format(doubleval($data["amount"]), 2, '.', ',');} ?></td>
 									<td style="text-align: right"><?php if ($data['creditDebit'] == 'credit'){echo number_format(doubleval($data["amount"]), 2, '.', ',');} ?></td>
 									<td><?php if($statusCounter == 0 && $data['creditDebit'] == "debit"){echo $data["status"]; $statusCounter++;} elseif ($data['creditDebit'] == "credit") {$statusCounter = 0;}?></td>
-									<td><?php if($fileCounter == 0 && $data['creditDebit'] == "debit"){ echo $data["filename"]; $fileCounter++;} elseif ($data['creditDebit'] == "credit") {$fileCounter = 0;} ?></td>
+									<td><?php if($fileCounter == 0 && $data['creditDebit'] == "debit"){ echo '<a href="fileUploads/'.$data["filename"].'" target="_blank">'.$data["filename"].'</a>'; $fileCounter++;} elseif ($data['creditDebit'] == "credit") {$fileCounter = 0;} ?></td>
 								</tr>
 							<?php } ?>
 									
