@@ -27,6 +27,7 @@ echo $date;
 <!-- horizontal navigation bar at the top of each page is in the navbar.php file -->
 <?php include ($_SERVER['DOCUMENT_ROOT']."/includes/navbar.php") ?>
 <div class="container">
+    <form action="includes/dcf_Write_CreateJournalEntry.php" method="post" class="journal-entry-form" enctype="multipart/form-data">
     <div class="row" style="margin-top: 40px">
         <div class="row col-xs-2 col-sm-2 col-md-2 col-lg-1"></div>
         <div class="row col-xs-10 col-sm-10 col-md-7 col-lg-7">
@@ -156,6 +157,7 @@ echo $date;
             <tr>
                 <td>
                     <div class="input-group">
+                        <input type="file" name="myFile" accept=".xls,.pdf,.csv,.docx, .txt">
                     </div>
                 </td>
                 <td col width="400px">
@@ -173,7 +175,9 @@ echo $date;
         <table style="margin: 0 auto;">
             <tr>
                 <td>
+                    <!--<label class="btn btn-default btn-success btn-large" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">
                         ATTACH <input id="filename" name="filename" type="file" accept=".xls,.pdf,.csv,.docx" hidden onchange="checkFile(id)" multiple>
+                    </label> -->
                 </td>
                 <td>
                     <button id="subBtn" type="submit" class="btn btn-success btn-large" style="margin-top: 2px; margin-bottom: 12px; background-color: #A6C48A; border-bottom: 5px solid #678D58; border-top: 0px; border-left: 0px; border-right: 0px;">SUBMIT</button>
@@ -652,3 +656,4 @@ $(function() {
     
 </script>
 </body>
+</html>
