@@ -216,6 +216,11 @@ $(function() {
                 $('.error-wrap').removeClass('d-none');
                 $('.error-wrap .alert').html('Error! Please enter the debit amount.');
             }
+            if($(this).val()==0){
+                error = true;
+                $('.error-wrap').removeClass('d-none');
+                $('.error-wrap .alert').html('Error! Please enter an amount greater than zero.');
+            }
         });
         $('.credit-input').each(function(){
             if($(this).val()!='' && !isNaN($(this).val())) {
@@ -225,6 +230,11 @@ $(function() {
                 error = true;
                 $('.error-wrap').removeClass('d-none');
                 $('.error-wrap .alert').html('Error! Please enter the credit amount.');
+            }
+            if($(this).val()==0){
+                error = true;
+                $('.error-wrap').removeClass('d-none');
+                $('.error-wrap .alert').html('Error! Please enter an amount greater than zero.');
             }
         });
 
@@ -312,7 +322,7 @@ $(function() {
         //defaultDate: "3/1/2018",
         format: 'MM-DD-YYYY', 
         useCurrent: true,
-        //maxDate: new Date(),
+        maxDate: new Date(),
         //minDate: new Date(), 
         disabledDate: [
             new Date()
