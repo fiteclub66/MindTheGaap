@@ -89,7 +89,7 @@
 									</td>
 									<td style="text-align: right">
 										<?php 
-											$runningBalance = number_format($runningBalance, 0, ".", ",");
+											$runningBalance = number_format($runningBalance, 2, ".", ",");
 											if (substr($runningBalance, 0, 1) == "-"){ 
 												$runningBalance = str_replace("-", "(", $runningBalance); 
 												$runningBalance = $runningBalance . ")";											

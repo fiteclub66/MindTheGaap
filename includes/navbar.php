@@ -26,8 +26,8 @@
 					<a class="dropdown-item" href="http://www.mindthegaap.info/AccountLedger.php">Ledgers</a>
 				</div>
 			</li>
-			<?php if($_SESSION['position'] == "Manager") {echo '<li class="active" style="margin-top: 8px; padding-left: 15px; color: white; font-size: 16px;"> | &nbsp; <a href="http://www.mindthegaap.info/Post.php" style="color: white;">POST</a></li>';}?>
-			<?php if($_SESSION['position'] == "Manager" || $_SESSION['position'] == "Administrator") {echo '
+			<?php if ($_SESSION['position'] == 'Manager') {echo '<li class="active" style="margin-top: 8px; padding-left: 15px; color: white; font-size: 16px;"> | &nbsp; <a href="http://www.mindthegaap.info/Post.php" style="color: white;">POST</a></li>';}?>
+			
 			<li class="nav-item dropdown active"  style="margin-top: 6px; padding-left: 15px; color: #ffffff; font-size: 16px;">
 				| &nbsp;  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="margin-top: -30px; padding-left: 20px">STATEMENTS</a>
 				<div class="dropdown-menu">
@@ -38,7 +38,7 @@
 					<a class="dropdown-item" href="http://www.mindthegaap.info/RetainedEarnings.php">Retained Earnings</a>
 					<a class="dropdown-item" href="http://www.mindthegaap.info/BalanceSheet.php">Balance Sheet</a>				
 				</div>
-			</li>';} ?>
+			</li>
 			<li class="active" style="margin-top: 8px; padding-left: 15px; color: #ffffff; font-size: 16px;"> 
 				| &nbsp;  <a href="http://www.mindthegaap.info/EventsLog.php" style="color: white">LOGS</a>
 			</li>

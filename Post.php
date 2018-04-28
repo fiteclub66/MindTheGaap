@@ -1,5 +1,5 @@
 <?php 
-	//session_start();
+	session_start();
 	//if ($_SESSION['username'] == null) {
 	//	header('Location: /index.php');
 	//}

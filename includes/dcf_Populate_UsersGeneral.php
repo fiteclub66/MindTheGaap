@@ -4,6 +4,7 @@ $username = "tylerdurden";
 $password = "QxCrlmfP269g13";
 $dbname = "mindthegaap";
 
+session_start();
 //include $_SERVER['DOCUMENT_ROOT']."/test3.php";
 
 //Create Connection
